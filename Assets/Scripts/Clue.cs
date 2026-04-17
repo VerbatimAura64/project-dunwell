@@ -5,6 +5,7 @@ public class Clue : MonoBehaviour
 
     public string clueName;
     public string description;
+    public bool relevant;
     public bool discovered;
     public GameObject clueObj;
     public string inkKnotTitle;
