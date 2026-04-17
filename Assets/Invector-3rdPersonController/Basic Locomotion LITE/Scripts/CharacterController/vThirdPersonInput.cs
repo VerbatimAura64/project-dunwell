@@ -173,6 +173,8 @@ namespace Invector.CharacterController
                         focused = true;
                         cc.lockMovement = true;
                         tpCamera.lockCamera = true;
+                        //tpCamera._camera.enabled = false;
+                        tpCamera.inspectCam.enabled = true;
                         
                         
                         if (mapCollided)
@@ -194,6 +196,8 @@ namespace Invector.CharacterController
                     {
                         focused = false;
                         cc.lockMovement = false;
+                        tpCamera._camera.enabled = true;
+                        tpCamera.inspectCam.enabled = false;
                         tpCamera.lockCamera = false;
                         if (mapCollided)
                         {
@@ -212,7 +216,8 @@ namespace Invector.CharacterController
                 {
                     cc.lockMovement = false;
                     focused = false;
-                    cc.lockMovement = false;
+                    tpCamera._camera.enabled = true;
+                    tpCamera.inspectCam.enabled = false;
                     tpCamera.lockCamera = false;
                 }
                 prompt.SetActive(false);
@@ -249,7 +254,7 @@ namespace Invector.CharacterController
             if (other.gameObject.CompareTag("Clue"))
             {
                 clueTriggered = true;
-                mapToFocus = other.gameObject;
+                //mapToFocus = other.gameObject;
                 InspectClue(other.gameObject);
                 //GM.clueList = new Clue { GM.cluesFound.FindIndex(0) };
                 /*GM.clueList[] = new Clue
