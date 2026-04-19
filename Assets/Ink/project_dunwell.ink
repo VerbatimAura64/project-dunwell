@@ -4,7 +4,7 @@ VAR hands_checked = false
 # SIFICITY, 2842 - Landon's Apartment
 VAR bad_count = 0
 VAR good_count = 0
-VAR clueInspected = false
+VAR clueRelevant = false
 
 #EXT Forest - First date
 ->main
@@ -65,7 +65,7 @@ You shouldn't have said that.
 ->END
 
 === clueInspection===
-{ clueInspected:
+{ clueRelevant:
  -true: This looks important.
  -false: I don't see the connection.
  }

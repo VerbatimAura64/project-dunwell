@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Invector;
+using Unity.Mathematics;
 //using System.Numerics;
 
 public class vThirdPersonCamera : MonoBehaviour
@@ -55,7 +56,9 @@ public class vThirdPersonCamera : MonoBehaviour
     public Transform currentTarget;
     [HideInInspector]
     public Vector2 movementSpeed;
-   
+    [SerializeField]
+    private Quaternion lockedRotation;
+    public Vector3 oldPos;
     private Transform targetLookAt;
     private Vector3 currentTargetPos;
     private Vector3 lookPoint;
@@ -112,7 +115,11 @@ public class vThirdPersonCamera : MonoBehaviour
         CameraMovement();
     }
 
-
+    public void ReturnOldRotate()
+    {
+        this.transform.rotation = lockedRotation;
+        this.transform.position = oldPos;
+    }
     /// <summary>
     /// Set the target for the camera
     /// </summary>
@@ -165,13 +172,21 @@ public class vThirdPersonCamera : MonoBehaviour
         movementSpeed.y = -y;
         if (!lockCamera)
         {
+            
             mouseY = vExtensions.ClampAngle(mouseY, yMinLimit, yMaxLimit);
             mouseX = vExtensions.ClampAngle(mouseX, xMinLimit, xMaxLimit);
+            //this.transform.position = oldPos;
+            lockedRotation = this.transform.rotation;
+            oldPos = this.transform.position;
+            //this.transform.rotation = oldAngle;
         }
         else
         {
+            this.transform.position = oldPos;
+            this.transform.rotation = lockedRotation;
             mouseY = currentTarget.root.localEulerAngles.x;
             mouseX = currentTarget.root.localEulerAngles.y;
+            
         }
     }
 

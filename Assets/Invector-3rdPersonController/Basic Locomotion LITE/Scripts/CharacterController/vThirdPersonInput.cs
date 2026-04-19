@@ -33,6 +33,7 @@ namespace Invector.CharacterController
         public GameObject mapToFocus;
         public GameObject dialogue;
         public bool clueInvestigated;
+        public GameObject screen;
         //public GameObject clueToInvestigate;
 
         protected vThirdPersonCamera tpCamera;                // acess camera info        
@@ -172,7 +173,8 @@ namespace Invector.CharacterController
                         cc.input = Vector2.zero;
                         focused = true;
                         cc.lockMovement = true;
-                        tpCamera.lockCamera = true;
+                        tpCamera.enabled = false;
+                        //tpCamera.lockCamera = true;
                         //tpCamera._camera.enabled = false;
                         tpCamera.inspectCam.enabled = true;
                         
@@ -196,8 +198,10 @@ namespace Invector.CharacterController
                     {
                         focused = false;
                         cc.lockMovement = false;
+                        tpCamera.enabled = true;
                         tpCamera._camera.enabled = true;
                         tpCamera.inspectCam.enabled = false;
+                        tpCamera.ReturnOldRotate();
                         tpCamera.lockCamera = false;
                         if (mapCollided)
                         {
@@ -219,6 +223,7 @@ namespace Invector.CharacterController
                     tpCamera._camera.enabled = true;
                     tpCamera.inspectCam.enabled = false;
                     tpCamera.lockCamera = false;
+                    tpCamera.ReturnOldRotate();
                 }
                 prompt.SetActive(false);
                 //dialogue.SetActive(false);
@@ -231,12 +236,14 @@ namespace Invector.CharacterController
                 if (focused && clue.GetComponent<Clue>().relevant)
                 {
                     clue.GetComponent<Clue>().discovered = true;
+                    this.clueInvestigated = true;
+                    GM.cluesFound.Add(clue);
                     //clueInvestigated = true;
                     GM._inkStory.variablesState["clueInspected"] = clue.GetComponent<Clue>().discovered;
                     GM._inkStory.ChoosePathString("clueInspection");
                     GM._inkStory.Continue();
                 }
-                else
+                else if(focused && !clue.GetComponent<Clue>().relevant) 
                 {
                     GM._inkStory.ChoosePathString("clueInspection");
                     GM._inkStory.Continue();
@@ -254,6 +261,12 @@ namespace Invector.CharacterController
             if (other.gameObject.CompareTag("Clue"))
             {
                 clueTriggered = true;
+                mapToFocus = other.gameObject;
+                if (!other.gameObject.GetComponent<Clue>().discovered)
+                { 
+                    GM.cluesFound.Add(other.gameObject);
+                    other.gameObject.GetComponent<Clue>().discovered = true;
+                }
                 //mapToFocus = other.gameObject;
                 InspectClue(other.gameObject);
                 //GM.clueList = new Clue { GM.cluesFound.FindIndex(0) };
@@ -299,17 +312,22 @@ namespace Invector.CharacterController
         protected virtual void CameraInput()
         {
             if (tpCamera == null)
-                return;
-            var Y = Input.GetAxis(rotateCameraYInput);
-            var X = Input.GetAxis(rotateCameraXInput);
+                    return;
+            if (!focused)
+            {
 
-            tpCamera.RotateCamera(X, Y);
+                
+                var Y = Input.GetAxis(rotateCameraYInput);
+                var X = Input.GetAxis(rotateCameraXInput);
 
-            // tranform Character direction from camera if not KeepDirection
-            if (!keepDirection)
-                cc.UpdateTargetDirection(tpCamera != null ? tpCamera.transform : null);
-            // rotate the character with the camera while strafing        
-            RotateWithCamera(tpCamera != null ? tpCamera.transform : null);            
+                tpCamera.RotateCamera(X, Y);
+
+                // tranform Character direction from camera if not KeepDirection
+                if (!keepDirection)
+                    cc.UpdateTargetDirection(tpCamera != null ? tpCamera.transform : null);
+                // rotate the character with the camera while strafing        
+                RotateWithCamera(tpCamera != null ? tpCamera.transform : null);
+            }
         }
 
         protected virtual void UpdateCameraStates()

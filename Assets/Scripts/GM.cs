@@ -48,7 +48,7 @@ public class GM : MonoBehaviour
         InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
         if (window != null) { InkPlayerWindow.Attach(_inkStory); }
         Queue<AudioClip> queueList = new();
-        auPlayer = GetComponent<AudioSource>();
+        //auPlayer = GetComponent<AudioSource>();
         //_inkStory.variablesState["good_count"] = goodChoice;
         //_inkStory.variablesState["bad_count"] = badChoice;
         //dialogue.GetComponent<TMP_Text>().text = "";
@@ -83,7 +83,7 @@ public class GM : MonoBehaviour
 
     void IsClipOn()
     {
-        if (auPlayer.isPlaying)
+        /*if (auPlayer.isPlaying)
         {
             isClipPlaying = true;
 
@@ -93,7 +93,7 @@ public class GM : MonoBehaviour
             isClipPlaying = false;
             PlayNext();
             //clipPlaying = null;
-        }
+        }*/
     }
 
     //public void EnterDialogueMode(TextAsset inkAsset)
@@ -104,7 +104,7 @@ public class GM : MonoBehaviour
     public void PlayClip()
     {
 
-        auPlayer.Play();
+        //auPlayer.Play();
 
         /* for(int i =0; i < choices.Length; i++)
          {
@@ -128,8 +128,8 @@ public class GM : MonoBehaviour
     public void PlayNext()
     {
         clipPlaying = queueList.First();
-        auPlayer.resource = clipPlaying;
-        auPlayer.Play();
+        //auPlayer.resource = clipPlaying;
+        //auPlayer.Play();
         queueList.Remove(clipPlaying);
         //.Peek();
         //toBePlayed.Dequeue();
