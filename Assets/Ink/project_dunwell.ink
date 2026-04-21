@@ -14,11 +14,12 @@ VAR managerAlerted = false
 VAR managerKnowsMonitor = false
 VAR datapadsChoice = false
 VAR morrowSuspicion = 0
+VAR managerCaught = false
 
 
 VAR bad_count = 0
 VAR good_count = 0
-VAR clueRelevant = false
+
 
 
 ->extMonologue
