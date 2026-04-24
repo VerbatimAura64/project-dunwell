@@ -21,11 +21,11 @@ VAR bad_count = 0
 VAR good_count = 0
 
 
-# SCENE_EXTERIOR
+
 ->extMonologue
 
 ===extMonologue===
-
+#SCENE_EXTERIOR
 
 The message came in at 2:47 a.m. I read it at 6:12.
 Three hours and twenty-five minutes. In this city, that's not a window. That's a eulogy.
@@ -46,7 +46,7 @@ These apartments were cheap, The Studios they called them, basically saving spac
 +[Examine the notice on the door] ->clueFineNotice
 +[Knock on Dexter's door] -> dextersDoor
 +{dextersDoor } [There's the service closet.] ->findTerminal
-
++{foundTerminal } [Go inside] ->aptUnlocked
 
 ===dextersDoor===
 I knocked on the door. The room sounds hollow, like it couldn't possibly have anyone inside. He told me to meet here. Maybe he fell asleep - I'm three hours late.
@@ -55,34 +55,40 @@ The door is locked. Override lock, not a standard residential fit.
 *[Force the lock] ->bruteForce
 +[Maybe there's a floor terminal around here somewhere.] -> intMonologue
 
+
+
 === bruteForce ===
 # DOOR_FORCED
 Four override prompts and some patience. The lock gives.
 ~ managerAlerted = true
 -> aptUnlocked
 
-=== findTerminal ===
+===findTerminal ===
 The terminal was in the storage closet. Go figure. This terminal is older than the building deserves though. Repurposed city-issue, the kind that felt familiar six, seven years ago. Before droids took over the jobs and contracts.
 Before I left.
 
 ~ managerAlerted = false
 -> storageTerminal
 
-=== storageTerminal===
+===storageTerminal===
 # TERMINAL_ACTIVE
 City-issue hardware running apartment management software it was never designed for. Whoever set this up knew what they were doing — or knew someone who did.
 I found Dexter's unit in the directory. Ran the unlock sequence.
 There's something else in here. A ghost signal, low bandwidth, encrypted. I can't read it from here.
+
 ~ foundTerminal = true
+
 ->intMonologue
 
 ===clueFineNotice===
 #CLUE_FOUND_9
 
-There's a notice pinned to the door. A fine - a tapestry hung over a wall screen, flagged as a possible fire hazard. The letterhead is corporate, not municipal. Someone with money sent this.
-Not important.
-~foundFineDoc = true
-->intMonologue
+There's a notice pinned to the door. A fine - a tapestry hung over a wall screen, flagged as a possible fire hazard. The letterhead is corporate, not municipal. Someone with money sent this. Not important.
+
+~ foundFineDoc = true
+
+->clueHub
+
 
 
 ===aptUnlocked===
@@ -96,15 +102,21 @@ If only I had answered him sooner.
 
 
 ===clueHub===
+What else can I find here.
 
++{foundFineDoc } [Look at that design] That tapestry is no fire hazard ->clueHub
++[There's a gun] ->clueGun
 ->DONE
 
 
 
 ===clueGun===
+#CLUE_FOUND_1
+
 There's a round missing from the gun on the floor.
 ~ foundGun = true
 ->clueHub
+
 
 
 

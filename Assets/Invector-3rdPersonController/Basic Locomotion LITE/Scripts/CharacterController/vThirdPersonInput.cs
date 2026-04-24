@@ -30,7 +30,7 @@ namespace Invector.CharacterController
         public bool focused = false;
         public bool clueTriggered = false;
         public GameObject prompt;
-        public GameObject mapToFocus;
+        public GameObject itemToFocus;
         public GameObject dialogue;
         public bool clueInvestigated;
         public GameObject screen;
@@ -110,7 +110,7 @@ namespace Invector.CharacterController
         {
             if (focused)
             {
-                tpCamera.target = mapToFocus.transform;//.transform;
+                tpCamera.target = itemToFocus.transform;//.transform;
                 tpCamera.currentTarget = tpCamera.target;
             } else
             {
@@ -169,6 +169,7 @@ namespace Invector.CharacterController
                     prompt.SetActive(true);
                     if (Input.GetKeyDown(focusInput))
                     {
+                        
                         cc.isSprinting = false;
                         cc.input = Vector2.zero;
                         focused = true;
@@ -186,7 +187,7 @@ namespace Invector.CharacterController
                         else if (clueTriggered)
                         {
                             
-                            //InspectClue();
+                            InspectClue();
                             prompt.GetComponent<TMP_Text>().text = "Press F to back out";
                         }
                             SetFocus();
@@ -230,20 +231,29 @@ namespace Invector.CharacterController
             }
         }
 
-        protected virtual void InspectClue(GameObject clue)
+        protected virtual void InspectClue()
         {
             
-                if (focused && clue.GetComponent<Clue>().relevant)
+                if (focused && itemToFocus.GetComponent<Clue>().relevant)
                 {
-                    clue.GetComponent<Clue>().discovered = true;
-                    this.clueInvestigated = true;
-                    GM.cluesFound.Add(clue);
+                    if(itemToFocus.GetComponent<Clue>().discovered == false)
+                    {
+                        GM.DiscoverClue();
+                        GM.cluesFound.Add(itemToFocus);
+                        itemToFocus.GetComponent<Clue>().discovered = true;
+                    }
+                    
+                    
+                    
+                    //this.clueInvestigated = true;
+                    
+                    
                     //clueInvestigated = true;
-                    GM._inkStory.variablesState["clueInspected"] = clue.GetComponent<Clue>().discovered;
-                    GM._inkStory.ChoosePathString("clueInspection");
-                    GM._inkStory.Continue();
+                    //GM._inkStory.variablesState["clueInspected"] = clue.GetComponent<Clue>().discovered;
+                   // GM._inkStory.ChoosePathString("clueInspection");
+                    //GM._inkStory.Continue();
                 }
-                else if(focused && !clue.GetComponent<Clue>().relevant) 
+                else if(focused && !itemToFocus.GetComponent<Clue>().relevant) 
                 {
                     GM._inkStory.ChoosePathString("clueInspection");
                     GM._inkStory.Continue();
@@ -256,19 +266,18 @@ namespace Invector.CharacterController
             if (other.gameObject.CompareTag("Focus"))
             {
                 mapCollided = true;
-                mapToFocus = other.gameObject;
+                itemToFocus = other.gameObject;
             }
             if (other.gameObject.CompareTag("Clue"))
             {
                 clueTriggered = true;
-                mapToFocus = other.gameObject;
-                if (!other.gameObject.GetComponent<Clue>().discovered)
-                { 
-                    GM.cluesFound.Add(other.gameObject);
-                    other.gameObject.GetComponent<Clue>().discovered = true;
-                }
+                itemToFocus = other.gameObject;
+                
+                    //GM.cluesFound.Add(other.gameObject);
+                    //other.gameObject.GetComponent<Clue>().discovered = true;
+                
                 //mapToFocus = other.gameObject;
-                InspectClue(other.gameObject);
+                //InspectClue(other.gameObject);
                 //GM.clueList = new Clue { GM.cluesFound.FindIndex(0) };
                 /*GM.clueList[] = new Clue
                 {

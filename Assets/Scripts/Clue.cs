@@ -9,12 +9,13 @@ public class Clue : MonoBehaviour
     public bool relevant;
     public bool discovered;
     public GameObject clueObj;
-    //public string inkKnotTitle;
+    public string inkKnotTitle;
     [SerializeField]
     private GM gm;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        clueObj =this.gameObject;
         gm = GameObject.FindWithTag("GameController").GetComponent<GM>();
 
     }
@@ -36,8 +37,5 @@ public class Clue : MonoBehaviour
     }*/
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

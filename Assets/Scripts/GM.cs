@@ -23,9 +23,10 @@ public class GM : MonoBehaviour
     public Story _inkStory;
     public GameObject dialogue;
     public bool dialogueIsPlaying;
+    public Clue clueScript;
 
     [System.Serializable]
-    public class Clue
+    public class ClueInfo
     {
         public string name;
         public string description;
@@ -33,11 +34,11 @@ public class GM : MonoBehaviour
         public GameObject clueObj;
         public string inkKnotTitle;
     }
-
+    
     [System.Serializable]
     public class ClueList
     {
-        public Clue[] clues;
+        public ClueInfo[] clues;
     }
 
     public ClueList clueList = new();
@@ -48,17 +49,23 @@ public class GM : MonoBehaviour
         InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
         if (window != null) { InkPlayerWindow.Attach(_inkStory); }
         Queue<AudioClip> queueList = new();
+        
         //auPlayer = GetComponent<AudioSource>();
         //_inkStory.variablesState["good_count"] = goodChoice;
         //_inkStory.variablesState["bad_count"] = badChoice;
         //dialogue.GetComponent<TMP_Text>().text = "";
         _inkStory.Continue();
+        dialogue.GetComponent<TMP_Text>().text = _inkStory.currentText;
     }
 
     // Update is called once per frame
     void Update()
     {
         IsClipOn();
+        DiscoverClue();
+        if(Input.GetKeyDown(KeyCode.Return))
+            if(_inkStory.canContinue)
+                ContinueStory();
         //while (_inkStory.canContinue)
         {
             //Debug.Log
@@ -74,10 +81,40 @@ public class GM : MonoBehaviour
     {
         if (_inkStory.canContinue)
         {
-
-
             dialogue.GetComponent<TMP_Text>().text = _inkStory.Continue();
             dialogue.SetActive(true);
+            List<string> tags = _inkStory.currentTags;
+            foreach (string tag in tags)
+            {
+                /*if (tag.StartsWith("audio:"))
+                {
+                    string clipName = tag.Substring(6); // Extract the clip name after "audio:"
+                    AudioClip clipToPlay = Resources.Load<AudioClip>(clipName); // Load the audio clip from Resources folder
+                    if (clipToPlay != null)
+                    {
+                        queueList.Add(clipToPlay); // Add the clip to the queue
+                        Debug.Log("Added clip to queue: " + clipName);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Audio clip not found: " + clipName);
+                    }
+                }*/
+                if (tag.StartsWith("SCENE_"))
+                {
+                    string sceneName = tag.Substring(6); // Extract the scene name after "SCENE_"
+                    // Load the scene using SceneManager.LoadScene(sceneName);
+                    Debug.Log("Scene change triggered: " + sceneName);
+                    continue;
+                }
+                if (tag.StartsWith("CLUE_"))
+                {
+                    string clueName = tag.Substring(0); // Extract the clue number after "CLUE_"
+                    // Load the scene using SceneManager.LoadScene(sceneName);
+                    Debug.Log("Clue found triggered: " + clueName);
+                    continue;
+                }
+            }
         }
     }
 
@@ -157,6 +194,29 @@ public class GM : MonoBehaviour
 
     public void DiscoverClue()
     {
+
+       clueList.clues = new ClueInfo[cluesFound.Count];
+        for (int i = 0; i < cluesFound.Count; i++)
+        {
+            clueScript = cluesFound[i].GetComponent<Clue>();
+            clueList.clues[i] = new ClueInfo
+            {
+                name = cluesFound[i].GetComponent<Clue>().clueName,
+                description = cluesFound[i].GetComponent<Clue>().description,
+                discovered = cluesFound[i].GetComponent<Clue>().discovered,
+                clueObj = cluesFound[i],
+                inkKnotTitle = cluesFound[i].GetComponent<Clue>().inkKnotTitle
+            };
+            //clueList.clues[i] = clueInfo;
+        }
+        if (clueList.clues.Length > 0)
+         {
+            if(Input.GetKeyDown(KeyCode.Return))
+                _inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
+             //_inkStory.variablesState["clueInspected"] = true;
+         }
+         
+        //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);//.Last<Clue>().inkKnotTitle);
         // _inkStory.variablesState["clueInspected"] = clueInspected;
     }
 }
