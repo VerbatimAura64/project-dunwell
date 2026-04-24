@@ -21,12 +21,12 @@ VAR bad_count = 0
 VAR good_count = 0
 
 
-
+# SCENE_EXTERIOR
 ->extMonologue
 
 ===extMonologue===
 
-# SCENE_EXTERIOR
+
 The message came in at 2:47 a.m. I read it at 6:12.
 Three hours and twenty-five minutes. In this city, that's not a window. That's a eulogy.
 His name was in the header. Dexter Clear. I didn't recognize it. I almost deleted it — the kind of encrypted routing he used, you see it from cranks mostly, people who think the city is listening. At least he was smart enough about that.
@@ -179,10 +179,9 @@ You shouldn't have said that.
 ->END
 
 === clueInspection===
-{ clueRelevant:
- -true: This looks important.
- -false: I don't see the connection.
- }
+
+ I don't see the connection.
+ 
  ->DONE
 
 -> apartment
