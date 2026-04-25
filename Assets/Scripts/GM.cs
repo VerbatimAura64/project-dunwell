@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GM : MonoBehaviour
 {
     public TextAsset inkAsset;
@@ -48,6 +48,11 @@ public class GM : MonoBehaviour
         _inkStory = new Story(inkAsset.text);
         InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
         if (window != null) { InkPlayerWindow.Attach(_inkStory); }
+
+        if(SceneManager.GetActiveScene().name == "Interior")
+        {
+            _inkStory.ChoosePathString("intMonologue");
+        }
         Queue<AudioClip> queueList = new();
         
         //auPlayer = GetComponent<AudioSource>();

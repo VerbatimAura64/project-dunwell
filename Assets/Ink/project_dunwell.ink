@@ -80,14 +80,7 @@ There's something else in here. A ghost signal, low bandwidth, encrypted. I can'
 
 ->intMonologue
 
-===clueFineNotice===
-#CLUE_FOUND_9
 
-There's a notice pinned to the door. A fine - a tapestry hung over a wall screen, flagged as a possible fire hazard. The letterhead is corporate, not municipal. Someone with money sent this. Not important.
-
-~ foundFineDoc = true
-
-->clueHub
 
 
 
@@ -106,8 +99,18 @@ What else can I find here.
 
 +{foundFineDoc } [Look at that design] That tapestry is no fire hazard ->clueHub
 +[There's a gun] ->clueGun
++[Who is that] ->clueBody
 ->DONE
 
+
+===clueFineNotice===
+#CLUE_FOUND_9
+
+There's a notice pinned to the door. A fine - a tapestry hung over a wall screen, flagged as a possible fire hazard. The letterhead is corporate, not municipal. Someone with money sent this. Not important.
+
+~ foundFineDoc = true
+ ->DONE
+ 
 
 
 ===clueGun===
@@ -115,9 +118,13 @@ What else can I find here.
 
 There's a round missing from the gun on the floor.
 ~ foundGun = true
-->clueHub
+->DONE
 
-
+===clueBody===
+#CLUE_FOUND_4
+It's Landon and he is tied to a chair, his head is bagged and blood drips from it onto his shirt, but I know its him, he was the kind of guy I could pick clear out of a crowd.
+~ foundBody = true
+->DONE
 
 
 
@@ -235,17 +242,14 @@ He takes a second to look around.
 *[He noticed the gun]
     ->gun_clue
 *[He noticed the body]
-    ->landon_clue
+    ->clueBody
 +[Leave] 
     ->door
 
     
     
     
-===landon_clue===
-It's Landon and he is tied to a chair, his head is bagged and blood drips from it onto his shirt, but I know its him, he was the kind of guy I could pick clear out of a crowd.
 
-->search
 
     
 
