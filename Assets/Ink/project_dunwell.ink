@@ -3,7 +3,7 @@ VAR foundWipedDesk = false
 VAR foundBody = false
 VAR foundMonitor = false
 VAR foundGun = false
-VAR foundTerminal = false
+VAR foundStorageTerminal = false
 VAR foundObsRoom = false
 VAR foundMorrowTrace = false
 VAR foundFiles = false
@@ -15,6 +15,7 @@ VAR managerKnowsMonitor = false
 VAR datapadsChoice = false
 VAR morrowSuspicion = 0
 VAR managerCaught = false
+VAR foundWallTerminal = false
 
 
 VAR bad_count = 0
@@ -46,7 +47,7 @@ These apartments were cheap, The Studios they called them, basically saving spac
 +[Examine the notice on the door] ->clueFineNotice
 +[Knock on Dexter's door] -> dextersDoor
 +{dextersDoor } [There's the service closet.] ->findTerminal
-+{foundTerminal } [Go inside] ->aptUnlocked
++{foundStorageTerminal } [Go inside Dexter's Apartment] ->aptUnlocked
 
 ===dextersDoor===
 I knocked on the door. The room sounds hollow, like it couldn't possibly have anyone inside. He told me to meet here. Maybe he fell asleep - I'm three hours late.
@@ -54,6 +55,7 @@ The door is locked. Override lock, not a standard residential fit.
 
 *[Force the lock] ->bruteForce
 +[Maybe there's a floor terminal around here somewhere.] -> intMonologue
++{foundStorageTerminal } [It's unlocked now.] ->aptUnlocked
 
 
 
@@ -76,12 +78,9 @@ City-issue hardware running apartment management software it was never designed 
 I found Dexter's unit in the directory. Ran the unlock sequence.
 There's something else in here. A ghost signal, low bandwidth, encrypted. I can't read it from here.
 
-~ foundTerminal = true
+~ foundStorageTerminal = true
 
 ->intMonologue
-
-
-
 
 
 ===aptUnlocked===
@@ -95,12 +94,59 @@ If only I had answered him sooner.
 
 
 ===clueHub===
-What else can I find here.
 
-+{foundFineDoc } [Look at that design] That tapestry is no fire hazard ->clueHub
+What can I find here, I don't have a lot of time.
+
++[The door] ->clueLockedDoor
++[The desk] ->clueWipedDesk
++[The wall screen] ->clueMonitor
 +[There's a gun] ->clueGun
 +[Who is that] ->clueBody
+{ foundLockedDoor && foundWipedDesk && foundBody && foundGun && foundMonitor: I think I have an idea. ->beatTwo }
 ->DONE
+
+
+=== clueLockedDoor ===
+# CLUE_FOUND_1
+An overrided privacy lock can only come from the inside, and the stack trace from the terminal didn't log any entry requests or breach attempts after the lock was set.
+So how did our killer get in? How did they get out?
+~ foundLockedDoor = true
+~ good_count = good_count + 1
+-> clueHub
+
+=== clueWipedDesk ===
+# CLUE_FOUND_2
+The rest of the place is tossed, or maybe this is how he lived. Boxes of junk, trash piling up in the corner. But his desk? Clean and empty, but the trash around it doesn't look like it's been there long. Tools on the wrong side, leftover food thrown over where it didn't belong.
+This place had been wrecked.
+~ foundWipedDesk = true
+~ good_count = good_count + 1
+-> clueHub
+
+=== clueBody ===
+# CLUE_FOUND_3
+It looks like Dexter, but I can't be sure. Not with the bag on his head and the blood splatter dripping into his shirt and onto the floor. I never met the guy, but something tells me there wouldn't be anyone else in here except him anyhow.
+One shot, straight between the eyes.
+~ foundBody = true
+~ good_count = good_count + 1
+-> clueHub
+
+
+=== clueGun ===
+# CLUE_FOUND_4
+I shouldn't be touching the gun, but I need to know if this was what left Dexter in the chair for good. There's a round missing from its chamber.
+But why leave it to be found? Why drop it here from where they shot Dexter?
+~ foundGun = true
+~ good_count = good_count + 1
+-> clueHub
+
+
+=== clueMonitor ===
+# CLUE_FOUND_5
+There's no windows in these apartments by design, but these wallscreens weren't any better as a source of artificial sunshine. But why is it still on, glowing with life if the rest of the room has died.
+There's something more off though, the emitted light is further behind the glass instead of on it. I'm beginning to feel more disconnected than the panel from where it ought to be emitting from.
+~ foundMonitor = true
+~ good_count = good_count + 1
+-> clueHub
 
 
 ===clueFineNotice===
@@ -109,21 +155,29 @@ What else can I find here.
 There's a notice pinned to the door. A fine - a tapestry hung over a wall screen, flagged as a possible fire hazard. The letterhead is corporate, not municipal. Someone with money sent this. Not important.
 
 ~ foundFineDoc = true
- ->DONE
+ {aptUnlocked: ->clueHub}
+ ->intMonologue
  
+ 
+ === beatTwo ===
+# SCENE_BEAT_TWO
+Something clicks under my fingers as I trace the edge trying to bring the lights to the front glass. A terminal shows itself from out behind the wall.
+The something in the walls.
+That ghost signal from the storage terminal. It was coming from here.
+Could this have been what Dexter was thinking? How did he find it himself, what was he looking for, what did he find? Could he have left something behind that whoever killed him was looking for? Where would he hide that kind of thing.
+The terminal needs a different kind of authentication, a handshake that seems too familiar though. My work credential token isn't something I'd plug in here, but you don't leave your proudest work behind a lock without a skeleton key that could save your skin in a moment like this.
+~ foundWallTerminal = true
+~ good_count = good_count + 1
++ [Use the skeleton key] -> obsRoom
 
 
-===clueGun===
-#CLUE_FOUND_1
 
-There's a round missing from the gun on the floor.
-~ foundGun = true
-->DONE
+===obsRoom===
 
-===clueBody===
-#CLUE_FOUND_4
-It's Landon and he is tied to a chair, his head is bagged and blood drips from it onto his shirt, but I know its him, he was the kind of guy I could pick clear out of a crowd.
-~ foundBody = true
+->obsInterior
+
+===obsInterior===
+
 ->DONE
 
 
@@ -135,6 +189,7 @@ It's Landon and he is tied to a chair, his head is bagged and blood drips from i
 
 
 
+->aptUnlocked
 
 
 
