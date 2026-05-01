@@ -16,6 +16,10 @@ VAR datapadsChoice = false
 VAR morrowSuspicion = 0
 VAR managerCaught = false
 VAR foundWallTerminal = false
+VAR foundOneWayGlass = false
+VAR foundAccessDoor = false
+VAR foundNeighborDatapad = false
+VAR foundDexterDatapad = false
 
 
 VAR bad_count = 0
@@ -171,14 +175,42 @@ The terminal needs a different kind of authentication, a handshake that seems to
 + [Use the skeleton key] -> obsRoom
 
 
+=== clueNeighborDatapad ===
+# CLUE_FOUND_6
+According to the observer's notes, they were suspicious of this tenant's behavior and awareness — he'd put up a tapestry. He was blocking the view.
+I don't think he knew. He'd taken it half down somewhere between when the observer had the building manager issue the fine and now. Compliance without understanding.
+There's a request written at the end. Have the tenant placed under further investigation. Followed.
+{ foundFineDoc: The letterhead on this datapad matches the fine notice on the door. Same corporation. Same enforcement. }
+~ foundNeighborDatapad = true
+~ good_count = good_count + 1
+-> obsRoom
 
-===obsRoom===
 
-->obsInterior
+===clueDexterDatapad===
 
-===obsInterior===
+~ foundDexterDatapad = true
+~ good_count = good_count + 1
+->obsRoom
 
-->DONE
+===clueBackupDrive===
+
+~ foundFiles = true
+~ good_count = good_count + 1
+->obsRoom
+
+=== obsRoom ===
+# SCENE_OBS_ROOM
+One way glass. Four apartments visible from here, Dexter's included. There's a door in the wall — service corridor access. This is how he got in. This is how he got out.
++ [The neighbor's datapad] -> clueNeighborDatapad
++ [Dexter's datapad] -> clueDexterDatapad
++ [The terminal] -> clueBackupDrive
+{ clueNeighborDatapad && clueDexterDatapad && clueBackupDrive:
+    -> portTrace
+}
+
+
+===portTrace===
+-> DONE
 
 
 
