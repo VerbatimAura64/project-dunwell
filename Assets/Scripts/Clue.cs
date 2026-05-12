@@ -10,12 +10,14 @@ public class Clue : MonoBehaviour
     public bool discovered;
     public GameObject clueObj;
     public string inkKnotTitle;
+    public string[] inkChoice;
     [SerializeField]
     private GM gm;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         clueObj = this.gameObject;
+        this.gameObject.name = clueName;
         gm = GameObject.FindWithTag("GameController").GetComponent<GM>();
 
     }

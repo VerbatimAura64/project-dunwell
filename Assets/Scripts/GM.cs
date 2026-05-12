@@ -9,7 +9,7 @@ public class GM : MonoBehaviour
 {
     public TextAsset inkAsset;
     public Story inkStory;
-    public TextMeshProUGUI dialogueText;
+    //public TextMeshProUGUI dialogueText;
     public GameObject caseBoard;
     public bool isClipPlaying;
     public AudioSource auPlayer;
@@ -19,7 +19,7 @@ public class GM : MonoBehaviour
     public List<GameObject> clueCards;
     public Story _inkStory;
     public GameObject dialogue;
-    public bool dialogueIsPlaying;
+    //public bool dialogueIsPlaying;
     public Clue clueScript;
     //public Queue<AudioClip> toBePlayed;
     //public List<bool> choices;
@@ -33,6 +33,7 @@ public class GM : MonoBehaviour
         public bool discovered;
         public GameObject clueObj;
         public string inkKnotTitle;
+        public string[] inkChoice;
     }
     
     [System.Serializable]
@@ -180,13 +181,14 @@ public class GM : MonoBehaviour
 
     }
 
-    public void MakeChoice(bool choice)
+    public void MakeChoice(string choice)
     {
-        if (choice)
+        if (!string.IsNullOrEmpty(choice))
         {
             //goodChoice++;
             //_inkStory.variablesState["good_count"] = goodChoice;
             //_inkStory.ChooseChoiceIndex(0);
+            _inkStory.ChoosePathString(choice);
             ContinueStory();
         }
         else
@@ -203,7 +205,7 @@ public class GM : MonoBehaviour
     {
 
         clueList.clues = new ClueInfo[cluesFound.Count];
-        clueCards = new List<GameObject>();
+        //clueCards = new List<GameObject>();
         for (int i = 0; i < cluesFound.Count; i++)
         {
             clueScript = cluesFound[i].GetComponent<Clue>();
@@ -213,15 +215,23 @@ public class GM : MonoBehaviour
                 description = cluesFound[i].GetComponent<Clue>().description,
                 discovered = cluesFound[i].GetComponent<Clue>().discovered,
                 clueObj = cluesFound[i],
-                inkKnotTitle = cluesFound[i].GetComponent<Clue>().inkKnotTitle
+                inkKnotTitle = cluesFound[i].GetComponent<Clue>().inkKnotTitle,
+                inkChoice = cluesFound[i].GetComponent<Clue>().inkChoice
+
             };
             //clueList.clues[i] = clueInfo;
         }
         if (clueList.clues.Length > 0)
         {
-            if(Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Return)) { 
+                if(clueList.clues.Last<ClueInfo>().inkChoice != null && clueList.clues.Last<ClueInfo>().inkChoice.Length > 0)
+                {
+                    MakeChoice(clueList.clues.Last<ClueInfo>().inkChoice[0]);
+                }
                 _inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
              //_inkStory.variablesState["clueInspected"] = true;
+             
+            }
         }
          
         //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);//.Last<Clue>().inkKnotTitle);

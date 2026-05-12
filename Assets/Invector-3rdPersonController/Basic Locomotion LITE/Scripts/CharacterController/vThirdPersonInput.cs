@@ -170,7 +170,7 @@ namespace Invector.CharacterController
                 if (!focused)
                 {
                     prompt.SetActive(true);
-                    if (Input.GetKeyDown(focusInput))
+                    if (Input.GetKeyDown(focusInput) && !caseFocused)
                     { 
                         cc.isSprinting = false;
                         cc.input = Vector2.zero;
@@ -235,7 +235,7 @@ namespace Invector.CharacterController
 
         protected virtual void OpenCaseBoard()
         {
-            if (caseFocused == false)
+            if (!caseFocused && !focused)
             {
                 if (Input.GetKeyDown(caseBoardInput))
                 {
@@ -248,7 +248,7 @@ namespace Invector.CharacterController
                     caseFocused = true;
                 }
             }
-            else
+            else if (caseFocused && !focused)
             {
                 if (Input.GetKeyDown(caseBoardInput))
                 {
@@ -268,8 +268,8 @@ namespace Invector.CharacterController
                 {
                     if(itemToFocus.GetComponent<Clue>().discovered == false)
                     {
-                        GM.DiscoverClue();
                         GM.cluesFound.Add(itemToFocus);
+                        GM.DiscoverClue();
                         itemToFocus.GetComponent<Clue>().discovered = true;
                     }
                     //this.clueInvestigated = true;    
@@ -347,7 +347,7 @@ namespace Invector.CharacterController
         {
             if (tpCamera == null)
                     return;
-            if (!focused)
+            if (!focused || !caseFocused)
             {
 
                 
