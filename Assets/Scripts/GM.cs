@@ -10,21 +10,21 @@ public class GM : MonoBehaviour
     public TextAsset inkAsset;
     public Story inkStory;
     public TextMeshProUGUI dialogueText;
-
+    public GameObject caseBoard;
     public bool isClipPlaying;
     public AudioSource auPlayer;
     public AudioClip clipPlaying;
     public List<AudioClip> queueList;
-    //public Queue<AudioClip> toBePlayed;
-    //public List<bool> choices;
     public List<GameObject> cluesFound;
-    //public int goodChoice, badChoice;
-    //public TextAsset inkAsset;
+    public List<GameObject> clueCards;
     public Story _inkStory;
     public GameObject dialogue;
     public bool dialogueIsPlaying;
     public Clue clueScript;
-
+    //public Queue<AudioClip> toBePlayed;
+    //public List<bool> choices;
+    //public int goodChoice, badChoice;
+    //public TextAsset inkAsset;
     [System.Serializable]
     public class ClueInfo
     {
@@ -39,12 +39,14 @@ public class GM : MonoBehaviour
     public class ClueList
     {
         public ClueInfo[] clues;
+        
     }
 
     public ClueList clueList = new();
     // Start is called before the first frame update
     void Awake()
     {
+        caseBoard.SetActive(false);
         _inkStory = new Story(inkAsset.text);
         InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
         if (window != null) { InkPlayerWindow.Attach(_inkStory); }
@@ -200,7 +202,8 @@ public class GM : MonoBehaviour
     public void DiscoverClue()
     {
 
-       clueList.clues = new ClueInfo[cluesFound.Count];
+        clueList.clues = new ClueInfo[cluesFound.Count];
+        clueCards = new List<GameObject>();
         for (int i = 0; i < cluesFound.Count; i++)
         {
             clueScript = cluesFound[i].GetComponent<Clue>();
@@ -215,11 +218,11 @@ public class GM : MonoBehaviour
             //clueList.clues[i] = clueInfo;
         }
         if (clueList.clues.Length > 0)
-         {
+        {
             if(Input.GetKeyDown(KeyCode.Return))
                 _inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
              //_inkStory.variablesState["clueInspected"] = true;
-         }
+        }
          
         //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);//.Last<Clue>().inkKnotTitle);
         // _inkStory.variablesState["clueInspected"] = clueInspected;

@@ -16,6 +16,7 @@ namespace Invector.CharacterController
         [Header("Default Inputs")]
         public string horizontalInput = "Horizontal";
         public string verticallInput = "Vertical";
+        public KeyCode caseBoardInput = KeyCode.C;
         public KeyCode focusInput = KeyCode.F;
         public KeyCode jumpInput = KeyCode.Space;
         public KeyCode strafeInput = KeyCode.Tab;
@@ -28,6 +29,7 @@ namespace Invector.CharacterController
         public GM GM;
         public bool mapCollided = false;
         public bool focused = false;
+        public bool caseFocused = false;
         public bool clueTriggered = false;
         public GameObject prompt;
         public GameObject itemToFocus;
@@ -95,6 +97,7 @@ namespace Invector.CharacterController
             ExitGameInput();
             
             FocusInput();
+            OpenCaseBoard();
 
             if (!cc.lockMovement)
             {
@@ -168,8 +171,7 @@ namespace Invector.CharacterController
                 {
                     prompt.SetActive(true);
                     if (Input.GetKeyDown(focusInput))
-                    {
-                        
+                    { 
                         cc.isSprinting = false;
                         cc.input = Vector2.zero;
                         focused = true;
@@ -231,6 +233,34 @@ namespace Invector.CharacterController
             }
         }
 
+        protected virtual void OpenCaseBoard()
+        {
+            if (caseFocused == false)
+            {
+                if (Input.GetKeyDown(caseBoardInput))
+                {
+                    cc.isSprinting = false;
+                    cc.input = Vector2.zero;
+                    tpCamera.lockCamera = true;
+                    tpCamera.enabled = false;
+                    GM.caseBoard.SetActive(true);
+                    cc.lockMovement = true;
+                    caseFocused = true;
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(caseBoardInput))
+                {
+                    GM.caseBoard.SetActive(false);
+                    cc.lockMovement = false;
+                    tpCamera.enabled = true;
+                    tpCamera.lockCamera = false;
+                    caseFocused = false;
+                }
+            }
+        }
+
         protected virtual void InspectClue()
         {
             
@@ -242,12 +272,7 @@ namespace Invector.CharacterController
                         GM.cluesFound.Add(itemToFocus);
                         itemToFocus.GetComponent<Clue>().discovered = true;
                     }
-                    
-                    
-                    
-                    //this.clueInvestigated = true;
-                    
-                    
+                    //this.clueInvestigated = true;    
                     //clueInvestigated = true;
                     //GM._inkStory.variablesState["clueInspected"] = clue.GetComponent<Clue>().discovered;
                    // GM._inkStory.ChoosePathString("clueInspection");

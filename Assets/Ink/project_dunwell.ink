@@ -12,7 +12,7 @@ VAR foundFineDoc = false
 VAR convManagerDone = false
 VAR managerAlerted = false
 VAR managerKnowsMonitor = false
-VAR datapadsChoice = false
+VAR datapadsChoiceMade = 0 //0 = left, 1 = taken, 2 = destroyed
 VAR morrowSuspicion = 0
 VAR managerCaught = false
 VAR foundWallTerminal = false
@@ -20,9 +20,6 @@ VAR foundOneWayGlass = false
 VAR foundAccessDoor = false
 VAR foundNeighborDatapad = false
 VAR foundDexterDatapad = false
-
-
-VAR bad_count = 0
 VAR good_count = 0
 
 
@@ -61,8 +58,6 @@ The door is locked. Override lock, not a standard residential fit.
 +[Maybe there's a floor terminal around here somewhere.] -> intMonologue
 +{foundStorageTerminal } [It's unlocked now.] ->aptUnlocked
 
-
-
 === bruteForce ===
 # DOOR_FORCED
 Four override prompts and some patience. The lock gives.
@@ -77,7 +72,7 @@ Before I left.
 -> storageTerminal
 
 ===storageTerminal===
-# TERMINAL_ACTIVE
+
 City-issue hardware running apartment management software it was never designed for. Whoever set this up knew what they were doing — or knew someone who did.
 I found Dexter's unit in the directory. Ran the unlock sequence.
 There's something else in here. A ghost signal, low bandwidth, encrypted. I can't read it from here.
@@ -86,9 +81,8 @@ There's something else in here. A ghost signal, low bandwidth, encrypted. I can'
 
 ->intMonologue
 
-
 ===aptUnlocked===
-# SCENE_INTERIOR_APARTMENT
+
 The door unlocks and slides into the wall. Dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
 I can make him out. Sitting in a chair, head down like he fell asleep watching something. But there's something on his head.
 A bag. And around his feet — a pool of blood.
@@ -96,19 +90,19 @@ I've just forced my way into a crime scene. The droids are going to pop in event
 If only I had answered him sooner.
 + [Look around] -> clueHub
 
-
 ===clueHub===
 
-What can I find here, I don't have a lot of time.
+What can I find here, I don't have a lot of time. 
 
-+[The door] ->clueLockedDoor
-+[The desk] ->clueWipedDesk
-+[The wall screen] ->clueMonitor
-+[There's a gun] ->clueGun
-+[Who is that] ->clueBody
-{ foundLockedDoor && foundWipedDesk && foundBody && foundGun && foundMonitor: I think I have an idea. ->beatTwo }
-->DONE
-
+{ foundLockedDoor && foundWipedDesk && foundBody && foundGun && foundMonitor: 
+    I think I have an idea. -> beatTwo
+- else:
+    +[The door] ->clueLockedDoor
+    +[The desk] ->clueWipedDesk
+    +[The wall screen] ->clueMonitor
+    +[There's a gun] ->clueGun
+    +[Who is that] ->clueBody
+}
 
 === clueLockedDoor ===
 # CLUE_FOUND_1
@@ -152,31 +146,17 @@ There's something more off though, the emitted light is further behind the glass
 ~ good_count = good_count + 1
 -> clueHub
 
-
 ===clueFineNotice===
-#CLUE_FOUND_9
+#CLUE_FOUND_6A
 
 There's a notice pinned to the door. A fine - a tapestry hung over a wall screen, flagged as a possible fire hazard. The letterhead is corporate, not municipal. Someone with money sent this. Not important.
 
 ~ foundFineDoc = true
  {aptUnlocked: ->clueHub}
  ->intMonologue
- 
- 
- === beatTwo ===
-# SCENE_BEAT_TWO
-Something clicks under my fingers as I trace the edge trying to bring the lights to the front glass. A terminal shows itself from out behind the wall.
-The something in the walls.
-That ghost signal from the storage terminal. It was coming from here.
-Could this have been what Dexter was thinking? How did he find it himself, what was he looking for, what did he find? Could he have left something behind that whoever killed him was looking for? Where would he hide that kind of thing.
-The terminal needs a different kind of authentication, a handshake that seems too familiar though. My work credential token isn't something I'd plug in here, but you don't leave your proudest work behind a lock without a skeleton key that could save your skin in a moment like this.
-~ foundWallTerminal = true
-~ good_count = good_count + 1
-+ [Use the skeleton key] -> obsRoom
-
 
 === clueNeighborDatapad ===
-# CLUE_FOUND_6
+# CLUE_FOUND_6B
 According to the observer's notes, they were suspicious of this tenant's behavior and awareness — he'd put up a tapestry. He was blocking the view.
 I don't think he knew. He'd taken it half down somewhere between when the observer had the building manager issue the fine and now. Compliance without understanding.
 There's a request written at the end. Have the tenant placed under further investigation. Followed.
@@ -185,179 +165,238 @@ There's a request written at the end. Have the tenant placed under further inves
 ~ good_count = good_count + 1
 -> obsRoom
 
-
-===clueDexterDatapad===
-
+=== clueDexterDatapad ===
+# CLUE_FOUND_7
+Here's Dexter's file. His occupation was listed as a disgruntled droid engineer and repairman, but I don't think the feeling of disgruntle is an occupation.
+Initial label — innocuous resident. No known connections to resistance groups or verified threat assessment.
+But there's a postmark. An addendum at the bottom, profiling his callstack to rebellious anarchists. A whole list of names at the end of the file.
+The one that stuck out the most was mine.
 ~ foundDexterDatapad = true
 ~ good_count = good_count + 1
-->obsRoom
+-> obsRoom
 
-===clueBackupDrive===
-
+=== clueBackupDrive ===
+# CLUE_FOUND_8
+The center command terminal has a backup drive plugged in, and it needs no authentication. Who doesn't lock their station before stepping away, unless they needed to leave in a hurry.
+But there's something more pressing. The directory list has a set of applications only I could recognize — applications I know I personally named. Not some corpo slave making a quick buck.
+Phelps. Chief. Morgan. Names from the History Archive Museum that seemed inspiring at the time.
+My architecture. My work. In the wild and in violation of everything I imagined its use for.
 ~ foundFiles = true
+~ foundSignature = true
 ~ good_count = good_count + 1
-->obsRoom
+-> obsRoom
+
+=== morrowRevealed ===
+# CLUE_FOUND_9
+# ALARM_TRIGGERED
+Last authentication — 5:45 a.m. this morning.
+The name attached to it: Dante Morrow.
+I know that name. I worked alongside him on the original infrastructure contracts. He knew this architecture because he helped build it. He knew where the skeleton keys were because I showed him.
+Morgan flags the trace. The alarm is live. I need to move.
+~ foundMorrowTrace = true
+~ good_count = good_count + 1
+-> datapadsChoice
+
+ 
+ === beatTwo ===
+I return to the wall screen to take a closer look, running my fingers around. Something clicks as I trace the edge trying to bring the lights to the front glass. A terminal shows itself from out behind the wall.
+The something in the walls.
+{ foundStorageTerminal: That ghost signal from the storage terminal. It was coming from here. }
+Could this have been what Dexter was thinking? How did he find it himself, what was he looking for, what did he find? Could he have left something behind that whoever killed him was looking for? Where would he hide that kind of thing.
+The terminal needs a different kind of authentication, a handshake that seems too familiar though. My work credential token isn't something I'd plug in here, but you don't leave your proudest work behind a lock without a skeleton key that could save your skin in a moment like this.
+~ foundWallTerminal = true
+~ good_count = good_count + 1
++ [Use the skeleton key] -> obsRoom
+
+
 
 === obsRoom ===
 # SCENE_OBS_ROOM
 One way glass. Four apartments visible from here, Dexter's included. There's a door in the wall — service corridor access. This is how he got in. This is how he got out.
-+ [The neighbor's datapad] -> clueNeighborDatapad
-+ [Dexter's datapad] -> clueDexterDatapad
-+ [The terminal] -> clueBackupDrive
+
 { clueNeighborDatapad && clueDexterDatapad && clueBackupDrive:
     -> portTrace
+-   else:
+    + [The neighbor's datapad] -> clueNeighborDatapad
+    + [Dexter's datapad] -> clueDexterDatapad
+    + [The terminal] -> clueBackupDrive
 }
 
 
-===portTrace===
+=== portTrace ===
+# PORT_TRACE_ACTIVE
+I need to know more about who last logged in. Does each tenant get their own agent filling out these notes, or is this one operation running across the whole floor?
+I can run a port trace using Phelps. Pull the last handshake, the last authentication. Find out who these people are, why they have my code, and what they're using it for.
+The irony isn't lost on me — using my own work to chase down whoever stole it.
++ [Run the trace] -> morrowRevealed
+
+
+=== datapadsChoice ===
+# DATAPAD_CHOICE
+All this data. The invasion of privacy, it's making me realize how much of a mistake this whole system was. The money moves fast in this city, changing things from bad to worse. No one needs all this personal information on any of these people.
+I need to figure out what to do with this.
+* [Take the datapads] -> datapadsSceneTake
+* [Destroy them] -> datapadsSceneDestroy
+* [Leave them] -> datapadsSceneLeave
+
+
+
+=== datapadsSceneTake ===
+I could use these to build a case against Dante, against this corporation. But my name is already on one of them — I might just implicate myself too. Is this going to be worth it if I get caught with them? They'll know I've been here and that'd be tampering with evidence as a possible suspect for an investigation.
+But it'd clear my name if I can connect the dots.
+~ datapadsChoiceMade = 1
+-> closingMonologue
+
+=== datapadsSceneDestroy ===
+There's rage sparking in my arms. I just want to smash the glass, crush the pads and erase all the data, wipe everything clean. The tablet is in my hands, arms shaking, and I can feel the relief of what it would be to see it break. To see them all break.
+And it's incredibly fulfilling to do so.
+~ datapadsChoiceMade = 2
+-> closingMonologue
+
+=== datapadsSceneLeave ===
+I don't have the time to think about these datapads. I have to get out of here. I'd love to smash them all, but I don't want to leave any more fingerprints. If I could carry them or back them up to the drive to wipe them, I would.
+But there's no time.
+~ datapadsChoiceMade = 0
+-> closingMonologue
+
+
+=== bldManagerConv ===
+{ managerAlerted:
+    ~ managerKnowsMonitor = false
+    The service corridor door clicked shut behind me just as he came around the corner from the elevator bank. Maintenance shirt, laminate badge, the particular walk of a man who has never once doubted his own jurisdiction.
+- else:
+    He was already in the hallway when I came out. Doing his rounds, or something close enough to rounds that he'd call it that. He clocked me the way building managers clock everyone — not suspicion, just inventory.
+}
+
+"Help you with something?"
+
+Not unfriendly. The tone of a man whose job is to know who belongs and who doesn't, and who has so far always been right.
+
+* ["Just checking on a tenant. Dexter Clear, 4C."]
+
+    "Mr. Clear." He said it like he was pulling a file. "We've had some correspondence with Mr. Clear recently. Lease matter."
+
+    "What kind of lease matter?"
+
+    "Wall fixture. Tapestry, specifically. Hung over one of the room screens — the decorative panels, you know the ones. It's in the lease. Nothing personal, just building standards."
+
+    { foundMonitor:
+        Building standards. I thought about the screen in Dexter's apartment. The depth that was wrong. The faint glow with the power cut.
+        
+        A tapestry over a screen. Dexter had felt it too — something on the other side of that glass he couldn't name. He covered it the only way he knew how and they fined him for it within the week.
+        
+        This man had no idea he was a instrument of something. That was the worst part. He was just doing his job.
+    - else:
+        A tapestry. I filed it away. Probably nothing. Probably the kind of administrative friction that accumulates around anyone who lives somewhere long enough.
+    }
+
+    "He comply?"
+
+    "Eventually. These things usually resolve themselves." He straightened slightly, the posture of a man who considers resolution his professional contribution. "Privacy was their whole selling point for these apartments. Residents take it seriously. Sometimes too seriously, if you follow me."
+
+    { foundMonitor:
+        I followed him. More than he knew.
+    - else:
+        I told him I followed him.
+    }
+
+    ~ convManagerDone = true
+    -> conveManagerDone
+
+* ["Wrong floor. Sorry."]
+
+    He looked at me the way people look at someone who has said something slightly too convenient.
+
+    "Elevator's back that way."
+
+    "I know. Thanks."
+
+    He watched me go. I could feel the inventory running — does he belong, does he not — and I walked like the answer was obvious until I turned the corner.
+
+    ~ convManagerDone = true
+    -> conveManagerDone
+
+=== conveManagerDone ===
 -> DONE
 
+=== closingMonologue ===
+# SCENE_CLOSING
+Dante was here. He might've just left the building as I walked in, and he left the door wide open for me to be caught in it.
+I have his credential now. And an address to the central hub he's pinged authentications from.
+With the drive in my possession, I look back at the room to see Dexter still sitting there. I'm sorry I couldn't have been here sooner for him.
+I never intended for my work to be used like this. Targeting innocent civilians for the wrong reasons. Nobody is safe if everyone is distrustful.
+There's a long list of things I need to do to nail Dante to this elaborate scheme. Will Sificity know what to do with something as large as this? Would there even be justice.
+I summon the elevator before I even approach the doors to avoid waiting for it.
+-> endingCheck
 
-
-===bldManagerConv===
-
-->intMonologue
-->storageTerminal
-
-
-
-->aptUnlocked
-
-
-
-
-
-
-===main2===
-We start with the couple walking into the forest.
-//{  good_count < 4  }
-    +[good] 
-    ~ good_count++  
-    -> good_choice 
-
-//{ bad_count < 4 }
-+[bad]
-    ~bad_count++
-->bad_choice
-
-=== good_choice ===
-{ good_count:
--1: ->no_good.
--2: ->some_good
--3: ->lots_of_good
-  
-}
-
-= lots_of_good
-Your date seems genuinely happy.
--> END
-
-= some_good
-Things feel okay between you two.
--> main2
-
-= no_good
-There's an awkward silence.
--> main2
-
-
-===bad_choice===
-
-{ bad_count:
--1: ->bad
--2: ->worse
--3: ->its_over
-  
-}
-
-= its_over
-The date is over, take her home
--> END
-
-
-= worse
-Things are getting worse
--> main2
-
-= bad
-You shouldn't have said that.
--> main2
-->END
-
-=== clueInspection===
-
- I don't see the connection.
- 
- ->DONE
-
--> apartment
-
-===apartment===
-# SIFICITY, 2842 - Landon's Apartment
-Marcus wakes up on the floor, a throbbing pain in his head and an ache in the rest of his body. His vision is blurred, but the picture starts to clear.
-
- * ["Where am I?"]-> look
- 
- ===look===
-    The room was a mess. Or maybe it always looked like this.
-        *[Check hands]
-            ->hands_clue
-        *[Get up]
-            ->getup
-        
-    
-    
- ===hands_clue===
-    Clean. That meant something, but he wasn't sure what yet. his hand still felt warm, and his shoulder had an ache in it, which means he must've shot someone or something.
-   
-    {not getup: 
-        "I should get up" 
-        ->getup
+=== endingCheck ===
+{ managerCaught:
+    -> endingB
+- else:
+    { good_count >= 9 && datapadsChoice > 0:
+        -> endingA
+    - else:
+        { good_count >= 9 && datapadsChoice == 0:
+            -> endingC
+        - else:
+            -> endingB
+        }
     }
-    ->search
-    
-    
-===getup===
-    The pain is subsiding as he stands, but it doesn't get any easier. 
-    ->search
- 
- 
-===search===
-       
-He takes a second to look around.
-    ->hands_clue
-*[He noticed the gun]
-    ->gun_clue
-*[He noticed the body]
-    ->clueBody
-+[Leave] 
-    ->door
+}
 
-    
-    
-    
+=== endingA ===
+# ENDING_A
+The case closed the way cases rarely do in Sificity — with the right person named.
 
+Dante Morrow is in the wind. He was before I walked through that door, and he will be long after whatever passes for justice here finishes deliberating. The city doesn't move fast enough to catch men like him. It barely moves fast enough to catch men like me.
 
-    
+But the record is clean. My name is off it.
 
-=== gun_clue ===
-There's a round missing from the gun on the floor. He doesn't need to imagine where it might've gone. But how did it get there, and why.
+Dexter Clear died trying to hand someone a truth they weren't ready for. He handed it to me instead. Three hours and twenty-five minutes too late to save him. Just in time to do something with it.
 
-    ->search
+I don't know if that counts as winning.
 
-    
-===door===
+The city keeps raining. I keep looking.
 
-        Marcus thinks he shot Landon with his gun.
-        ->DONE
-    -else:
-        Marcus feels like he missed something.
-        ->search
-        
-}        ->DONE
+-> END
 
-->END
+=== endingB ===
+# ENDING_B
+The cell is smaller than the apartments in The Studios. Not by much.
 
+I keep doing what I always do — noticing things. The crack in the upper left corner of the ceiling that suggests the building settled unevenly. The guard who favors his right leg on the evening shift. The way the light through the slot in the door hits the floor at exactly the same angle every morning, which means I'm facing east.
 
+Observation without application. The instinct running on nothing, like an engine with nowhere to go.
 
+Dante Morrow is outside these walls. Dexter Clear is in the ground. The observation network is still running in every Studio apartment in Sificity, behind every screen, through every sightline nobody thought to cover.
+
+{ managerCaught:
+    I had the thread. I just ran out of room to pull it.
+- else:
+    I had everything. The city just didn't want to hear it.
+}
+
+The city keeps raining. I stop looking.
+
+-> END
+
+=== endingC ===
+# ENDING_C
+I left the datapads where I found them.
+
+That's not the instinct. The instinct is to take everything, build the case, hand it to someone with a badge and watch the machinery move. That's what I came here to do. That's what Dexter's message asked me to do, even if he didn't know he was asking.
+
+But my name is in that network. My directories. My architecture. Chief, Phelps, Morgan — running surveillance on civilians in their own homes, and it doesn't matter that I didn't know. It doesn't matter that Dante took it without asking. The code is mine. The sightlines are mine. Any case built on that drive has me in it, and a case with me in it is a case Dante Morrow can dismantle in an afternoon.
+
+So I left it for someone else.
+
+Dexter Clear spent the last months of his life trying to assemble something — evidence, a droid, a contingency. He didn't trust institutions. He trusted systems he built himself. I understand that now in a way I didn't when I walked through that door.
+
+Will Sificity know what to do with something as large as this? Would there even be justice.
+
+I don't know. But I know who to ask.
+
+The city keeps raining. Someone else keeps looking.
+
+-> END
 

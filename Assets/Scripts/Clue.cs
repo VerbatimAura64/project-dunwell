@@ -15,7 +15,7 @@ public class Clue : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        clueObj =this.gameObject;
+        clueObj = this.gameObject;
         gm = GameObject.FindWithTag("GameController").GetComponent<GM>();
 
     }
