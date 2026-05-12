@@ -22,21 +22,28 @@ public class Clue : MonoBehaviour
 
     }
 
-
-
-
-   /* private void OnTriggerEnter(Collider other)
+    [CreateAssetMenu(fileName = "ClueCard", menuName = "ClueCard")]
+    public class ClueCard : ScriptableObject
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            GameObject Player = other.gameObject;
-            if (Player.GetComponent<vThirdPersonInput>().focused)
-            {
-                this.discovered = true;
-            }
-            
-        }
-    }*/
+        public string clueName;
+        public string description;
+        public GameObject clueObj;
+        public Sprite clueSprite;
+    }
+
+
+    /* private void OnTriggerEnter(Collider other)
+     {
+         if (other.gameObject.CompareTag("Player"))
+         {
+             GameObject Player = other.gameObject;
+             if (Player.GetComponent<vThirdPersonInput>().focused)
+             {
+                 this.discovered = true;
+             }
+
+         }
+     }*/
 
     // Update is called once per frame
 
