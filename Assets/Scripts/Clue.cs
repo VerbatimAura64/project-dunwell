@@ -10,7 +10,7 @@ public class Clue : MonoBehaviour
     public bool discovered;
     public GameObject clueObj;
     public string inkKnotTitle;
-    public string[] inkChoice;
+    public int[] inkChoice;
     [SerializeField]
     private GM gm;
     // Start is called once before the first execution of Update after the MonoBehaviour is created

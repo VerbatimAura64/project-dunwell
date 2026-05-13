@@ -157,8 +157,8 @@ There's a notice pinned to the door. A fine - a tapestry hung over a wall screen
 
 === clueNeighborDatapad ===
 # CLUE_FOUND_6B
-According to the observer's notes, they were suspicious of this tenant's behavior and awareness — he'd put up a tapestry. He was blocking the view.
-I don't think he knew. He'd taken it half down somewhere between when the observer had the building manager issue the fine and now. Compliance without understanding.
+According to the observer's notes, they were suspicious of this tenant's behavior and awareness — he'd put up a tapestry. He's blocking the view.
+I don't think he knows. Rebellion without awareness.
 There's a request written at the end. Have the tenant placed under further investigation. Followed.
 { foundFineDoc: The letterhead on this datapad matches the fine notice on the door. Same corporation. Same enforcement. }
 ~ foundNeighborDatapad = true

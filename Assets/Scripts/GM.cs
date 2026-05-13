@@ -14,6 +14,8 @@ public class GM : MonoBehaviour
     public bool isClipPlaying;
     public AudioSource auPlayer;
     public AudioClip clipPlaying;
+    [SerializeField]
+    private GameObject clueCardObj;
     public List<AudioClip> queueList;
     public List<GameObject> cluesFound;
     public List<GameObject> clueCards;
@@ -33,7 +35,7 @@ public class GM : MonoBehaviour
         public bool discovered;
         public GameObject clueObj;
         public string inkKnotTitle;
-        public string[] inkChoice;
+        public int[] inkChoice;
     }
     
     [System.Serializable]
@@ -70,10 +72,10 @@ public class GM : MonoBehaviour
     void Update()
     {
         IsClipOn();
-        DiscoverClue();
+        //DiscoverClue();
         if(Input.GetKeyDown(KeyCode.Return))
-            if(_inkStory.canContinue)
-                ContinueStory();
+            ContinueStory();
+        //DiscoverClue();
         //while (_inkStory.canContinue)
         {
             //Debug.Log
@@ -87,11 +89,16 @@ public class GM : MonoBehaviour
 
     public void ContinueStory()
     {
-        if (_inkStory.canContinue)
+        while (_inkStory.canContinue)
         {
+            if (clueList.clues.Length > 0)
+            {
+                _inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
+            }
             dialogue.GetComponent<TMP_Text>().text = _inkStory.Continue();
             dialogue.SetActive(true);
             List<string> tags = _inkStory.currentTags;
+            
             foreach (string tag in tags)
             {
                 /*if (tag.StartsWith("audio:"))
@@ -121,6 +128,17 @@ public class GM : MonoBehaviour
                     // Load the scene using SceneManager.LoadScene(sceneName);
                     Debug.Log("Clue found triggered: " + clueName);
                     continue;
+                }
+            }
+
+            if(_inkStory.currentChoices.Count > 0)
+            {
+                //choices = new List<bool>();
+                for (int i = 0; i < _inkStory.currentChoices.Count; i++)
+                {
+                    Choice choice = _inkStory.currentChoices[i];
+                    //choices.Add(false);
+                    Debug.Log("Choice " + (i+1) + ": " + choice.text);
                 }
             }
         }
@@ -188,7 +206,7 @@ public class GM : MonoBehaviour
             //goodChoice++;
             //_inkStory.variablesState["good_count"] = goodChoice;
             //_inkStory.ChooseChoiceIndex(0);
-            _inkStory.ChoosePathString(choice);
+            //Debug.Log(_inkStory.currentChoices);//ChoosePathString(choice);
             ContinueStory();
         }
         else
@@ -219,9 +237,15 @@ public class GM : MonoBehaviour
                 inkChoice = cluesFound[i].GetComponent<Clue>().inkChoice
 
             };
+            //if(clueList.clues.Length > 0)
+            
+                //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
+            
             //clueList.clues[i] = clueInfo;
         }
-        if (clueList.clues.Length > 0)
+        //
+        //_inkStory.Continue();
+        /*if (clueList.clues.Length > 0)
         {
             if (Input.GetKeyDown(KeyCode.Return)) { 
                 if(clueList.clues.Last<ClueInfo>().inkChoice != null && clueList.clues.Last<ClueInfo>().inkChoice.Length > 0)
@@ -232,8 +256,8 @@ public class GM : MonoBehaviour
              //_inkStory.variablesState["clueInspected"] = true;
              
             }
-        }
-         
+        }*/
+
         //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);//.Last<Clue>().inkKnotTitle);
         // _inkStory.variablesState["clueInspected"] = clueInspected;
     }
