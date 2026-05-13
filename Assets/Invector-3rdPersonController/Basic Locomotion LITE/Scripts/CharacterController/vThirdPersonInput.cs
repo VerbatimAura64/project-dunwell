@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;
+using static GM;
+using static GM;
+
+
 
 #if UNITY_5_3_OR_NEWER
 using UnityEngine.SceneManagement;
@@ -271,7 +275,15 @@ namespace Invector.CharacterController
                         GM.cluesFound.Add(itemToFocus);
                         GM.DiscoverClue();
                         itemToFocus.GetComponent<Clue>().discovered = true;
-                    }
+                      
+                    /* THIS IS WHERE WE LEFT OFF WITH THE NEXT TWO LINES */
+                    
+                    
+                    // if (GM.clueList.clues.Last<ClueInfo>().inkChoice != null && clueList.clues.Last<ClueInfo>().inkChoice.Length > 0)
+                        {
+                        //    GM.MakeChoice(GM.clueList.clues.Last<ClueInfo>().inkChoice[0]);
+                        }
+                }
                     //this.clueInvestigated = true;    
                     //clueInvestigated = true;
                     //GM._inkStory.variablesState["clueInspected"] = clue.GetComponent<Clue>().discovered;
