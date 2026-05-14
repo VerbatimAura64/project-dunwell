@@ -1083,7 +1083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
-  clueCard: {fileID: 0}
+  gm: {fileID: 0}
   clueCardObj: {fileID: 0}
   clueName: Landon's Body
   description: 
@@ -1092,7 +1092,8 @@ MonoBehaviour:
   clueObj: {fileID: 0}
   inkKnotTitle: clueBody
   inkChoice: 
-  gm: {fileID: 0}
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
 --- !u!1001 &78774321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6311,7 +6312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
-  clueCard: {fileID: 0}
+  gm: {fileID: 0}
   clueCardObj: {fileID: 0}
   clueName: Locked Door
   description: 
@@ -6320,7 +6321,8 @@ MonoBehaviour:
   clueObj: {fileID: 0}
   inkKnotTitle: 
   inkChoice: 
-  gm: {fileID: 0}
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
 --- !u!1001 &363444848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10461,7 +10463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
-  clueCard: {fileID: 0}
+  gm: {fileID: 0}
   clueCardObj: {fileID: 0}
   clueName: Neighbor Datapad
   description: 
@@ -10470,7 +10472,8 @@ MonoBehaviour:
   clueObj: {fileID: 0}
   inkKnotTitle: 
   inkChoice: 
-  gm: {fileID: 0}
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
 --- !u!4 &585640727 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4340035863860304, guid: 9edd647ec22f2b94db2477d12e5cb44c, type: 3}
@@ -15206,7 +15209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
-  clueCard: {fileID: 0}
+  gm: {fileID: 0}
   clueCardObj: {fileID: 0}
   clueName: Desk
   description: 
@@ -15215,7 +15218,8 @@ MonoBehaviour:
   clueObj: {fileID: 0}
   inkKnotTitle: clueWipedDesk
   inkChoice: 
-  gm: {fileID: 0}
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
 --- !u!65 &845584094
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16423,11 +16427,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24314940e1a8ddc47bbb9281e63963a3, type: 3}
---- !u!1 &939869292 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7905338974331181838, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
-  m_PrefabInstance: {fileID: 1419369959618325537}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &944939072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16874,7 +16873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
-  clueCard: {fileID: 0}
+  gm: {fileID: 0}
   clueCardObj: {fileID: 0}
   clueName: Fine Doc
   description: 
@@ -16883,7 +16882,8 @@ MonoBehaviour:
   clueObj: {fileID: 0}
   inkKnotTitle: clueFineNotice
   inkChoice: 00000000
-  gm: {fileID: 0}
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
 --- !u!65 &958994656
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17185,16 +17185,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
-  clueCard: {fileID: 0}
+  gm: {fileID: 0}
   clueCardObj: {fileID: 0}
-  clueName: 
+  clueName: Dexter's Drive
   description: 
-  relevant: 0
+  relevant: 1
   discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: 
   inkChoice: 
-  gm: {fileID: 0}
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
 --- !u!135 &967902259
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -17210,12 +17211,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.42477426
-  m_Center: {x: 0.0000076293945, y: 0.31987, z: 0}
+  m_Radius: 2.5
+  m_Center: {x: 1.9, y: 0.61, z: -0.76}
 --- !u!4 &968855710 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4248050944851236, guid: 44651a1ac81d76e4099136b57cfdd83b, type: 3}
@@ -25536,7 +25537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
-  clueCard: {fileID: 0}
+  gm: {fileID: 0}
   clueCardObj: {fileID: 0}
   clueName: Dexter Datapad
   description: 
@@ -25545,7 +25546,8 @@ MonoBehaviour:
   clueObj: {fileID: 0}
   inkKnotTitle: 
   inkChoice: 
-  gm: {fileID: 0}
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
 --- !u!135 &1575666633
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -28775,8 +28777,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
-  clueCard: {fileID: 0}
-  clueCardObj: {fileID: 939869292}
+  gm: {fileID: 0}
+  clueCardObj: {fileID: 0}
   clueName: Gun
   description: 
   relevant: 1
@@ -28784,7 +28786,8 @@ MonoBehaviour:
   clueObj: {fileID: 0}
   inkKnotTitle: clueGun
   inkChoice: 
-  gm: {fileID: 0}
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
 --- !u!4 &1841074066 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4276584366140610, guid: 8a5973e326885694c8eb4a575b705591, type: 3}
@@ -31266,7 +31269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
-  clueCard: {fileID: 0}
+  gm: {fileID: 0}
   clueCardObj: {fileID: 0}
   clueName: Test
   description: 
@@ -31275,7 +31278,8 @@ MonoBehaviour:
   clueObj: {fileID: 1971781885}
   inkKnotTitle: 
   inkChoice: 
-  gm: {fileID: 0}
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
 --- !u!1001 &1972645499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35107,16 +35111,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
-  clueCard: {fileID: 0}
+  gm: {fileID: 0}
   clueCardObj: {fileID: 0}
   clueName: Dexter's Code Signature
   description: 
-  relevant: 0
+  relevant: 1
   discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: 
   inkChoice: 
-  gm: {fileID: 0}
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
 --- !u!64 &4755720217542200778
 MeshCollider:
   m_ObjectHideFlags: 0

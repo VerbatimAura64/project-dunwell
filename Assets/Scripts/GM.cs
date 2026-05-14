@@ -260,6 +260,30 @@ public class GM : MonoBehaviour
         //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);//.Last<Clue>().inkKnotTitle);
         // _inkStory.variablesState["clueInspected"] = clueInspected;
     }
+
+    public Quaternion RotateTowardsTarget(Transform target)
+    {
+        Vector3 direction = target.position - transform.position;
+        direction.y = 0; // Keep only the horizontal direction
+        if (direction.sqrMagnitude > 0.01f) // Avoid zero-length direction
+        {
+            return Quaternion.LookRotation(direction);
+        }
+        else
+        {
+            return transform.rotation; // No change in rotation if target is very close
+        }
+    }
+
+    public RectTransform AddCardspace(GameObject newCard)
+    {
+        //GameObject newCard = Instantiate(clueCardObj, clueCardObj.transform);
+        clueCards.Add(newCard);
+        newCard.transform.position = new Vector3(newCard.transform.position.x + 5f, newCard.transform.position.y, newCard.transform.position.z);
+        return newCard.transform as RectTransform;
+    }
+
+
 }
 
 /*

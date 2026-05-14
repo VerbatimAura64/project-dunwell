@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 7760755939566267455}
   - component: {fileID: 8141388960716716729}
   m_Layer: 5
-  m_Name: ClueTitle
+  m_Name: ClueName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
-  clueCard: {fileID: 0}
+  gm: {fileID: 0}
   clueCardObj: {fileID: 0}
   clueName: Gun
   description: 
@@ -387,7 +387,8 @@ MonoBehaviour:
   clueObj: {fileID: 0}
   inkKnotTitle: 
   inkChoice: 
-  gm: {fileID: 0}
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
 --- !u!1 &8003556506394678606
 GameObject:
   m_ObjectHideFlags: 0

@@ -268,18 +268,24 @@ namespace Invector.CharacterController
 
         protected virtual void InspectClue()
         {
-            
-                if (focused && itemToFocus.GetComponent<Clue>().relevant)
+            Clue foundClue = itemToFocus.GetComponent<Clue>();
+                if (focused && foundClue.relevant)
                 {
-                    if(itemToFocus.GetComponent<Clue>().discovered == false)
+                    
+                    if (foundClue.discovered == false)
                     {
-                        itemToFocus.GetComponent<Clue>().discovered = true;
-                        GM.cluesFound.Add(itemToFocus);
+                        foundClue.discovered = true;
+                        GM.cluesFound.Add(foundClue.gameObject);
                         GM.DiscoverClue();
+                        GM.clueCardObj.GetComponent<Clue>().clueName = foundClue.clueName + " Clue";
                         GM.clueCards.Add(Instantiate(GM.clueCardObj, GM.caseBoard.GetComponentInChildren<Transform>()));
-                        itemToFocus.GetComponent<Clue>().clueCardObj = GM.clueCards.Last();
-                        GM.clueCardObj.GetComponent<Clue>().clueName = itemToFocus.GetComponent<Clue>().clueName + " Clue";
+                        foundClue.clueCardObj = GM.clueCards.Last();
+                        GM.clueCards.Last().GetComponent<Clue>().clueCardObj = GM.clueCardObj;
+                    foundClue.cardClueName = foundClue.clueCardObj.GetComponentInChildren<TextMeshProUGUI>();
+                    //GM.clueCards.Last().GetComponent<Clue>().description = foundClue.description;
+                    GM.AddCardspace(GM.clueCards.Last());
                         
+                        //itemToFocus.GetComponent<Clue>().clueCardObj = GM.clueCards.Last();
                         
                       
                     /* THIS IS WHERE WE LEFT OFF WITH THE NEXT TWO LINES FOR INK */
@@ -296,9 +302,9 @@ namespace Invector.CharacterController
                    // GM._inkStory.ChoosePathString("clueInspection");
                     //GM._inkStory.Continue();
                 }
-                else if(focused && !itemToFocus.GetComponent<Clue>().relevant) 
+                else if(focused && !foundClue.relevant) 
                 {
-                    GM._inkStory.ChoosePathString("clueInspection");
+                    GM._inkStory.ChoosePathString("notRelevant");
                     GM._inkStory.Continue();
                 }
             
