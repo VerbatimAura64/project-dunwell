@@ -14,8 +14,7 @@ public class GM : MonoBehaviour
     public bool isClipPlaying;
     public AudioSource auPlayer;
     public AudioClip clipPlaying;
-    [SerializeField]
-    private GameObject clueCardObj;
+    public GameObject clueCardObj;
     public List<AudioClip> queueList;
     public List<GameObject> cluesFound;
     public List<GameObject> clueCards;
@@ -223,7 +222,7 @@ public class GM : MonoBehaviour
     {
 
         clueList.clues = new ClueInfo[cluesFound.Count];
-        //clueCards = new List<GameObject>();
+        //clueCards
         for (int i = 0; i < cluesFound.Count; i++)
         {
             clueScript = cluesFound[i].GetComponent<Clue>();

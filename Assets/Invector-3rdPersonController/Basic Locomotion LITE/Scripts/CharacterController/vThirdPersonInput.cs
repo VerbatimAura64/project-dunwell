@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using TMPro;
 using static GM;
-using static GM;
+using System.Linq;
+
 
 
 
@@ -272,11 +273,16 @@ namespace Invector.CharacterController
                 {
                     if(itemToFocus.GetComponent<Clue>().discovered == false)
                     {
+                        itemToFocus.GetComponent<Clue>().discovered = true;
                         GM.cluesFound.Add(itemToFocus);
                         GM.DiscoverClue();
-                        itemToFocus.GetComponent<Clue>().discovered = true;
+                        GM.clueCards.Add(Instantiate(GM.clueCardObj, GM.caseBoard.GetComponentInChildren<Transform>()));
+                        itemToFocus.GetComponent<Clue>().clueCardObj = GM.clueCards.Last();
+                        GM.clueCardObj.GetComponent<Clue>().clueName = itemToFocus.GetComponent<Clue>().clueName + " Clue";
+                        
+                        
                       
-                    /* THIS IS WHERE WE LEFT OFF WITH THE NEXT TWO LINES */
+                    /* THIS IS WHERE WE LEFT OFF WITH THE NEXT TWO LINES FOR INK */
                     
                     
                     // if (GM.clueList.clues.Last<ClueInfo>().inkChoice != null && clueList.clues.Last<ClueInfo>().inkChoice.Length > 0)

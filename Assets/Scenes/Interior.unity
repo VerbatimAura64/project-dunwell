@@ -1083,13 +1083,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
+  clueCard: {fileID: 0}
+  clueCardObj: {fileID: 0}
   clueName: Landon's Body
   description: 
   relevant: 1
   discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: clueBody
-  inkChoice: []
+  inkChoice: 
   gm: {fileID: 0}
 --- !u!1001 &78774321
 PrefabInstance:
@@ -6309,13 +6311,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
+  clueCard: {fileID: 0}
+  clueCardObj: {fileID: 0}
   clueName: Locked Door
   description: 
   relevant: 1
   discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: 
-  inkChoice: []
+  inkChoice: 
   gm: {fileID: 0}
 --- !u!1001 &363444848
 PrefabInstance:
@@ -10457,13 +10461,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
+  clueCard: {fileID: 0}
+  clueCardObj: {fileID: 0}
   clueName: Neighbor Datapad
   description: 
   relevant: 1
   discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: 
-  inkChoice: []
+  inkChoice: 
   gm: {fileID: 0}
 --- !u!4 &585640727 stripped
 Transform:
@@ -15200,13 +15206,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
+  clueCard: {fileID: 0}
+  clueCardObj: {fileID: 0}
   clueName: Desk
   description: 
   relevant: 1
   discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: clueWipedDesk
-  inkChoice: []
+  inkChoice: 
   gm: {fileID: 0}
 --- !u!65 &845584094
 BoxCollider:
@@ -16415,6 +16423,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24314940e1a8ddc47bbb9281e63963a3, type: 3}
+--- !u!1 &939869292 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7905338974331181838, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
+  m_PrefabInstance: {fileID: 1419369959618325537}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &944939072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16861,14 +16874,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
+  clueCard: {fileID: 0}
+  clueCardObj: {fileID: 0}
   clueName: Fine Doc
   description: 
   relevant: 1
   discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: clueFineNotice
-  inkChoice:
-  - 0
+  inkChoice: 00000000
   gm: {fileID: 0}
 --- !u!65 &958994656
 BoxCollider:
@@ -17171,13 +17185,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
+  clueCard: {fileID: 0}
+  clueCardObj: {fileID: 0}
   clueName: 
   description: 
   relevant: 0
   discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: 
-  inkChoice: []
+  inkChoice: 
   gm: {fileID: 0}
 --- !u!135 &967902259
 SphereCollider:
@@ -23847,7 +23863,7 @@ MonoBehaviour:
   isClipPlaying: 0
   auPlayer: {fileID: 0}
   clipPlaying: {fileID: 0}
-  clueCardObj: {fileID: 0}
+  clueCardObj: {fileID: 7905338974331181838, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
   queueList: []
   cluesFound: []
   clueCards: []
@@ -25520,13 +25536,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
+  clueCard: {fileID: 0}
+  clueCardObj: {fileID: 0}
   clueName: Dexter Datapad
   description: 
   relevant: 1
   discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: 
-  inkChoice: []
+  inkChoice: 
   gm: {fileID: 0}
 --- !u!135 &1575666633
 SphereCollider:
@@ -28757,13 +28775,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
+  clueCard: {fileID: 0}
+  clueCardObj: {fileID: 939869292}
   clueName: Gun
   description: 
   relevant: 1
   discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: clueGun
-  inkChoice: []
+  inkChoice: 
   gm: {fileID: 0}
 --- !u!4 &1841074066 stripped
 Transform:
@@ -31246,13 +31266,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
+  clueCard: {fileID: 0}
+  clueCardObj: {fileID: 0}
   clueName: Test
   description: 
   relevant: 1
   discovered: 0
   clueObj: {fileID: 1971781885}
   inkKnotTitle: 
-  inkChoice: []
+  inkChoice: 
   gm: {fileID: 0}
 --- !u!1001 &1972645499
 PrefabInstance:
@@ -34829,10 +34851,6 @@ PrefabInstance:
       value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3842099414815955872, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 5.5555553
-      objectReference: {fileID: 0}
-    - target: {fileID: 3842099414815955872, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -34883,6 +34901,10 @@ PrefabInstance:
     - target: {fileID: 7905338974331181838, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
       propertyPath: m_Name
       value: ClueCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7905338974331181838, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -35085,13 +35107,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
+  clueCard: {fileID: 0}
+  clueCardObj: {fileID: 0}
   clueName: Dexter's Code Signature
   description: 
   relevant: 0
   discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: 
-  inkChoice: []
+  inkChoice: 
   gm: {fileID: 0}
 --- !u!64 &4755720217542200778
 MeshCollider:

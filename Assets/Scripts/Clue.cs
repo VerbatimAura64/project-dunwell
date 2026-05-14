@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class Clue : MonoBehaviour
 {
-
+    [SerializeField]
+    private GM gm;
+    [SerializeField]
+    private ClueCard clueCard;
+    public GameObject clueCardObj;
     public string clueName;
     public string description;
     public bool relevant;
@@ -11,25 +15,20 @@ public class Clue : MonoBehaviour
     public GameObject clueObj;
     public string inkKnotTitle;
     public int[] inkChoice;
-    [SerializeField]
-    private GM gm;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         clueObj = this.gameObject;
         this.gameObject.name = clueName;
         gm = GameObject.FindWithTag("GameController").GetComponent<GM>();
+        clueCard = ScriptableObject.CreateInstance<ClueCard>();
+        clueCard.clueName = clueName;
+        clueCard.description = description;
+        clueCard.clueObj = clueObj;
 
     }
 
-    [CreateAssetMenu(fileName = "ClueCard", menuName = "ClueCard")]
-    public class ClueCard : ScriptableObject
-    {
-        public string clueName;
-        public string description;
-        public GameObject clueObj;
-        public Sprite clueSprite;
-    }
 
 
     /* private void OnTriggerEnter(Collider other)
