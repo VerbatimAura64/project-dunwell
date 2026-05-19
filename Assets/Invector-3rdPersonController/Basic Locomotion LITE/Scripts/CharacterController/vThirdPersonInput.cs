@@ -244,6 +244,9 @@ namespace Invector.CharacterController
             {
                 if (Input.GetKeyDown(caseBoardInput))
                 {
+                    if (!Cursor.visible)
+                        Cursor.lockState = CursorLockMode.Confined;
+                        Cursor.visible = true;
                     cc.isSprinting = false;
                     cc.input = Vector2.zero;
                     tpCamera.lockCamera = true;
@@ -257,6 +260,8 @@ namespace Invector.CharacterController
             {
                 if (Input.GetKeyDown(caseBoardInput))
                 {
+                    if (Cursor.visible)
+                        Cursor.visible = false;
                     GM.caseBoard.SetActive(false);
                     cc.lockMovement = false;
                     tpCamera.enabled = true;
@@ -275,24 +280,36 @@ namespace Invector.CharacterController
                     if (foundClue.discovered == false)
                     {
                         foundClue.discovered = true;
+                        GM.clueCardObj.GetComponent<Clue>().clueName = foundClue.clueName ;
+                        foundClue.clueCardObj = Instantiate(GM.clueCardObj, GM.caseBoard.GetComponentInChildren<Transform>());
+                        foundClue.clueCardObj.GetComponent<Clue>().discovered = true;
+                        //foundClue.clueCardObj.GetComponent<Clue>().clueName = foundClue.clueName + " Clue";
                         GM.cluesFound.Add(foundClue.gameObject);
+                        GM.clueCards.Add(foundClue.clueCardObj);
+                        //foundClue.clueCardObj.GetComponent <Clue>().cardClueName.text = foundClue.clueName + " Clue";
+                        GM.clueCards.Last().GetComponent<Clue>().cardClueName = foundClue.clueCardObj.GetComponentInChildren<TextMeshProUGUI>();
+                        GM.clueCards.Last().GetComponent<Clue>().isClueCard = true;
                         GM.DiscoverClue();
-                        GM.clueCardObj.GetComponent<Clue>().clueName = foundClue.clueName + " Clue";
-                        GM.clueCards.Add(Instantiate(GM.clueCardObj, GM.caseBoard.GetComponentInChildren<Transform>()));
-                        foundClue.clueCardObj = GM.clueCards.Last();
-                        GM.clueCards.Last().GetComponent<Clue>().clueCardObj = GM.clueCardObj;
-                    foundClue.cardClueName = foundClue.clueCardObj.GetComponentInChildren<TextMeshProUGUI>();
-                    //GM.clueCards.Last().GetComponent<Clue>().description = foundClue.description;
-                    GM.AddCardspace(GM.clueCards.Last());
-                        
-                        //itemToFocus.GetComponent<Clue>().clueCardObj = GM.clueCards.Last();
-                        
-                      
+                    
+
+                    //GM.clueCardObj.GetComponent<Clue>
+
+                    //foundClue.clueCardObj = GM.clueCards.Last();
+                    //GM.clueCards.Last().GetComponent<Clue>().clueCardObj = GM.clueCardObj;
+
+                    //GM.AddCardspace(GM.clueCards.Last());
+
+
+
+
+                    //itemToFocus.GetComponent<Clue>().clueCardObj = GM.clueCards.Last();
+
+
                     /* THIS IS WHERE WE LEFT OFF WITH THE NEXT TWO LINES FOR INK */
-                    
-                    
+
+
                     // if (GM.clueList.clues.Last<ClueInfo>().inkChoice != null && clueList.clues.Last<ClueInfo>().inkChoice.Length > 0)
-                        {
+                    {
                         //    GM.MakeChoice(GM.clueList.clues.Last<ClueInfo>().inkChoice[0]);
                         }
                 }

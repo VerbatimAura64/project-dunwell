@@ -15,13 +15,13 @@ public class GM : MonoBehaviour
     public AudioSource auPlayer;
     public AudioClip clipPlaying;
     public GameObject clueCardObj;
+    public GameObject dialogue;
+    //public bool dialogueIsPlaying;
+    public Clue clueScript;
     public List<AudioClip> queueList;
     public List<GameObject> cluesFound;
     public List<GameObject> clueCards;
     public Story _inkStory;
-    public GameObject dialogue;
-    //public bool dialogueIsPlaying;
-    public Clue clueScript;
     //public Queue<AudioClip> toBePlayed;
     //public List<bool> choices;
     //public int goodChoice, badChoice;
@@ -86,14 +86,16 @@ public class GM : MonoBehaviour
         //toBePlayed.Enqueue(queueList.First());
     }
 
+    public void TriggerClueKnot(string knotTitle)
+    {
+        _inkStory.ChoosePathString(knotTitle);
+        ContinueStory();
+    }
+
     public void ContinueStory()
     {
         while (_inkStory.canContinue)
         {
-            if (clueList.clues.Length > 0)
-            {
-                _inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
-            }
             dialogue.GetComponent<TMP_Text>().text = _inkStory.Continue();
             dialogue.SetActive(true);
             List<string> tags = _inkStory.currentTags;
@@ -135,9 +137,9 @@ public class GM : MonoBehaviour
                 //choices = new List<bool>();
                 for (int i = 0; i < _inkStory.currentChoices.Count; i++)
                 {
-                    Choice choice = _inkStory.currentChoices[i];
+                    //Choice choice = _inkStory.currentChoices[i];
                     //choices.Add(false);
-                    Debug.Log("Choice " + (i+1) + ": " + choice.text);
+                    //Debug.Log("Choice " + (i+1) + ": " + choice.text);
                 }
             }
         }
@@ -236,12 +238,14 @@ public class GM : MonoBehaviour
                 inkChoice = cluesFound[i].GetComponent<Clue>().inkChoice
 
             };
-            //if(clueList.clues.Length > 0)
             
-                //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
-            
+            //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
+
             //clueList.clues[i] = clueInfo;
         }
+        if(clueList.clues.Length > 0)
+                TriggerClueKnot(clueList.clues.Last<ClueInfo>().inkKnotTitle);
+        //_inkStory.
         //
         //_inkStory.Continue();
         /*if (clueList.clues.Length > 0)
@@ -257,7 +261,9 @@ public class GM : MonoBehaviour
             }
         }*/
 
-        //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);//.Last<Clue>().inkKnotTitle);
+        //.Last<Clue>().inkKnotTitle);
+        if(Input.GetKeyDown(KeyCode.Return))
+            _inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
         // _inkStory.variablesState["clueInspected"] = clueInspected;
     }
 
@@ -278,7 +284,7 @@ public class GM : MonoBehaviour
     public RectTransform AddCardspace(GameObject newCard)
     {
         //GameObject newCard = Instantiate(clueCardObj, clueCardObj.transform);
-        clueCards.Add(newCard);
+        //clueCards.Add(newCard);
         newCard.transform.position = new Vector3(newCard.transform.position.x + 5f, newCard.transform.position.y, newCard.transform.position.z);
         return newCard.transform as RectTransform;
     }

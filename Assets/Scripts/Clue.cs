@@ -1,5 +1,6 @@
 using Invector.CharacterController;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +8,13 @@ public class Clue : MonoBehaviour
 {
     [SerializeField]
     private GM gm;
+    public bool relevant;
+    public bool discovered;
+    public bool isClueCard;
     public GameObject clueCardObj;
     public string clueName;
     public string description;
-    public bool relevant;
-    public bool discovered;
+    
     public GameObject clueObj;
     public string inkKnotTitle;
     public int[] inkChoice;
@@ -25,22 +28,36 @@ public class Clue : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        clueObj = this.gameObject;
         this.gameObject.name = clueName;
         gm = GameObject.FindWithTag("GameController").GetComponent<GM>();
-        if (clueCardObj != null)
+        if(isClueCard)
         {
-            cardClueName = GameObject.Find("ClueName").GetComponent<TextMeshProUGUI>();
-            cardClueName.text = clueName;
-            clueCardObj.GetComponent<Clue>().cardClueName = cardClueName;
-            clueCardObj.GetComponent<Clue>().cardClueName.text = clueName;
-            //clueCardObj = GameObject.FindWithTag("ClueCard");
-        } else
-        {
-            
+            clueCardObj = this.gameObject;
+            if (discovered && clueObj == null)
+            {
+                clueObj = GameObject.Find(clueName);
+                clueCardObj = GameObject.Find(clueName);
+                cardClueName = GameObject.Find("ClueName").GetComponent<TextMeshProUGUI>();
+                cardClueName.name = clueCardObj.name;
+                cardClueName.text = clueName;
+            }
         }
-
+        else
+        {
+            clueObj = this.gameObject;
+            if (discovered && clueCardObj == null)
+            {
+                //clueCardObj = GameObject.Find(clueName);
+                //cardClueName = GameObject.Find("ClueName").GetComponent<TextMeshProUGUI>();
+                //cardClueName.name = clueCardObj.name;
+                //cardClueName.text = clueName;
+                //clueCardObj.GetComponent<Clue>().cardClueName = cardClueName;
+                //clueCardObj.GetComponent<Clue>().cardClueName.text = clueName;
+                //clueCardObj = GameObject.FindWithTag("ClueCard");
+            } 
+        }
         
+                
 
     }
 

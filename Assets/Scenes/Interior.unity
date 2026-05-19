@@ -1084,11 +1084,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
-  clueCardObj: {fileID: 0}
-  clueName: Landon's Body
-  description: 
   relevant: 1
   discovered: 0
+  isClueCard: 0
+  clueCardObj: {fileID: 0}
+  clueName: Body
+  description: 
   clueObj: {fileID: 0}
   inkKnotTitle: clueBody
   inkChoice: 
@@ -2255,6 +2256,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6ca24f648280eb42aacc73b163e0f98, type: 3}
+--- !u!1 &138472993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1603617425342002, guid: d4b0d3b273b187c4696240caebff3f7a, type: 3}
+  m_PrefabInstance: {fileID: 524691657}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &139532375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5032,7 +5038,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4655052210597358, guid: 4493b9786df76d64fad99c1e9ac91ace, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.637978
+      value: -28.04
       objectReference: {fileID: 0}
     - target: {fileID: 4655052210597358, guid: 4493b9786df76d64fad99c1e9ac91ace, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6299,7 +6305,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.81, y: 2.33, z: 1.07}
-  m_Center: {x: -0.4739567, y: 0, z: -0.66}
+  m_Center: {x: -0.4739567, y: 0.17, z: -0.66}
 --- !u!114 &359634769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6313,16 +6319,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
+  relevant: 1
+  discovered: 0
+  isClueCard: 0
   clueCardObj: {fileID: 0}
   clueName: Locked Door
   description: 
-  relevant: 1
-  discovered: 0
   clueObj: {fileID: 0}
-  inkKnotTitle: 
-  inkChoice: 
+  inkKnotTitle: clueLockedDoor
+  inkChoice: 01000000
   cardClueName: {fileID: 0}
   cardClueImage: {fileID: 0}
+--- !u!114 &359634774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359634763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec78cbf0aaed184cb1b0925660d78ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Door
+  locked: 1
+  door: {fileID: 0}
 --- !u!1001 &363444848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7912,7 +7933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1126415219792081617, guid: 609e7b7606cdb8c4faa1bd70f4a4270f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.76
+      value: 19.011
       objectReference: {fileID: 0}
     - target: {fileID: 1126415219792081617, guid: 609e7b7606cdb8c4faa1bd70f4a4270f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9378,13 +9399,64 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1603617425342002, guid: d4b0d3b273b187c4696240caebff3f7a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 524691663}
+    - targetCorrespondingSourceObject: {fileID: 1603617425342002, guid: d4b0d3b273b187c4696240caebff3f7a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 524691662}
   m_SourcePrefab: {fileID: 100100000, guid: d4b0d3b273b187c4696240caebff3f7a, type: 3}
 --- !u!4 &524691658 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4319367055552584, guid: d4b0d3b273b187c4696240caebff3f7a, type: 3}
   m_PrefabInstance: {fileID: 524691657}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &524691662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138472993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Clue
+  gm: {fileID: 0}
+  relevant: 1
+  discovered: 0
+  isClueCard: 0
+  clueCardObj: {fileID: 0}
+  clueName: Wall Screen
+  description: 
+  clueObj: {fileID: 0}
+  inkKnotTitle: clueMonitor
+  inkChoice: 
+  cardClueName: {fileID: 0}
+  cardClueImage: {fileID: 0}
+--- !u!65 &524691663
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138472993}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 2.5, z: 1}
+  m_Center: {x: -4.01, y: -0.000000074505806, z: 0.53}
 --- !u!1 &524704900 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1107258382206988, guid: f4e7aafddc507f340b682560df2b00f6, type: 3}
@@ -10464,13 +10536,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
+  relevant: 1
+  discovered: 0
+  isClueCard: 0
   clueCardObj: {fileID: 0}
   clueName: Neighbor Datapad
   description: 
-  relevant: 1
-  discovered: 0
   clueObj: {fileID: 0}
-  inkKnotTitle: 
+  inkKnotTitle: clueNeighborDatapad
   inkChoice: 
   cardClueName: {fileID: 0}
   cardClueImage: {fileID: 0}
@@ -10690,6 +10763,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &595969646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1222621871574060, guid: 228d48af1edab9043b87d3048b297ff9, type: 3}
+  m_PrefabInstance: {fileID: 1274456979}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &595969651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595969646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec78cbf0aaed184cb1b0925660d78ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Door
+  locked: 1
+  door: {fileID: 0}
 --- !u!4 &596104079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4646546603325220, guid: f02284cc2a3b3134282bef15ff01d792, type: 3}
@@ -14137,6 +14229,7 @@ Transform:
   - {fileID: 1178433188}
   - {fileID: 1692566165}
   - {fileID: 344781380}
+  - {fileID: 2123698850}
   - {fileID: 991192993}
   - {fileID: 97842479}
   - {fileID: 704326843}
@@ -15210,11 +15303,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
+  relevant: 1
+  discovered: 0
+  isClueCard: 0
   clueCardObj: {fileID: 0}
   clueName: Desk
   description: 
-  relevant: 1
-  discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: clueWipedDesk
   inkChoice: 
@@ -16874,11 +16968,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
+  relevant: 1
+  discovered: 0
+  isClueCard: 0
   clueCardObj: {fileID: 0}
   clueName: Fine Doc
   description: 
-  relevant: 1
-  discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: clueFineNotice
   inkChoice: 00000000
@@ -17077,7 +17172,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1734237436760426, guid: 2b58d0b3fe7ca6a42bc23d936b7f83bc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1425016895}
+      addedObject: {fileID: 1425016901}
   m_SourcePrefab: {fileID: 100100000, guid: 2b58d0b3fe7ca6a42bc23d936b7f83bc, type: 3}
 --- !u!4 &965123491 stripped
 Transform:
@@ -17186,13 +17281,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
+  relevant: 1
+  discovered: 0
+  isClueCard: 0
   clueCardObj: {fileID: 0}
   clueName: Dexter's Drive
   description: 
-  relevant: 1
-  discovered: 0
   clueObj: {fileID: 0}
-  inkKnotTitle: 
+  inkKnotTitle: clueBackupDrive
   inkChoice: 
   cardClueName: {fileID: 0}
   cardClueImage: {fileID: 0}
@@ -18766,13 +18862,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Wall_Doorframe_04
       objectReference: {fileID: 0}
+    - target: {fileID: 1193256753639204, guid: efe15252b0ea3824b939145bdd9eef41, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4007370178102640, guid: efe15252b0ea3824b939145bdd9eef41, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5
+      value: 0.425
       objectReference: {fileID: 0}
     - target: {fileID: 4007370178102640, guid: efe15252b0ea3824b939145bdd9eef41, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.48549643
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4007370178102640, guid: efe15252b0ea3824b939145bdd9eef41, type: 3}
       propertyPath: m_LocalRotation.x
@@ -18780,7 +18880,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4007370178102640, guid: efe15252b0ea3824b939145bdd9eef41, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.87423867
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4007370178102640, guid: efe15252b0ea3824b939145bdd9eef41, type: 3}
       propertyPath: m_LocalRotation.z
@@ -18788,7 +18888,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4007370178102640, guid: efe15252b0ea3824b939145bdd9eef41, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -121.91
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4035240748447630, guid: efe15252b0ea3824b939145bdd9eef41, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21815,11 +21915,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4582171785527272, guid: 228d48af1edab9043b87d3048b297ff9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.34095383
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4582171785527272, guid: 228d48af1edab9043b87d3048b297ff9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.94008005
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4582171785527272, guid: 228d48af1edab9043b87d3048b297ff9, type: 3}
       propertyPath: m_LocalRotation.z
@@ -21827,12 +21927,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4582171785527272, guid: 228d48af1edab9043b87d3048b297ff9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -140.13
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1222621871574060, guid: 228d48af1edab9043b87d3048b297ff9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 595969651}
   m_SourcePrefab: {fileID: 100100000, guid: 228d48af1edab9043b87d3048b297ff9, type: 3}
 --- !u!4 &1278310945 stripped
 Transform:
@@ -23035,11 +23138,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4530545607528316, guid: a99e925af17968346a3f898fcfe65cd8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6087614
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4530545607528316, guid: a99e925af17968346a3f898fcfe65cd8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7933534
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4530545607528316, guid: a99e925af17968346a3f898fcfe65cd8, type: 3}
       propertyPath: m_LocalRotation.z
@@ -23047,7 +23150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4530545607528316, guid: a99e925af17968346a3f898fcfe65cd8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 105
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23062,6 +23165,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1052587204435960, guid: a99e925af17968346a3f898fcfe65cd8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 359634769}
+    - targetCorrespondingSourceObject: {fileID: 1052587204435960, guid: a99e925af17968346a3f898fcfe65cd8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 359634774}
   m_SourcePrefab: {fileID: 100100000, guid: a99e925af17968346a3f898fcfe65cd8, type: 3}
 --- !u!4 &1381092762 stripped
 Transform:
@@ -23559,8 +23665,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1734237436760426, guid: 2b58d0b3fe7ca6a42bc23d936b7f83bc, type: 3}
   m_PrefabInstance: {fileID: 965123490}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &1425016895
-SphereCollider:
+--- !u!65 &1425016901
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -23578,8 +23684,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.5000026
-  m_Center: {x: -2.4999995, y: 1.5022796, z: 0.40391243}
+  m_Size: {x: 2.32, y: 3.13, z: 2.51}
+  m_Center: {x: -2.4999995, y: 0.68, z: 1.31}
 --- !u!1001 &1441829110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23865,11 +23971,11 @@ MonoBehaviour:
   auPlayer: {fileID: 0}
   clipPlaying: {fileID: 0}
   clueCardObj: {fileID: 7905338974331181838, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
+  dialogue: {fileID: 1163257188}
+  clueScript: {fileID: 0}
   queueList: []
   cluesFound: []
   clueCards: []
-  dialogue: {fileID: 1163257188}
-  clueScript: {fileID: 0}
   clueList:
     clues: []
 --- !u!1001 &1468306859
@@ -25538,13 +25644,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
+  relevant: 1
+  discovered: 0
+  isClueCard: 0
   clueCardObj: {fileID: 0}
   clueName: Dexter Datapad
   description: 
-  relevant: 1
-  discovered: 0
   clueObj: {fileID: 0}
-  inkKnotTitle: 
+  inkKnotTitle: clueDexterDatapad
   inkChoice: 
   cardClueName: {fileID: 0}
   cardClueImage: {fileID: 0}
@@ -28778,11 +28885,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
+  relevant: 1
+  discovered: 0
+  isClueCard: 0
   clueCardObj: {fileID: 0}
   clueName: Gun
   description: 
-  relevant: 1
-  discovered: 0
   clueObj: {fileID: 0}
   inkKnotTitle: clueGun
   inkChoice: 
@@ -29074,6 +29182,10 @@ PrefabInstance:
     - target: {fileID: 1603617425342002, guid: d4b0d3b273b187c4696240caebff3f7a, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Scanner_01 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603617425342002, guid: d4b0d3b273b187c4696240caebff3f7a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4319367055552584, guid: d4b0d3b273b187c4696240caebff3f7a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29997,7 +30109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4336824843761612, guid: bb7183613fb04cf4d9756746065ddc35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4336824843761612, guid: bb7183613fb04cf4d9756746065ddc35, type: 3}
       propertyPath: m_LocalPosition.y
@@ -30009,19 +30121,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4336824843761612, guid: bb7183613fb04cf4d9756746065ddc35, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4336824843761612, guid: bb7183613fb04cf4d9756746065ddc35, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4336824843761612, guid: bb7183613fb04cf4d9756746065ddc35, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4336824843761612, guid: bb7183613fb04cf4d9756746065ddc35, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4336824843761612, guid: bb7183613fb04cf4d9756746065ddc35, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -30029,7 +30141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4336824843761612, guid: bb7183613fb04cf4d9756746065ddc35, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 4336824843761612, guid: bb7183613fb04cf4d9756746065ddc35, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -31270,11 +31382,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
+  relevant: 1
+  discovered: 0
+  isClueCard: 0
   clueCardObj: {fileID: 0}
   clueName: Test
   description: 
-  relevant: 1
-  discovered: 0
   clueObj: {fileID: 1971781885}
   inkKnotTitle: 
   inkChoice: 
@@ -33989,6 +34102,68 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.2792081, z: 2.5493386}
   m_Center: {x: -1.25, y: 0.63960403, z: 1.15}
+--- !u!1001 &2123698849
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 797684372}
+    m_Modifications:
+    - target: {fileID: 1765146581840778, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+      propertyPath: m_Name
+      value: SM_Bld_Wall_03 (39)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645002640809266, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645002640809266, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645002640809266, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645002640809266, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645002640809266, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645002640809266, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645002640809266, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645002640809266, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645002640809266, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645002640809266, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+--- !u!4 &2123698850 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4645002640809266, guid: 9a0b50ddb0002a047a3c8cefb24da0c5, type: 3}
+  m_PrefabInstance: {fileID: 2123698849}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2127543654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35112,13 +35287,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
+  relevant: 1
+  discovered: 0
+  isClueCard: 0
   clueCardObj: {fileID: 0}
   clueName: Dexter's Code Signature
   description: 
-  relevant: 1
-  discovered: 0
   clueObj: {fileID: 0}
-  inkKnotTitle: 
+  inkKnotTitle: morrowRevealed
   inkChoice: 
   cardClueName: {fileID: 0}
   cardClueImage: {fileID: 0}
