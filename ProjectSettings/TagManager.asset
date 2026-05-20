@@ -7,6 +7,7 @@ TagManager:
   - Clue
   - Terminal
   - Focus
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Player
   - 
   - 
   - 

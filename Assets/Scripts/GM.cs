@@ -1,3 +1,4 @@
+//using Ink.Parsed;
 using Ink.Runtime;
 using Ink.UnityIntegration;
 using System.Collections.Generic;
@@ -74,6 +75,8 @@ public class GM : MonoBehaviour
         //DiscoverClue();
         if(Input.GetKeyDown(KeyCode.Return))
             ContinueStory();
+        //if(Input.GetKeyDown(KeyCode.Return))
+          //  PlayNext();
         //DiscoverClue();
         //while (_inkStory.canContinue)
         {
@@ -89,12 +92,42 @@ public class GM : MonoBehaviour
     public void TriggerClueKnot(string knotTitle)
     {
         _inkStory.ChoosePathString(knotTitle);
-        ContinueStory();
+        AdvanceDialogue();
+        //ContinueStory();
+    }
+
+    public void AdvanceDialogue()
+    {
+        if (_inkStory.canContinue)
+        {
+            dialogue.GetComponent<TMP_Text>().text = _inkStory.Continue();
+            dialogue.SetActive(true);
+
+            List<string> tags = _inkStory.currentTags;
+            foreach (string tag in tags)
+            {
+                if (tag.StartsWith("SCENE_"))
+                {
+                    string sceneName = tag.Substring(6); // Extract the scene name after "SCENE_"
+                                                         // Load the scene using SceneManager.LoadScene(sceneName);
+                    Debug.Log("Scene change triggered: " + sceneName);
+
+                }
+                if (tag.StartsWith("CLUE_"))
+                {
+                    string clueName = tag.Substring(0); // Extract the clue number after "CLUE_"
+                                                        // Load the scene using SceneManager.LoadScene(sceneName);
+                    Debug.Log("Clue found triggered: " + clueName);
+
+                }
+            }
+        }
+
     }
 
     public void ContinueStory()
     {
-        while (_inkStory.canContinue)
+        if (_inkStory.canContinue)
         {
             dialogue.GetComponent<TMP_Text>().text = _inkStory.Continue();
             dialogue.SetActive(true);
@@ -243,8 +276,8 @@ public class GM : MonoBehaviour
 
             //clueList.clues[i] = clueInfo;
         }
-        if(clueList.clues.Length > 0)
-                TriggerClueKnot(clueList.clues.Last<ClueInfo>().inkKnotTitle);
+        //if(clueList.clues.Length > 0)
+        TriggerClueKnot(clueList.clues.Last<ClueInfo>().inkKnotTitle);
         //_inkStory.
         //
         //_inkStory.Continue();
@@ -262,8 +295,8 @@ public class GM : MonoBehaviour
         }*/
 
         //.Last<Clue>().inkKnotTitle);
-        if(Input.GetKeyDown(KeyCode.Return))
-            _inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
+       //if(Input.GetKeyDown(KeyCode.Return))
+            //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
         // _inkStory.variablesState["clueInspected"] = clueInspected;
     }
 

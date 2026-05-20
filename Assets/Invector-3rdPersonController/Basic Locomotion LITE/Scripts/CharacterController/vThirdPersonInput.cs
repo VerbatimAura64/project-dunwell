@@ -26,6 +26,7 @@ namespace Invector.CharacterController
         public KeyCode jumpInput = KeyCode.Space;
         public KeyCode strafeInput = KeyCode.Tab;
         public KeyCode sprintInput = KeyCode.LeftShift;
+        public KeyCode interactInput = KeyCode.E;
 
         [Header("Camera Settings")]
         public string rotateCameraXInput ="Mouse X";
@@ -36,9 +37,12 @@ namespace Invector.CharacterController
         public bool focused = false;
         public bool caseFocused = false;
         public bool clueTriggered = false;
+        public bool doorCollided = false;
+        public bool terminalCollided = false;
         public GameObject prompt;
         public GameObject itemToFocus;
         public GameObject dialogue;
+        public GameObject door;
         public bool clueInvestigated;
         public GameObject screen;
         //public GameObject clueToInvestigate;
@@ -62,6 +66,7 @@ namespace Invector.CharacterController
         protected virtual void Start()
         {
             CharacterInit();
+            prompt.SetActive(false);
         }
 
         protected virtual void CharacterInit()
@@ -100,7 +105,7 @@ namespace Invector.CharacterController
         protected virtual void InputHandle()
         {
             ExitGameInput();
-            
+            InteractInput();
             FocusInput();
             OpenCaseBoard();
 
@@ -159,19 +164,60 @@ namespace Invector.CharacterController
                 cc.Jump();
         }
 
-        protected virtual void FocusInput()
+        protected virtual void InteractInput()
         {
-            if (mapCollided || clueTriggered)
+            if (doorCollided)
             {
-                if (mapCollided && !focused)
+                //prompt.SetActive(true);
+                if (!door.GetComponent<Door>().locked)
                 {
-                    prompt.GetComponent<TMP_Text>().text = "Press F to focus on map";
-                } 
-                if (clueTriggered && !focused)
+                    prompt.GetComponent<TMP_Text>().text = "Press E to open";
+                }
+                else
                 {
-                    prompt.GetComponent<TMP_Text>().text = "Press F to investigate";
+                    prompt.GetComponent<TMP_Text>().text = "Press E to Knock";
+                }
+                
+            }
+
+            if (terminalCollided)
+            {
+                prompt.GetComponent<TMP_Text>().text = "Press E to use terminal";
+            }
+            else
+            {
+                //prompt.SetActive(false);
+            }
+
+            if (Input.GetKeyDown(interactInput))
+            {
+                if(door.GetComponent<Door>().enabled && !door.GetComponent<Door>().locked)
+                {
+                    door.GetComponent<Door>().OpenDoor();
+                    door.GetComponent<Door>().enabled = false;
+                    doorCollided = false;
+                    prompt.SetActive(false);
+                }
+                else if(door.GetComponent<Door>().enabled && door.GetComponent<Door>().locked)
+                {
+                    Knock();
+                    if(door.name.Equals("Locked Door"))
+                    {
+                        //GM._inkStory.ChoosePathString("knock");
+                        //GM._inkStory.Continue();
+                    }
+                    
                 }
 
+
+            }
+        }
+
+        protected virtual void FocusInput()
+        {
+            if (mapCollided || clueTriggered )
+            {
+            prompt.SetActive(true);
                 if (!focused)
                 {
                     prompt.SetActive(true);
@@ -189,7 +235,7 @@ namespace Invector.CharacterController
                         
                         if (mapCollided)
                         {
-                            prompt.GetComponent<TMP_Text>().text = "Press F to unfocus on map";
+                            prompt.GetComponent<TMP_Text>().text = "Press F to back out";
                         } 
                         else if (clueTriggered)
                         {
@@ -213,7 +259,7 @@ namespace Invector.CharacterController
                         tpCamera.lockCamera = false;
                         if (mapCollided)
                         {
-                            prompt.GetComponent<TMP_Text>().text = "Press F to focus on map";
+                            prompt.GetComponent<TMP_Text>().text = "Press F to focus";
                         }
                         else if (clueTriggered)
                         {
@@ -224,7 +270,7 @@ namespace Invector.CharacterController
                 }
             } else
             {
-                if (Input.GetKeyDown(focusInput) && focused)
+                /*if (Input.GetKeyDown(focusInput) && focused)
                 {
                     cc.lockMovement = false;
                     focused = false;
@@ -232,8 +278,8 @@ namespace Invector.CharacterController
                     tpCamera.inspectCam.enabled = false;
                     tpCamera.lockCamera = false;
                     tpCamera.ReturnOldRotate();
-                }
-                prompt.SetActive(false);
+                }*/
+                //prompt.SetActive(false);
                 //dialogue.SetActive(false);
             }
         }
@@ -249,7 +295,6 @@ namespace Invector.CharacterController
                         Cursor.visible = true;
                     cc.isSprinting = false;
                     cc.input = Vector2.zero;
-                    tpCamera.lockCamera = true;
                     tpCamera.enabled = false;
                     GM.caseBoard.SetActive(true);
                     cc.lockMovement = true;
@@ -262,10 +307,11 @@ namespace Invector.CharacterController
                 {
                     if (Cursor.visible)
                         Cursor.visible = false;
+                        Cursor.lockState = CursorLockMode.Locked;
                     GM.caseBoard.SetActive(false);
                     cc.lockMovement = false;
                     tpCamera.enabled = true;
-                    tpCamera.lockCamera = false;
+                    tpCamera.ReturnOldRotate();
                     caseFocused = false;
                 }
             }
@@ -304,14 +350,6 @@ namespace Invector.CharacterController
 
                     //itemToFocus.GetComponent<Clue>().clueCardObj = GM.clueCards.Last();
 
-
-                    /* THIS IS WHERE WE LEFT OFF WITH THE NEXT TWO LINES FOR INK */
-
-
-                    // if (GM.clueList.clues.Last<ClueInfo>().inkChoice != null && clueList.clues.Last<ClueInfo>().inkChoice.Length > 0)
-                    {
-                        //    GM.MakeChoice(GM.clueList.clues.Last<ClueInfo>().inkChoice[0]);
-                        }
                 }
                     //this.clueInvestigated = true;    
                     //clueInvestigated = true;
@@ -333,12 +371,44 @@ namespace Invector.CharacterController
             {
                 mapCollided = true;
                 itemToFocus = other.gameObject;
+                if (!focused)
+                    prompt.GetComponent<TMP_Text>().text = "Press F to focus";
             }
             if (other.gameObject.CompareTag("Clue"))
             {
                 clueTriggered = true;
                 itemToFocus = other.gameObject;
-                
+                if (!focused)
+                    prompt.GetComponent<TMP_Text>().text = "Press F to investigate";
+            }
+            if (other.gameObject.CompareTag("Terminal"))
+            {
+                terminalCollided = true;
+                prompt.SetActive(true);
+                //itemToFocus = other.gameObject;
+            }
+            if (other.gameObject.CompareTag("Door"))
+            {
+                doorCollided = true;
+                door = other.gameObject;
+                if (doorCollided)
+                {
+                    
+                    if (!door.GetComponent<Door>().locked)
+                    {
+                        prompt.GetComponent<TMP_Text>().text = "Press E to open";
+                        
+                    }
+                    else
+                    {
+                        prompt.GetComponent<TMP_Text>().text = "Press E to Knock";
+                    }
+
+                }
+                prompt.SetActive(true);
+
+
+            }
                     //GM.cluesFound.Add(other.gameObject);
                     //other.gameObject.GetComponent<Clue>().discovered = true;
                 
@@ -352,19 +422,35 @@ namespace Invector.CharacterController
                 //GM.clueList.clues = new Clue() other.gameObject.GetComponent<Clue>();
                 
                 //clueToInvestigate = other.gameObject;
-            }
+            
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.CompareTag("Focus"))
             {
                 mapCollided = false;
+                prompt.SetActive(false);
             }
             if (other.gameObject.CompareTag("Clue"))
             {
                 clueTriggered = false;
-                //clueToInvestigate = null;
+                prompt.SetActive(false);
             }
+            if (other.gameObject.CompareTag("Terminal"))
+            {
+                terminalCollided = false;
+                prompt.SetActive(false);
+            }
+            if (other.gameObject.CompareTag("Door"))
+            {
+                doorCollided = false;   
+                    prompt.SetActive(false);
+            }
+        }
+
+        public void Knock()
+        {
+            
         }
 
 
