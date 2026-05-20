@@ -50,6 +50,14 @@ These apartments were cheap, The Studios they called them, basically saving spac
 +{dextersDoor } [There's the service closet.] ->findTerminal
 +{foundStorageTerminal } [Go inside Dexter's Apartment] ->aptUnlocked
 
+===wrongApt===
+This isn't Dexter's Apartment...
+->DONE
+
+===notRelevant===
+Doesn't look important...
+->DONE
+
 ===dextersDoor===
 I knocked on the door. The room sounds hollow, like it couldn't possibly have anyone inside. He told me to meet here. Maybe he fell asleep - I'm three hours late.
 The door is locked. Override lock, not a standard residential fit.
@@ -153,7 +161,7 @@ There's a notice pinned to the door. A fine - a tapestry hung over a wall screen
 
 ~ foundFineDoc = true
  {aptUnlocked: ->clueHub}
- ->intMonologue
+ ->DONE
 
 === clueNeighborDatapad ===
 # CLUE_FOUND_6B

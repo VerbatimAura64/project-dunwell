@@ -6,6 +6,8 @@ public class Door : MonoBehaviour
     public bool locked = true;
     private bool opening = false;
     public bool hinged = true;
+    public bool knocked;
+    public bool unlockable;
     //public GameObject doorObj;
     public GameObject door;
     private float up = 3;
@@ -61,16 +63,35 @@ public class Door : MonoBehaviour
         }
     }
 
-    void UnlockDoor()
+    public void UnlockDoor()
     {
-        locked = false;
-        door.GetComponent<Clue>().enabled = true;
-        door.GetComponent<BoxCollider>().enabled = true;
+        if (Hacking())
+        {
+            //play success sound
+            locked = false;
+            OpenDoor();
+            this.GetComponent<Door>().enabled = false;
+            door.GetComponent<Clue>().enabled = true;
+            door.GetComponent<BoxCollider>().enabled = true;
+        }
+        else
+        {
+            //play failure sound
+            
+        }
         if (!hinged)
         {
             opening = true;
             SlideUp();
         }
+    }
+
+    bool Hacking()
+    {
+        //play hacking minigame
+        //if success
+        return true;
+
     }
 
     void SlideUp()

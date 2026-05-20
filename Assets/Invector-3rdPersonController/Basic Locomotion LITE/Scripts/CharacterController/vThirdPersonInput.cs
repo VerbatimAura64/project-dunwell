@@ -175,7 +175,14 @@ namespace Invector.CharacterController
                 }
                 else
                 {
-                    prompt.GetComponent<TMP_Text>().text = "Press E to Knock";
+                    if(door.name.Equals("APT4") && door.GetComponent<Door>().knocked)
+                    {
+                        prompt.GetComponent<TMP_Text>().text = "Press E to Brute force";
+                    }
+                    else
+                    {
+                        prompt.GetComponent<TMP_Text>().text = "Press E to Knock";
+                    }
                 }
                 
             }
@@ -200,17 +207,52 @@ namespace Invector.CharacterController
                 }
                 else if(door.GetComponent<Door>().enabled && door.GetComponent<Door>().locked)
                 {
-                    Knock();
-                    if(door.name.Equals("Locked Door"))
+                    //Knock();
+                    if(!door.name.Equals("APT4"))
                     {
-                        //GM._inkStory.ChoosePathString("knock");
-                        //GM._inkStory.Continue();
+                        Debug.Log("Knock Knock " + door.name);
+                        Knock();
+                        GM._inkStory.ChoosePathString("wrongApt");
+                        GM.dialogue.GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                        GM._inkStory.Continue();
                     }
+                    else
+                    {
+                        if (door.GetComponent<Door>().knocked)
+                        {
+                            Debug.Log("Brute Forcing " + door.name);
+                            door.GetComponent<Door>().UnlockDoor();
+                            doorCollided = false;
+                            prompt.SetActive(false);
+                            GM._inkStory.ChoosePathString("bruteForce");
+                            GM.dialogue.GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                        }
+                        else
+                        {
+
+                            Knock();
+                            GM._inkStory.ChoosePathString("dextersDoor");
+                            GM.dialogue.GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                        }
+                        
+                    }
+
                     
+
                 }
 
 
             }
+            //if(door != null)
+                //if(door.name.Equals("APT4") && door.GetComponent<Door>().knocked)
+                  // {
+                   //     //door.GetComponent<Door>().locked = false;
+                    //    prompt.GetComponent<TMP_Text>().text = "Press E to Brute force";
+                      //  if (Input.GetKeyDown(interactInput))
+                        //{
+                          //  door.GetComponent<Door>().UnlockDoor();
+                        //}
+                    //}
         }
 
         protected virtual void FocusInput()
@@ -401,7 +443,12 @@ namespace Invector.CharacterController
                     }
                     else
                     {
-                        prompt.GetComponent<TMP_Text>().text = "Press E to Knock";
+                        if(door.name.Equals("APT4") && door.GetComponent<Door>().knocked)
+                        {
+                             prompt.GetComponent<TMP_Text>().text = "Press E to Brute force";
+                        }
+                        else
+                            prompt.GetComponent<TMP_Text>().text = "Press E to Knock";
                     }
 
                 }
@@ -450,7 +497,7 @@ namespace Invector.CharacterController
 
         public void Knock()
         {
-            
+            door.GetComponent<Door>().knocked = true;
         }
 
 
