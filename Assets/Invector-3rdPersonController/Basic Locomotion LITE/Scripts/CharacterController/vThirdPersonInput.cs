@@ -491,7 +491,8 @@ namespace Invector.CharacterController
             if (other.gameObject.CompareTag("Door"))
             {
                 doorCollided = false;   
-                    prompt.SetActive(false);
+                door  = null;
+                prompt.SetActive(false);
             }
         }
 

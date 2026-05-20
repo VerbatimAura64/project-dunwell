@@ -21,6 +21,9 @@ VAR foundAccessDoor = false
 VAR foundNeighborDatapad = false
 VAR foundDexterDatapad = false
 VAR good_count = 0
+VAR seenIntMonologue = false
+VAR seenClueHub = false
+
 
 
 
@@ -42,8 +45,13 @@ The rain is coming down harder now, and I need to get inside.
 ===intMonologue===
 
 #SCENE_INTERIOR_HALLWAY
+{ not seenIntMonologue:
 These apartments were cheap, The Studios they called them, basically saving space in the building by building the hallways around the outside of the apartments instead of between them. Leaner buildings, smaller but equally sized apartments, and cheaper rents.
  It didn’t take too many override prompts to convince the artificial reception to let me through and up to his floor. 
+  ~ seenIntMonologue = true
+ - else:
+ Where should I go
+ }
 
 +[Examine the notice on the door] ->clueFineNotice
 +[Knock on Dexter's door] -> dextersDoor
@@ -96,7 +104,7 @@ I can make him out. Sitting in a chair, head down like he fell asleep watching s
 A bag. And around his feet — a pool of blood.
 I've just forced my way into a crime scene. The droids are going to pop in eventually. When they do, they'll harden the logic around whatever they find — and right now everything they find points at me.
 If only I had answered him sooner.
-+ [Look around] -> clueHub
+-> clueHub
 
 ===clueHub===
 
@@ -161,7 +169,7 @@ There's a notice pinned to the door. A fine - a tapestry hung over a wall screen
 
 ~ foundFineDoc = true
  {aptUnlocked: ->clueHub}
- ->DONE
+ ->intMonologue
 
 === clueNeighborDatapad ===
 # CLUE_FOUND_6B
