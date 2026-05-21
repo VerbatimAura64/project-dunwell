@@ -43,6 +43,7 @@ namespace Invector.CharacterController
         public GameObject itemToFocus;
         public GameObject dialogue;
         public GameObject door;
+        public GameObject terminal;
         public bool clueInvestigated;
         public GameObject screen;
         //public GameObject clueToInvestigate;
@@ -426,6 +427,8 @@ namespace Invector.CharacterController
             if (other.gameObject.CompareTag("Terminal"))
             {
                 terminalCollided = true;
+                terminal = other.gameObject;
+                terminal.GetComponent<Terminal>().StartTerminal();
                 prompt.SetActive(true);
                 //itemToFocus = other.gameObject;
             }

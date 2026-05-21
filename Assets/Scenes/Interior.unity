@@ -5625,6 +5625,7 @@ MonoBehaviour:
   itemToFocus: {fileID: 0}
   dialogue: {fileID: 0}
   door: {fileID: 0}
+  terminal: {fileID: 0}
   clueInvestigated: 0
   screen: {fileID: 0}
   customCameraState: 
@@ -12795,6 +12796,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Door
   locked: 0
   hinged: 1
+  knocked: 0
+  unlockable: 0
   door: {fileID: 0}
 --- !u!65 &682277429
 BoxCollider:
@@ -15672,6 +15675,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Door
   locked: 1
   hinged: 1
+  knocked: 0
+  unlockable: 0
   door: {fileID: 0}
 --- !u!1001 &832485305
 PrefabInstance:
@@ -16661,6 +16666,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Door
   locked: 1
   hinged: 1
+  knocked: 0
+  unlockable: 0
   door: {fileID: 0}
 --- !u!65 &868461040
 BoxCollider:
@@ -24265,6 +24272,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Door
   locked: 0
   hinged: 1
+  knocked: 0
+  unlockable: 0
   door: {fileID: 765149307}
 --- !u!65 &1360858549
 BoxCollider:
@@ -24451,6 +24460,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Door
   locked: 1
   hinged: 1
+  knocked: 0
+  unlockable: 0
   door: {fileID: 0}
 --- !u!1001 &1374450249
 PrefabInstance:
@@ -24646,6 +24657,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Door
   locked: 1
   hinged: 1
+  knocked: 0
+  unlockable: 0
   door: {fileID: 0}
 --- !u!65 &1381092768
 BoxCollider:
@@ -29905,6 +29918,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1329857477486654, guid: 943628e3220013346b1b593556274672, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1754987240}
+    - targetCorrespondingSourceObject: {fileID: 1329857477486654, guid: 943628e3220013346b1b593556274672, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1754987244}
   m_SourcePrefab: {fileID: 100100000, guid: 943628e3220013346b1b593556274672, type: 3}
 --- !u!4 &1754987236 stripped
 Transform:
@@ -29932,6 +29948,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.3553951, y: 2, z: 1}
   m_Center: {x: 0, y: 0.2, z: 1.15}
+--- !u!114 &1754987244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112270751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ea511628c0ab5144b2e6976f42e0fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Terminal
+  storageTerminal: 1
+  gm: {fileID: 0}
+  door: {fileID: 0}
 --- !u!4 &1756072277 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 445114, guid: 5d7e66e33ddbaf64cb3580e489134147, type: 3}

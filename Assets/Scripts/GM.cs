@@ -57,6 +57,7 @@ public class GM : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "Interior")
         {
             _inkStory.ChoosePathString("intMonologue");
+            _inkStory.Continue();
         }
         Queue<AudioClip> queueList = new();
         
