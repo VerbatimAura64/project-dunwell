@@ -12,7 +12,8 @@ public class Terminal : MonoBehaviour
     void Awake()
     {
         gm = GameObject.FindWithTag("GameController").GetComponent<GM>();
-        door = GameObject.Find("APT4").GetComponent<Door>();
+        if(storageTerminal)
+            door = GameObject.Find("APT4").GetComponent<Door>();
     }
 
     public void StartTerminal()
