@@ -7526,8 +7526,8 @@ RectTransform:
   m_Children:
   - {fileID: 1258786800}
   - {fileID: 223419386}
-  - {fileID: 1180756662}
   - {fileID: 923553508}
+  - {fileID: 1180756662}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -21871,7 +21871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1180756662
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25759,7 +25759,7 @@ MonoBehaviour:
   auPlayer: {fileID: 0}
   clipPlaying: {fileID: 0}
   clueCardObj: {fileID: 7905338974331181838, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
-  dialogue: {fileID: 1163257188}
+  dialogue: {fileID: 923553507}
   clueScript: {fileID: 0}
   queueList: []
   cluesFound: []

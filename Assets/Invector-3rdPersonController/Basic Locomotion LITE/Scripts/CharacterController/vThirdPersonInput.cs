@@ -214,7 +214,7 @@ namespace Invector.CharacterController
                         Debug.Log("Knock Knock " + door.name);
                         Knock();
                         GM._inkStory.ChoosePathString("wrongApt");
-                        GM.dialogue.GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                        GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
                         GM._inkStory.Continue();
                     }
                     else
@@ -226,14 +226,14 @@ namespace Invector.CharacterController
                             doorCollided = false;
                             prompt.SetActive(false);
                             GM._inkStory.ChoosePathString("bruteForce");
-                            GM.dialogue.GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                            GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
                         }
                         else
                         {
 
                             Knock();
                             GM._inkStory.ChoosePathString("dextersDoor");
-                            GM.dialogue.GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                            GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
                         }
                         
                     }

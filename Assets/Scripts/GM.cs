@@ -66,7 +66,7 @@ public class GM : MonoBehaviour
         //_inkStory.variablesState["bad_count"] = badChoice;
         //dialogue.GetComponent<TMP_Text>().text = "";
         _inkStory.Continue();
-        dialogue.GetComponent<TMP_Text>().text = _inkStory.currentText;
+        dialogue.transform.GetChild(1).GetComponent<TMP_Text>().text = _inkStory.currentText;
     }
 
     // Update is called once per frame
@@ -101,7 +101,7 @@ public class GM : MonoBehaviour
     {
         if (_inkStory.canContinue)
         {
-            dialogue.GetComponent<TMP_Text>().text = _inkStory.Continue();
+            dialogue.transform.GetChild(1).GetComponent<TMP_Text>().text = _inkStory.Continue();
             dialogue.SetActive(true);
 
             List<string> tags = _inkStory.currentTags;
@@ -130,7 +130,7 @@ public class GM : MonoBehaviour
     {
         if (_inkStory.canContinue)
         {
-            dialogue.GetComponent<TMP_Text>().text = _inkStory.Continue();
+            dialogue.transform.GetChild(1).GetComponent<TMP_Text>().text = _inkStory.Continue();
             dialogue.SetActive(true);
             List<string> tags = _inkStory.currentTags;
             
