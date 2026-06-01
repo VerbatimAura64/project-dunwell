@@ -6,6 +6,7 @@ public class Door : MonoBehaviour
     public bool locked = true;
     private bool opening = false;
     public bool hinged = true;
+    public bool forced = false;
     public bool knocked;
     public bool unlockable;
     //public GameObject doorObj;
@@ -49,6 +50,8 @@ public class Door : MonoBehaviour
     {
         door.transform.Rotate(0, 90, 0); // Adjust the rotation angles as needed
         this.GetComponent<BoxCollider>().enabled = false; // Disable the collider to allow passage
+        this.GetComponent<Door>().enabled = false;
+
     }
     void OnTriggerExit(Collider other)
     {
@@ -65,7 +68,7 @@ public class Door : MonoBehaviour
 
     public void UnlockDoor()
     {
-        if (Hacking())
+        if (Hacked())
         {
             //play success sound
             locked = false;
@@ -76,8 +79,11 @@ public class Door : MonoBehaviour
         }
         else
         {
-            //play failure sound
-            
+            locked = false;
+            //this.GetComponent<Door>().enabled = false;
+            door.GetComponent<Clue>().enabled = true;
+            door.GetComponent<BoxCollider>().enabled = true;
+
         }
         if (!hinged)
         {
@@ -86,11 +92,12 @@ public class Door : MonoBehaviour
         }
     }
 
-    bool Hacking()
+    bool Hacked()
     {
-        //play hacking minigame
-        //if success
-        return true;
+        if (forced)
+            return true;
+        else
+            return false;
 
     }
 

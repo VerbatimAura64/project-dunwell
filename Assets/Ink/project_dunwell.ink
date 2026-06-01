@@ -43,14 +43,12 @@ The rain is coming down harder now, and I need to get inside.
 ->intMonologue
 
 ===intMonologue===
-
 #SCENE_INTERIOR_HALLWAY
 { not seenIntMonologue:
 These apartments were cheap, The Studios they called them, basically saving space in the building by building the hallways around the outside of the apartments instead of between them. Leaner buildings, smaller but equally sized apartments, and cheaper rents.
  It didn’t take too many override prompts to convince the artificial reception to let me through and up to his floor. 
   ~ seenIntMonologue = true
- - else:
- Where should I go
+ - else: Where should I go
  }
 
 +[Examine the notice on the door] ->clueFineNotice
@@ -68,7 +66,7 @@ Doesn't look important...
 
 ===dextersDoor===
 I knocked on the door. The room sounds hollow, like it couldn't possibly have anyone inside. He told me to meet here. Maybe he fell asleep - I'm three hours late.
-The door is locked. Override lock, not a standard residential fit.
+The door is locked. Override lock, not a standard residential fit. I can force the lock, or maybe there's a floor terminal around here somewhere.
 
 *[Force the lock] ->bruteForce
 +[Maybe there's a floor terminal around here somewhere.] -> intMonologue
@@ -83,19 +81,16 @@ Four override prompts and some patience. The lock gives.
 ===findTerminal ===
 The terminal was in the storage closet. Go figure. This terminal is older than the building deserves though. Repurposed city-issue, the kind that felt familiar six, seven years ago. Before droids took over the jobs and contracts.
 Before I left.
-
 ~ managerAlerted = false
 -> storageTerminal
 
 ===storageTerminal===
-
+~ foundStorageTerminal = true
 City-issue hardware running apartment management software it was never designed for. Whoever set this up knew what they were doing — or knew someone who did.
 I found Dexter's unit in the directory. Ran the unlock sequence.
 There's something else in here. A ghost signal, low bandwidth, encrypted. I can't read it from here.
+->DONE
 
-~ foundStorageTerminal = true
-
-->intMonologue
 
 ===aptUnlocked===
 
@@ -107,11 +102,10 @@ If only I had answered him sooner.
 -> clueHub
 
 ===clueHub===
-
 What can I find here, I don't have a lot of time. 
 
 { foundLockedDoor && foundWipedDesk && foundBody && foundGun && foundMonitor: 
-    I think I have an idea. -> beatTwo
+    The picture is becoming clearer. -> beatTwo
 - else:
     +[The door] ->clueLockedDoor
     +[The desk] ->clueWipedDesk
@@ -122,7 +116,7 @@ What can I find here, I don't have a lot of time.
 
 === clueLockedDoor ===
 # CLUE_FOUND_1
-An overrided privacy lock can only come from the inside, and the stack trace from the terminal didn't log any entry requests or breach attempts after the lock was set.
+An overrided privacy lock can only come from the inside, and the stack trace from the terminal didn't log any entry requests or breach attempts after the lock was set. 
 So how did our killer get in? How did they get out?
 ~ foundLockedDoor = true
 ~ good_count = good_count + 1
@@ -215,11 +209,11 @@ Morgan flags the trace. The alarm is live. I need to move.
 
  
  === beatTwo ===
-I return to the wall screen to take a closer look, running my fingers around. Something clicks as I trace the edge trying to bring the lights to the front glass. A terminal shows itself from out behind the wall.
+Something about that wallscreen isn't sitting right with me. Tracing the edge trying to bring the lights to the front glass, there's a click and a reader shows itself from out behind the wall.
 The something in the walls.
 { foundStorageTerminal: That ghost signal from the storage terminal. It was coming from here. }
 Could this have been what Dexter was thinking? How did he find it himself, what was he looking for, what did he find? Could he have left something behind that whoever killed him was looking for? Where would he hide that kind of thing.
-The terminal needs a different kind of authentication, a handshake that seems too familiar though. My work credential token isn't something I'd plug in here, but you don't leave your proudest work behind a lock without a skeleton key that could save your skin in a moment like this.
+The scanner needs a different kind of authentication, a handshake that seems too familiar though. My work credential token isn't something I'd plug in here, but you don't leave your proudest work behind a lock without a skeleton key that could save your skin in a moment like this.
 ~ foundWallTerminal = true
 ~ good_count = good_count + 1
 + [Use the skeleton key] -> obsRoom

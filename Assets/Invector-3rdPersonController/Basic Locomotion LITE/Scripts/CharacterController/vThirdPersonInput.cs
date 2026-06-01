@@ -191,13 +191,27 @@ namespace Invector.CharacterController
             if (terminalCollided)
             {
                 prompt.GetComponent<TMP_Text>().text = "Press E to use terminal";
+
+                if (Input.GetKeyDown(interactInput))
+                {
+                    if (terminal.GetComponent<Terminal>().storageTerminal) { 
+                        if (terminal.GetComponent<Terminal>().door.locked) {
+                            if (!GM.dialogue.activeInHierarchy)
+                                GM.dialogue.SetActive(true);
+                            GM.typeWriter._readyForNewText = true;
+                            GM.typeWriter.PrepareForNewText(GM.dialogue);
+                            terminal.GetComponent<Terminal>().StartTerminal();
+                        }
+                     }
+                    
+                }
             }
             else
             {
                 //prompt.SetActive(false);
             }
 
-            if (Input.GetKeyDown(interactInput))
+            if (Input.GetKeyDown(interactInput) && (doorCollided || terminalCollided))
             {
                 if(door.GetComponent<Door>().enabled && !door.GetComponent<Door>().locked)
                 {
@@ -213,6 +227,10 @@ namespace Invector.CharacterController
                     {
                         Debug.Log("Knock Knock " + door.name);
                         Knock();
+                        if(!GM.dialogue.activeInHierarchy)
+                            GM.dialogue.SetActive(true);
+                        GM.typeWriter._readyForNewText = true;
+                        GM.typeWriter.PrepareForNewText(GM.dialogue);
                         GM._inkStory.ChoosePathString("wrongApt");
                         GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
                         GM._inkStory.Continue();
@@ -222,9 +240,14 @@ namespace Invector.CharacterController
                         if (door.GetComponent<Door>().knocked)
                         {
                             Debug.Log("Brute Forcing " + door.name);
+                            door.GetComponent<Door>().forced = true;
                             door.GetComponent<Door>().UnlockDoor();
                             doorCollided = false;
                             prompt.SetActive(false);
+                            if (!GM.dialogue.activeInHierarchy)
+                                GM.dialogue.SetActive(true);
+                            GM.typeWriter._readyForNewText = true;
+                            GM.typeWriter.PrepareForNewText(GM.dialogue);
                             GM._inkStory.ChoosePathString("bruteForce");
                             GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
                         }
@@ -232,6 +255,10 @@ namespace Invector.CharacterController
                         {
 
                             Knock();
+                            if (!GM.dialogue.activeInHierarchy)
+                                GM.dialogue.SetActive(true);
+                            GM.typeWriter._readyForNewText = true;
+                            GM.typeWriter.PrepareForNewText(GM.dialogue);
                             GM._inkStory.ChoosePathString("dextersDoor");
                             GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
                         }
@@ -260,12 +287,15 @@ namespace Invector.CharacterController
         {
             if (mapCollided || clueTriggered )
             {
-            prompt.SetActive(true);
+                prompt.SetActive(true);
                 if (!focused)
                 {
                     prompt.SetActive(true);
                     if (Input.GetKeyDown(focusInput) && !caseFocused)
                     { 
+                        if (itemToFocus.GetComponent<Clue>()!= null)
+                            if(!itemToFocus.GetComponent<Clue>().discovered && clueTriggered)
+                                GM.dialogue.SetActive(true);
                         cc.isSprinting = false;
                         cc.input = Vector2.zero;
                         focused = true;
@@ -378,6 +408,7 @@ namespace Invector.CharacterController
                         //foundClue.clueCardObj.GetComponent <Clue>().cardClueName.text = foundClue.clueName + " Clue";
                         GM.clueCards.Last().GetComponent<Clue>().cardClueName = foundClue.clueCardObj.GetComponentInChildren<TextMeshProUGUI>();
                         GM.clueCards.Last().GetComponent<Clue>().isClueCard = true;
+                        GM.dialogue.SetActive(true);
                         GM.DiscoverClue();
                     
 
@@ -428,7 +459,8 @@ namespace Invector.CharacterController
             {
                 terminalCollided = true;
                 terminal = other.gameObject;
-                terminal.GetComponent<Terminal>().StartTerminal();
+                //if(Input.GetKeyDown(interactInput))
+                    //terminal.GetComponent<Terminal>().StartTerminal();
                 prompt.SetActive(true);
                 //itemToFocus = other.gameObject;
             }

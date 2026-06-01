@@ -20,7 +20,6 @@ public class Terminal : MonoBehaviour
     {
         if (storageTerminal)
         {
-
             RemoteUnlock();
         }
     }
@@ -29,10 +28,15 @@ public class Terminal : MonoBehaviour
     {
         if (door != null)
         {
-            door.locked = false;
             gm._inkStory.ChoosePathString("findTerminal");
-            gm.dialogue.GetComponent<TextMeshProUGUI>().text = gm._inkStory.Continue();
+
+            door.UnlockDoor();
+            //door.locked = false;
+            
+            gm.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = gm._inkStory.Continue();
+            //gm.AdvanceDialogue();
             //door.OpenDoor();
+            
         }
     }
 

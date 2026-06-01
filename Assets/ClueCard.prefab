@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4252513305461606534}
   - component: {fileID: 5391314651272180498}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ClueImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2735849, g: 0.15873086, b: 0.15873086, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -379,11 +379,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
+  relevant: 0
+  discovered: 0
+  isClueCard: 0
   clueCardObj: {fileID: 0}
   clueName: Gun
   description: 
-  relevant: 0
-  discovered: 0
+  clueSprite: {fileID: 0}
   clueObj: {fileID: 0}
   inkKnotTitle: 
   inkChoice: 

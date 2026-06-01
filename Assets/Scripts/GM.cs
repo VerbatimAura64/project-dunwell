@@ -17,6 +17,7 @@ public class GM : MonoBehaviour
     public AudioClip clipPlaying;
     public GameObject clueCardObj;
     public GameObject dialogue;
+    public TypeWriterEffect typeWriter;
     //public bool dialogueIsPlaying;
     public Clue clueScript;
     public List<AudioClip> queueList;
@@ -92,6 +93,7 @@ public class GM : MonoBehaviour
 
     public void TriggerClueKnot(string knotTitle)
     {
+        
         _inkStory.ChoosePathString(knotTitle);
         AdvanceDialogue();
         //ContinueStory();
@@ -101,7 +103,18 @@ public class GM : MonoBehaviour
     {
         if (_inkStory.canContinue)
         {
-            dialogue.transform.GetChild(1).GetComponent<TMP_Text>().text = _inkStory.Continue();
+            string line = _inkStory.Continue().Trim();
+
+            // Skip blank lines automatically
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                //AdvanceDialogue();
+                return;
+            }
+            typeWriter._readyForNewText = true;
+            typeWriter.PrepareForNewText(dialogue);
+            dialogue.transform.GetChild(1).GetComponent<TMP_Text>().text = line;
+            //_inkStory.Continue();
             dialogue.SetActive(true);
 
             List<string> tags = _inkStory.currentTags;
@@ -130,6 +143,8 @@ public class GM : MonoBehaviour
     {
         if (_inkStory.canContinue)
         {
+            typeWriter._readyForNewText = true;
+            typeWriter.PrepareForNewText(dialogue);
             dialogue.transform.GetChild(1).GetComponent<TMP_Text>().text = _inkStory.Continue();
             dialogue.SetActive(true);
             List<string> tags = _inkStory.currentTags;
@@ -176,6 +191,9 @@ public class GM : MonoBehaviour
                     //Debug.Log("Choice " + (i+1) + ": " + choice.text);
                 }
             }
+        } else
+        {
+            dialogue.SetActive(false);
         }
     }
 
@@ -256,23 +274,24 @@ public class GM : MonoBehaviour
 
     public void DiscoverClue()
     {
-
+        typeWriter._readyForNewText = true;
+        typeWriter.PrepareForNewText(dialogue);
         clueList.clues = new ClueInfo[cluesFound.Count];
         //clueCards
         for (int i = 0; i < cluesFound.Count; i++)
         {
+            //clueList.clues = new ClueInfo[cluesFound.Count];
             clueScript = cluesFound[i].GetComponent<Clue>();
             clueList.clues[i] = new ClueInfo
             {
-                name = cluesFound[i].GetComponent<Clue>().clueName,
-                description = cluesFound[i].GetComponent<Clue>().description,
-                discovered = cluesFound[i].GetComponent<Clue>().discovered,
+                name = clueScript.clueName,
+                //description = dialogue.GetComponent<TextMeshProUGUI>().text,
+                discovered = clueScript.discovered,
                 clueObj = cluesFound[i],
-                inkKnotTitle = cluesFound[i].GetComponent<Clue>().inkKnotTitle,
-                inkChoice = cluesFound[i].GetComponent<Clue>().inkChoice
-
+                inkKnotTitle = clueScript.inkKnotTitle,
+                inkChoice = clueScript.inkChoice
             };
-            
+           
             //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
 
             //clueList.clues[i] = clueInfo;
