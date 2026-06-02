@@ -125,7 +125,7 @@ public class GM : MonoBehaviour
                     string sceneName = tag.Substring(6); // Extract the scene name after "SCENE_"
                                                          // Load the scene using SceneManager.LoadScene(sceneName);
                     Debug.Log("Scene change triggered: " + sceneName);
-
+                    AdvanceDialogue();
                 }
                 if (tag.StartsWith("CLUE_"))
                 {

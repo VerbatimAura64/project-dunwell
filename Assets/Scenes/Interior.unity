@@ -9912,7 +9912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 23828504569877564, guid: d4b0d3b273b187c4696240caebff3f7a, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10016,7 +10016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Terminal
   storageTerminal: 0
   gm: {fileID: 0}
-  door: {fileID: 0}
+  door: {fileID: 1939573283}
 --- !u!1 &524704900 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1107258382206988, guid: f4e7aafddc507f340b682560df2b00f6, type: 3}
@@ -32934,7 +32934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4454580006987200, guid: 1dc55f6dbc165ca4486ab6bbaa048d5c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.149
+      value: -2.314
       objectReference: {fileID: 0}
     - target: {fileID: 4454580006987200, guid: 1dc55f6dbc165ca4486ab6bbaa048d5c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32955,7 +32955,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4454580006987200, guid: 1dc55f6dbc165ca4486ab6bbaa048d5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 194432794}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1245762855502432, guid: 1dc55f6dbc165ca4486ab6bbaa048d5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1939573283}
   m_SourcePrefab: {fileID: 100100000, guid: 1dc55f6dbc165ca4486ab6bbaa048d5c, type: 3}
 --- !u!4 &1908981997 stripped
 Transform:
@@ -33375,6 +33378,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4656416155954812, guid: e9b5d1f2bf0b9d14aa3e05c1d365110b, type: 3}
   m_PrefabInstance: {fileID: 1930265172}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1939573279 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1245762855502432, guid: 1dc55f6dbc165ca4486ab6bbaa048d5c, type: 3}
+  m_PrefabInstance: {fileID: 1908981996}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1939573283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939573279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec78cbf0aaed184cb1b0925660d78ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Door
+  locked: 1
+  hinged: 0
+  forced: 0
+  knocked: 0
+  unlockable: 0
+  door: {fileID: 0}
 --- !u!1001 &1941274487
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -202,7 +202,17 @@ namespace Invector.CharacterController
                             GM.typeWriter.PrepareForNewText(GM.dialogue);
                             terminal.GetComponent<Terminal>().StartTerminal();
                         }
-                     }
+                    } else
+                    {
+                        if (terminal.GetComponent<Terminal>().door.locked)
+                        {
+                            terminal.GetComponent<Terminal>().StartTerminal();
+                            if (!GM.dialogue.activeInHierarchy)
+                                GM.dialogue.SetActive(true);
+                            GM.typeWriter.PrepareForNewText(GM.dialogue);
+                            
+                        }
+                    }
                     
                 }
             }

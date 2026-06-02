@@ -22,7 +22,7 @@ VAR foundNeighborDatapad = false
 VAR foundDexterDatapad = false
 VAR good_count = 0
 VAR seenIntMonologue = false
-VAR seenClueHub = false
+VAR seenObsRoom = false
 
 
 
@@ -44,13 +44,12 @@ The rain is coming down harder now, and I need to get inside.
 
 ===intMonologue===
 #SCENE_INTERIOR_HALLWAY
-{ not seenIntMonologue:
+{ not seenIntMonologue: 
 These apartments were cheap, The Studios they called them, basically saving space in the building by building the hallways around the outside of the apartments instead of between them. Leaner buildings, smaller but equally sized apartments, and cheaper rents.
  It didn’t take too many override prompts to convince the artificial reception to let me through and up to his floor. 
   ~ seenIntMonologue = true
  - else: Where should I go
  }
-
 +[Examine the notice on the door] ->clueFineNotice
 +[Knock on Dexter's door] -> dextersDoor
 +{dextersDoor } [There's the service closet.] ->findTerminal
@@ -93,7 +92,6 @@ There's something else in here. A ghost signal, low bandwidth, encrypted. I can'
 
 
 ===aptUnlocked===
-
 The door unlocks and slides into the wall. Dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
 I can make him out. Sitting in a chair, head down like he fell asleep watching something. But there's something on his head.
 A bag. And around his feet — a pool of blood.
@@ -116,53 +114,54 @@ What can I find here, I don't have a lot of time.
 
 === clueLockedDoor ===
 # CLUE_FOUND_1
-An overrided privacy lock can only come from the inside, and the stack trace from the terminal didn't log any entry requests or breach attempts after the lock was set. 
-So how did our killer get in? How did they get out?
 ~ foundLockedDoor = true
 ~ good_count = good_count + 1
+An overrided privacy lock can only come from the inside, and the stack trace from the terminal didn't log any entry requests or breach attempts after the lock was set. 
+So how did our killer get in? How did they get out?
+
 -> clueHub
 
 === clueWipedDesk ===
 # CLUE_FOUND_2
-The rest of the place is tossed, or maybe this is how he lived. Boxes of junk, trash piling up in the corner. But his desk? Clean and empty, but the trash around it doesn't look like it's been there long. Tools on the wrong side, leftover food thrown over where it didn't belong.
-This place had been wrecked.
 ~ foundWipedDesk = true
 ~ good_count = good_count + 1
+The rest of the place is tossed, or maybe this is how he lived. Boxes of junk, trash piling up in the corner. But his desk? Clean and empty, but the trash around it doesn't look like it's been there long. Tools on the wrong side, leftover food thrown over where it didn't belong.
+This place had been wrecked.
 -> clueHub
 
 === clueBody ===
 # CLUE_FOUND_3
-It looks like Dexter, but I can't be sure. Not with the bag on his head and the blood splatter dripping into his shirt and onto the floor. I never met the guy, but something tells me there wouldn't be anyone else in here except him anyhow.
-One shot, straight between the eyes.
 ~ foundBody = true
 ~ good_count = good_count + 1
+It looks like Dexter, but I can't be sure. Not with the bag on his head and the blood splatter dripping into his shirt and onto the floor. I never met the guy, but something tells me there wouldn't be anyone else in here except him anyhow.
+One shot, straight between the eyes.
+
 -> clueHub
 
 
 === clueGun ===
 # CLUE_FOUND_4
-I shouldn't be touching the gun, but I need to know if this was what left Dexter in the chair for good. There's a round missing from its chamber.
-But why leave it to be found? Why drop it here from where they shot Dexter?
 ~ foundGun = true
 ~ good_count = good_count + 1
+I shouldn't be touching the gun, but I need to know if this was what left Dexter in the chair for good. There's a round missing from its chamber.
+But why leave it to be found? Why drop it here from where they shot Dexter?
+
 -> clueHub
 
 
 === clueMonitor ===
 # CLUE_FOUND_5
-There's no windows in these apartments by design, but these wallscreens weren't any better as a source of artificial sunshine. But why is it still on, glowing with life if the rest of the room has died.
-There's something more off though, the emitted light is further behind the glass instead of on it. I'm beginning to feel more disconnected than the panel from where it ought to be emitting from.
 ~ foundMonitor = true
 ~ good_count = good_count + 1
+There's no windows in these apartments by design, but these wallscreens weren't any better as a source of artificial sunshine. But why is it still on, glowing with life if the rest of the room has died.
+There's something more off though, the emitted light is further behind the glass instead of on it. I'm beginning to feel more disconnected than the panel from where it ought to be emitting from.
 -> clueHub
 
 ===clueFineNotice===
 #CLUE_FOUND_6A
-
+~ foundFineDoc = true 
 There's a notice pinned to the door. A fine - a tapestry hung over a wall screen, flagged as a possible fire hazard. The letterhead is corporate, not municipal. Someone with money sent this. Not important.
-
-~ foundFineDoc = true
- {aptUnlocked: ->clueHub}
+{aptUnlocked: ->clueHub}
  ->intMonologue
 
 === clueNeighborDatapad ===
@@ -222,7 +221,12 @@ The scanner needs a different kind of authentication, a handshake that seems too
 
 === obsRoom ===
 # SCENE_OBS_ROOM
-One way glass. Four apartments visible from here, Dexter's included. There's a door in the wall — service corridor access. This is how he got in. This is how he got out.
+{not seenObsRoom:
+    One way glass. Four apartments visible from here, Dexter's included. There's a door in the wall — service corridor access. This is how he got in. This is how he got out.
+~seenObsRoom = true
+- else: 
+    What are they doing here...
+}
 
 { clueNeighborDatapad && clueDexterDatapad && clueBackupDrive:
     -> portTrace

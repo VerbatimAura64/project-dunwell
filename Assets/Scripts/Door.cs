@@ -11,7 +11,7 @@ public class Door : MonoBehaviour
     public bool unlockable;
     //public GameObject doorObj;
     public GameObject door;
-    private float up = 3;
+    private float left = 0;
     private float down = 0;
 
 
@@ -23,28 +23,10 @@ public class Door : MonoBehaviour
     
     }
 
-
-
-    private void OnTriggerEnter(Collider other)
+    void Update()
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (!locked && !hinged)
-            {
-                opening = true;
-                SlideUp();
-                //door.SetActive(false);
-      //          doorObj.SetActive(false);
-            }
-            if(!locked && hinged)
-            {
-                //opening = true;
-                //OpenDoor();
-                //play locked sound
-            }
-        }
+        Slide();
     }
-
 
     public void OpenDoor()
     {
@@ -52,18 +34,6 @@ public class Door : MonoBehaviour
         this.GetComponent<BoxCollider>().enabled = false; // Disable the collider to allow passage
         this.GetComponent<Door>().enabled = false;
 
-    }
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (!locked)
-            {
-                opening = false;
-                SlideUp();
-                //          doorObj.SetActive(true);
-            }
-        }
     }
 
     public void UnlockDoor()
@@ -88,7 +58,7 @@ public class Door : MonoBehaviour
         if (!hinged)
         {
             opening = true;
-            SlideUp();
+            Slide();
         }
     }
 
@@ -101,26 +71,18 @@ public class Door : MonoBehaviour
 
     }
 
-    void SlideUp()
+    void Slide()
     {
-        if (opening)
+        if (!locked)
         {
-            float step = .2f;
-            if(door.transform.position.y <= up)
-                door.transform.Translate(Vector3.up * step * Time.deltaTime); // Adjust the sliding direction and distance as needed
+            if (!hinged)
+            {
+                float step = .2f;
+                if (left >= door.transform.localPosition.x)
+                door.transform.Translate(step * Time.deltaTime * Vector3.right); // Adjust the sliding direction and distance as needed
+            }
         }
-        else
-        {
-            float step = 1f * Time.deltaTime;
-            //while(door.transform.position.y >= down)
-                door.transform.position =  Vector3.MoveTowards(door.transform.position, new Vector3(door.transform.position.x, down, door.transform.position.z), step); // Adjust the sliding direction and distance as needed
-        }
+           
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

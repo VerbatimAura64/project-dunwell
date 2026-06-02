@@ -14,6 +14,7 @@ public class Terminal : MonoBehaviour
         gm = GameObject.FindWithTag("GameController").GetComponent<GM>();
         if(storageTerminal)
             door = GameObject.Find("APT4").GetComponent<Door>();
+        
     }
 
     public void StartTerminal()
@@ -21,6 +22,10 @@ public class Terminal : MonoBehaviour
         if (storageTerminal)
         {
             RemoteUnlock();
+        }
+        else
+        {
+            RevealRoom();
         }
     }
 
@@ -36,6 +41,19 @@ public class Terminal : MonoBehaviour
             gm.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = gm._inkStory.Continue();
             //gm.AdvanceDialogue();
             //door.OpenDoor();
+            
+        }
+    }
+
+    void RevealRoom()
+    {
+        if (door != null)
+        {
+            door.locked = false;
+            gm._inkStory.ChoosePathString("obsRoom");
+            gm.typeWriter._readyForNewText = true;
+            
+            
             
         }
     }

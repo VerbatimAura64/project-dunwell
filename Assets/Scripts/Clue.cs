@@ -32,6 +32,7 @@ public class Clue : MonoBehaviour
     {
         //clueTexture = AssetPreview.GetAssetPreview(clueObj);
         //Debug.Log(clueTexture);
+        WallReveal();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -86,6 +87,24 @@ public class Clue : MonoBehaviour
         
                 
 
+    }
+
+    void WallReveal()
+    {
+        if(clueObj.name == "Wall Screen")
+        {
+            if ((int)gm._inkStory.variablesState["good_count"] >= 5)
+            {
+               
+                this.clueObj.GetComponent<Clue>().enabled = false;
+                this.clueObj.GetComponent<BoxCollider>().enabled = false;
+                this.clueObj.tag = "Terminal";
+                this.clueObj.GetComponent<MeshRenderer>().enabled = true;
+                this.clueObj.GetComponent<SphereCollider>().enabled = true;
+                //GameObject.Find("Dunwell").GetComponent<vThirdPersonInput>().clueTriggered = false;
+                
+            }
+        }
     }
 
 
