@@ -19,12 +19,18 @@ public class GM : MonoBehaviour
     public GameObject dialogue;
     public TypeWriterEffect typeWriter;
     public GameObject arrow;
-    //public bool dialogueIsPlaying;
+    public GameObject manager;
+    public bool managerAlerted;
+    public bool isConversation;
+    public GameObject choiceButtonPrefab;
+    public Transform choicesContainer;
     public Clue clueScript;
     public List<AudioClip> queueList;
     public List<GameObject> cluesFound;
     public List<GameObject> clueCards;
     public Story _inkStory;
+    
+    private List<GameObject> choiceButtons = new List<GameObject>();
     //public Queue<AudioClip> toBePlayed;
     //public List<bool> choices;
     //public int goodChoice, badChoice;
@@ -76,7 +82,8 @@ public class GM : MonoBehaviour
     {
         IsClipOn();
         //DiscoverClue();
-        if(Input.GetKeyDown(KeyCode.Return))
+        ManagerAlerted();
+        if (Input.GetKeyDown(KeyCode.Return))
             if(arrow.activeInHierarchy)
                 ContinueStory();
         //if(Input.GetKeyDown(KeyCode.Return))
@@ -110,7 +117,7 @@ public class GM : MonoBehaviour
             // Skip blank lines automatically
             if (string.IsNullOrWhiteSpace(line))
             {
-                //AdvanceDialogue();
+                AdvanceDialogue();
                 return;
             }
             typeWriter._readyForNewText = true;
@@ -127,7 +134,17 @@ public class GM : MonoBehaviour
                     string sceneName = tag.Substring(6); // Extract the scene name after "SCENE_"
                                                          // Load the scene using SceneManager.LoadScene(sceneName);
                     Debug.Log("Scene change triggered: " + sceneName);
+                    AdvanceDialogue(); //UI will produce a blank line, so we need to advance the dialogue again to skip it
+                }
+                if (tag.StartsWith("CONVO_"))
+                {
                     AdvanceDialogue();
+                    dialogue.SetActive(false);
+                    // Load the scene using SceneManager.LoadScene(sceneName);
+                    manager.GetComponent<BldingManager>().Restore();
+                    Debug.Log("Conversation is Done ");
+                    //ui will produce a blank line, so we need to advance the dialogue again to skip it
+                    continue;
                 }
                 if (tag.StartsWith("CLUE_"))
                 {
@@ -137,6 +154,10 @@ public class GM : MonoBehaviour
 
                 }
             }
+        }
+        else
+        {
+            dialogue.SetActive(false);
         }
 
     }
@@ -150,7 +171,7 @@ public class GM : MonoBehaviour
             dialogue.transform.GetChild(1).GetComponent<TMP_Text>().text = _inkStory.Continue();
             dialogue.SetActive(true);
             List<string> tags = _inkStory.currentTags;
-            
+
             foreach (string tag in tags)
             {
                 /*if (tag.StartsWith("audio:"))
@@ -172,7 +193,17 @@ public class GM : MonoBehaviour
                     string sceneName = tag.Substring(6); // Extract the scene name after "SCENE_"
                     // Load the scene using SceneManager.LoadScene(sceneName);
                     Debug.Log("Scene change triggered: " + sceneName);
+                    AdvanceDialogue();//ui will produce a blank line, so we need to advance the dialogue again to skip it
+                    continue;
+                }
+                if (tag.StartsWith("CONVO_"))
+                {
                     AdvanceDialogue();
+                    dialogue.SetActive(false);
+                    // Load the scene using SceneManager.LoadScene(sceneName);
+                    manager.GetComponent<BldingManager>().Restore();
+                    Debug.Log("Conversation is Done ");
+                    //ui will produce a blank line, so we need to advance the dialogue again to skip it
                     continue;
                 }
                 if (tag.StartsWith("CLUE_"))
@@ -184,20 +215,61 @@ public class GM : MonoBehaviour
                 }
             }
 
-            if(_inkStory.currentChoices.Count > 0)
+
+        } else if (_inkStory.currentChoices.Count > 0)
+        {
+
+            dialogue.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
+            arrow.SetActive(false);
+            if (isConversation)
             {
-                //choices = new List<bool>();
-                for (int i = 0; i < _inkStory.currentChoices.Count; i++)
-                {
-                    //Choice choice = _inkStory.currentChoices[i];
-                    //choices.Add(false);
-                    //Debug.Log("Choice " + (i+1) + ": " + choice.text);
-                }
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
             }
+            //choices = new List<bool>();
+            for (int i = 0; i < _inkStory.currentChoices.Count; i++)
+            {
+                if(isConversation)
+                    DisplayChoices();
+                else
+                    dialogue.SetActive(false);
+                //Choice choice = _inkStory.currentChoices[i];
+                //choices.Add(false);
+                //Debug.Log("Choice " + (i+1) + ": " + choice.text);
+            }
+        
         } else
         {
             dialogue.SetActive(false);
         }
+    }
+
+    void DisplayChoices()
+    {
+        HideChoices();
+
+        for (int i = 0; i < _inkStory.currentChoices.Count; i++)
+        {
+            Choice choice = _inkStory.currentChoices[i];
+            GameObject choiceButton = Instantiate(choiceButtonPrefab, choicesContainer);
+            choiceButton.GetComponentInChildren<TMP_Text>().text = choice.text;
+            int choiceIndex = i; // Capture the current index for the lambda
+            choiceButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => MakeChoice(choiceIndex));
+            choiceButtons.Add(choiceButton);
+        }
+
+        choicesContainer.gameObject.SetActive(true);
+    }
+    
+    void HideChoices()
+    {
+        foreach (GameObject choiceButton in choiceButtons)
+        {
+            Destroy(choiceButton);
+        }
+        choiceButtons.Clear();
+        choicesContainer.gameObject.SetActive(false);
+    
     }
 
     void IsClipOn()
@@ -214,11 +286,6 @@ public class GM : MonoBehaviour
             //clipPlaying = null;
         }*/
     }
-
-    //public void EnterDialogueMode(TextAsset inkAsset)
-    //{
-
-    //    }
 
     public void PlayClip()
     {
@@ -255,23 +322,12 @@ public class GM : MonoBehaviour
 
     }
 
-    public void MakeChoice(string choice)
+    public void MakeChoice(int choice)
     {
-        if (!string.IsNullOrEmpty(choice))
-        {
-            //goodChoice++;
-            //_inkStory.variablesState["good_count"] = goodChoice;
-            //_inkStory.ChooseChoiceIndex(0);
-            //Debug.Log(_inkStory.currentChoices);//ChoosePathString(choice);
-            ContinueStory();
-        }
-        else
-        {
-            //badChoice++;
-            //_inkStory.variablesState["bad_count"] = badChoice;
-            //_inkStory.ChooseChoiceIndex(1);
-            ContinueStory();
-        }
+        _inkStory.ChooseChoiceIndex(choice);
+        Cursor.visible = false;
+        HideChoices();
+        AdvanceDialogue();
 
     }
 
@@ -345,55 +401,14 @@ public class GM : MonoBehaviour
         return newCard.transform as RectTransform;
     }
 
-
-}
-
-/*
-[System.Serializable]
-    public class Clue
+    void ManagerAlerted()
     {
-        public string name;
-        public string description;
-        public bool discovered;
-        public GameObject clueObj;
-        public string inkKnotTitle;
-    }
-
-    [System.Serializable]
-    public class ClueList
-    {
-        public Clue[] clues;
-    }
-
-
-    private void Awake()
-    {
-        inkStory = new Story(inkAsset.text);
-        InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
-        if (window != null) { InkPlayerWindow.Attach(inkStory); }
-
-    }
-
-    public void ContinueStory()
-    {
-        if (inkStory.canContinue)
+        if(managerAlerted)
         {
-            dialogueText.GetComponent<TextMeshProUGUI>().text = inkStory.Continue();
+            manager.SetActive(true);
+            //_inkStory.ChoosePathString("bldManagerConv");
+            //AdvanceDialogue();
         }
     }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
-}*/
+}
 

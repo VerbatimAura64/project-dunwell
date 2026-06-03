@@ -251,6 +251,7 @@ namespace Invector.CharacterController
                         if (door.GetComponent<Door>().knocked)
                         {
                             Debug.Log("Brute Forcing " + door.name);
+                            GM.managerAlerted = true;
                             door.GetComponent<Door>().forced = true;
                             door.GetComponent<Door>().UnlockDoor();
                             doorCollided = false;
@@ -282,16 +283,7 @@ namespace Invector.CharacterController
 
 
             }
-            //if(door != null)
-                //if(door.name.Equals("APT4") && door.GetComponent<Door>().knocked)
-                  // {
-                   //     //door.GetComponent<Door>().locked = false;
-                    //    prompt.GetComponent<TMP_Text>().text = "Press E to Brute force";
-                      //  if (Input.GetKeyDown(interactInput))
-                        //{
-                          //  door.GetComponent<Door>().UnlockDoor();
-                        //}
-                    //}
+
         }
 
         protected virtual void FocusInput()
@@ -421,26 +413,9 @@ namespace Invector.CharacterController
                         ccm.clueCards.Last().GetComponent<Clue>().isClueCard = true;
                         GM.dialogue.SetActive(true);
                         GM.DiscoverClue();
+
+                    }
                     
-
-                    //GM.clueCardObj.GetComponent<Clue>
-
-                    //foundClue.clueCardObj = GM.clueCards.Last();
-                    //GM.clueCards.Last().GetComponent<Clue>().clueCardObj = GM.clueCardObj;
-
-                    //GM.AddCardspace(GM.clueCards.Last());
-
-
-
-
-                    //itemToFocus.GetComponent<Clue>().clueCardObj = GM.clueCards.Last();
-
-                }
-                    //this.clueInvestigated = true;    
-                    //clueInvestigated = true;
-                    //GM._inkStory.variablesState["clueInspected"] = clue.GetComponent<Clue>().discovered;
-                   // GM._inkStory.ChoosePathString("clueInspection");
-                    //GM._inkStory.Continue();
                 }
                 else if(focused && !foundClue.relevant) 
                 {
@@ -449,9 +424,10 @@ namespace Invector.CharacterController
                 GM.typeWriter._readyForNewText = true;
                 GM.typeWriter.PrepareForNewText(GM.dialogue);
                 GM._inkStory.ChoosePathString("notRelevant");
-                GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                GM.AdvanceDialogue();//GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+               
 
-                }
+            }
             
         }
 
@@ -561,7 +537,12 @@ namespace Invector.CharacterController
                 if (!Cursor.visible)
                     Cursor.visible = true;
                 else
+                {
                     Application.Quit();
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+#endif
+                }
             }
         }
 

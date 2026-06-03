@@ -58,12 +58,14 @@ These apartments were cheap, The Studios they called them, basically saving spac
 
 ===wrongApt===
 This isn't Dexter's Apartment...
-->intMonologue
+-{not seenIntMonologue && not managerAlerted: ->intMonologue}
+->DONE
 
 ===notRelevant===
 {~ Doesn't look important... | Sificity needs a facelift... | Maybe it's decorative... | Really? | Nothing here that helps me | Marcus looks. Moves on.}
--{aptUnlocked: ->clueHub}
--{not seenIntMonologue: ->intMonologue}
+-{not seenIntMonologue && not managerAlerted: ->intMonologue}
+-{not seenClueRoom: ->aptUnlocked}
+//-{seenClueRoom: ->clueHub}
  ->DONE
 
 ===dextersDoor===
@@ -76,8 +78,8 @@ The door is locked. Override lock, not a standard residential fit. I can force t
 
 === bruteForce ===
 # DOOR_FORCED
-Four override prompts and some patience. The lock gives.
 ~ managerAlerted = true
+Four override prompts and some patience. The lock gives.
 -> aptUnlocked
 
 ===findTerminal ===
@@ -100,10 +102,11 @@ I can make him out. Sitting in a chair, head down like he fell asleep watching s
 A bag. And around his feet — a pool of blood.
 I've just forced my way into a crime scene. The droids are going to pop in eventually. When they do, they'll harden the logic around whatever they find — and right now everything they find points at me.
 If only I had answered him sooner.
+~seenClueRoom = true
 -> clueHub
 
 ===clueHub===
-{not bruteForce || not seenClueRoom: 
+{not managerAlerted: 
 The door unlocks and swings open. It's dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
 I can make him out. Sitting in a chair, head down like he fell asleep watching something. But there's something on his head.
 A bag. And around his feet — a pool of blood.
@@ -111,9 +114,7 @@ I've just forced my way into a crime scene. The droids are going to pop in event
 If only I had answered him sooner.
 ~seenClueRoom = true
 }
-
 What can I find here, I don't have a lot of time. 
-
 { foundLockedDoor && foundWipedDesk && foundBody && foundGun && foundMonitor: 
     The picture is becoming clearer. -> beatTwo
 - else:
@@ -173,7 +174,7 @@ There's something more off though, the emitted light is further behind the glass
 #CLUE_FOUND_6A
 ~ foundFineDoc = true 
 There's a notice pinned to the door. A fine - a tapestry hung over a wall screen, flagged as a possible fire hazard. The letterhead is corporate, not municipal. Someone with money sent this. Not important.
-{aptUnlocked: ->clueHub}
+{aptUnlocked or seenClueRoom or managerAlerted: ->clueHub}
  ->intMonologue
 
 === clueNeighborDatapad ===
@@ -288,10 +289,9 @@ But there's no time.
 
 === bldManagerConv ===
 { managerAlerted:
-    ~ managerKnowsMonitor = false
-    The service corridor door clicked shut behind me just as he came around the corner from the elevator bank. Maintenance shirt, laminate badge, the particular walk of a man who has never once doubted his own jurisdiction.
+    He was already in the hallway when I came out. The lock system must've flagged the override. He had the walk of a man who'd been called up for something and wasn't sure yet how serious it was.
 - else:
-    He was already in the hallway when I came out. Doing his rounds, or something close enough to rounds that he'd call it that. He clocked me the way building managers clock everyone — not suspicion, just inventory.
+    He was already in the hallway when I came out of the service corridor. Doing his rounds, or something close enough to rounds that he'd call it that. He clocked me the way building managers clock everyone — not suspicion, just inventory.
 }
 
 "Help you with something?"
@@ -343,6 +343,9 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
     -> conveManagerDone
 
 === conveManagerDone ===
+#CONVO_DONE
+-{seenClueRoom: ->clueHub}
+-{not seenIntMonologue: ->intMonologue}
 -> DONE
 
 === closingMonologue ===
