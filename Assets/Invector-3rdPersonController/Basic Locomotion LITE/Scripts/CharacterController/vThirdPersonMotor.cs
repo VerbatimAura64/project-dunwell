@@ -393,6 +393,11 @@ namespace Invector.CharacterController
             }
         }
 
+        void CheckAirTime()
+        {
+
+        }
+
         void CheckGroundDistance()
         {
             if (_capsuleCollider != null)

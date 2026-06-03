@@ -15,6 +15,7 @@ public class TypeWriterEffect : MonoBehaviour
     public int currentVisibleCharacterIndex;
     private Coroutine typewriterCoroutine;
     public bool _readyForNewText = true;
+    public GameObject nextArrow;
     private WaitForSeconds simpleDelay;
     private WaitForSeconds interpunctuationDelay;
 
@@ -40,7 +41,7 @@ public class TypeWriterEffect : MonoBehaviour
     private void Awake()
     {
         _textBox = GetComponent<TMP_Text>();
-
+        nextArrow.SetActive(false);
         simpleDelay = new WaitForSeconds(1 / charactersPerSecond);
         interpunctuationDelay = new WaitForSeconds(interpunctuationDelay_);
 
@@ -57,7 +58,6 @@ public class TypeWriterEffect : MonoBehaviour
 
     private void OnEnable()
     {
-
         _textBox.maxVisibleCharacters = 0;
     }
 
@@ -161,7 +161,16 @@ public class TypeWriterEffect : MonoBehaviour
                 yield return currentlySkipping ? skippingDelay : simpleDelay;
             }
             currentVisibleCharacterIndex++;
+            
+            if(currentVisibleCharacterIndex >= lastCharacterIndex)
+            {
+                nextArrow.SetActive(true);
+            } else
+            {
+                nextArrow.SetActive(false);
+            }
         }
-
+        
+        
     }
 }

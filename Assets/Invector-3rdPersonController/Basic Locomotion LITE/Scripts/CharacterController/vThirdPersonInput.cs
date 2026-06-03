@@ -46,6 +46,7 @@ namespace Invector.CharacterController
         public GameObject terminal;
         public bool clueInvestigated;
         public GameObject screen;
+        public ClueCardManager ccm;
         //public GameObject clueToInvestigate;
 
         protected vThirdPersonCamera tpCamera;                // acess camera info        
@@ -414,10 +415,10 @@ namespace Invector.CharacterController
                         foundClue.clueCardObj.GetComponent<Clue>().discovered = true;
                         //foundClue.clueCardObj.GetComponent<Clue>().clueName = foundClue.clueName + " Clue";
                         GM.cluesFound.Add(foundClue.gameObject);
-                        GM.clueCards.Add(foundClue.clueCardObj);
+                        ccm.clueCards.Add(foundClue.clueCardObj);
                         //foundClue.clueCardObj.GetComponent <Clue>().cardClueName.text = foundClue.clueName + " Clue";
-                        GM.clueCards.Last().GetComponent<Clue>().cardClueName = foundClue.clueCardObj.GetComponentInChildren<TextMeshProUGUI>();
-                        GM.clueCards.Last().GetComponent<Clue>().isClueCard = true;
+                        ccm.clueCards.Last().GetComponent<Clue>().cardClueName = foundClue.clueCardObj.GetComponentInChildren<TextMeshProUGUI>();
+                        ccm.clueCards.Last().GetComponent<Clue>().isClueCard = true;
                         GM.dialogue.SetActive(true);
                         GM.DiscoverClue();
                     
@@ -443,8 +444,13 @@ namespace Invector.CharacterController
                 }
                 else if(focused && !foundClue.relevant) 
                 {
-                    GM._inkStory.ChoosePathString("notRelevant");
-                    GM._inkStory.Continue();
+                if (!GM.dialogue.activeInHierarchy)
+                    GM.dialogue.SetActive(true);
+                GM.typeWriter._readyForNewText = true;
+                GM.typeWriter.PrepareForNewText(GM.dialogue);
+                GM._inkStory.ChoosePathString("notRelevant");
+                GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+
                 }
             
         }

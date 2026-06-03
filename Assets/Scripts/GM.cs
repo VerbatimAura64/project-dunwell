@@ -18,6 +18,7 @@ public class GM : MonoBehaviour
     public GameObject clueCardObj;
     public GameObject dialogue;
     public TypeWriterEffect typeWriter;
+    public GameObject arrow;
     //public bool dialogueIsPlaying;
     public Clue clueScript;
     public List<AudioClip> queueList;
@@ -76,7 +77,8 @@ public class GM : MonoBehaviour
         IsClipOn();
         //DiscoverClue();
         if(Input.GetKeyDown(KeyCode.Return))
-            ContinueStory();
+            if(arrow.activeInHierarchy)
+                ContinueStory();
         //if(Input.GetKeyDown(KeyCode.Return))
           //  PlayNext();
         //DiscoverClue();
@@ -170,6 +172,7 @@ public class GM : MonoBehaviour
                     string sceneName = tag.Substring(6); // Extract the scene name after "SCENE_"
                     // Load the scene using SceneManager.LoadScene(sceneName);
                     Debug.Log("Scene change triggered: " + sceneName);
+                    AdvanceDialogue();
                     continue;
                 }
                 if (tag.StartsWith("CLUE_"))
