@@ -22,6 +22,7 @@ VAR foundNeighborDatapad = false
 VAR foundDexterDatapad = false
 VAR good_count = 0
 VAR seenIntMonologue = false
+VAR seenClueRoom = false
 VAR seenObsRoom = false
 
 
@@ -57,11 +58,13 @@ These apartments were cheap, The Studios they called them, basically saving spac
 
 ===wrongApt===
 This isn't Dexter's Apartment...
-->DONE
+->intMonologue
 
 ===notRelevant===
 {~ Doesn't look important... | Sificity needs a facelift... | Maybe it's decorative... | Really? | Nothing here that helps me | Marcus looks. Moves on.}
-->DONE
+-{aptUnlocked: ->clueHub}
+-{not seenIntMonologue: ->intMonologue}
+ ->DONE
 
 ===dextersDoor===
 I knocked on the door. The room sounds hollow, like it couldn't possibly have anyone inside. He told me to meet here. Maybe he fell asleep - I'm three hours late.
@@ -92,7 +95,7 @@ There's something else in here. A ghost signal, low bandwidth, encrypted. I can'
 
 
 ===aptUnlocked===
-The door unlocks and slides into the wall. Dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
+The door unlocks and swings open. It's dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
 I can make him out. Sitting in a chair, head down like he fell asleep watching something. But there's something on his head.
 A bag. And around his feet — a pool of blood.
 I've just forced my way into a crime scene. The droids are going to pop in eventually. When they do, they'll harden the logic around whatever they find — and right now everything they find points at me.
@@ -100,6 +103,15 @@ If only I had answered him sooner.
 -> clueHub
 
 ===clueHub===
+{not bruteForce || not seenClueRoom: 
+The door unlocks and swings open. It's dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
+I can make him out. Sitting in a chair, head down like he fell asleep watching something. But there's something on his head.
+A bag. And around his feet — a pool of blood.
+I've just forced my way into a crime scene. The droids are going to pop in eventually. When they do, they'll harden the logic around whatever they find — and right now everything they find points at me.
+If only I had answered him sooner.
+~seenClueRoom = true
+}
+
 What can I find here, I don't have a lot of time. 
 
 { foundLockedDoor && foundWipedDesk && foundBody && foundGun && foundMonitor: 
