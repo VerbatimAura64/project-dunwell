@@ -301,6 +301,8 @@ GameObject:
   - component: {fileID: 9015055386436356698}
   - component: {fileID: 675835352097381499}
   - component: {fileID: 2073337848874142502}
+  - component: {fileID: 1644158675192070704}
+  - component: {fileID: 104875448586124799}
   m_Layer: 5
   m_Name: ClueCard
   m_TagString: Untagged
@@ -383,14 +385,38 @@ MonoBehaviour:
   discovered: 0
   isClueCard: 0
   clueCardObj: {fileID: 0}
-  clueName: Gun
+  clueName: Wall Screen
   description: 
   clueSprite: {fileID: 0}
   clueObj: {fileID: 0}
   inkKnotTitle: 
   inkChoice: 
   cardClueName: {fileID: 0}
-  cardClueImage: {fileID: 0}
+--- !u!114 &1644158675192070704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7905338974331181838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 745ababef9b78cb48bd4769a35d2d170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DragCard
+  canvas: {fileID: 0}
+--- !u!225 &104875448586124799
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7905338974331181838}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8003556506394678606
 GameObject:
   m_ObjectHideFlags: 0

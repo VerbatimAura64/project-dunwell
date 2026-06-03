@@ -22,7 +22,7 @@ public class ClueCardManager : MonoBehaviour
         gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GM>();
     }
 
-    private void UpdateCardPosition()
+    public void UpdateCardPosition()
     {
         if (clueCards.Count == 0) return;
         float cardSpacing = 1f/clueCards.Count;
@@ -40,7 +40,7 @@ public class ClueCardManager : MonoBehaviour
 
     void Update()
     {
-        UpdateCardPosition();
+        //UpdateCardPosition();
         /*for(int i = 0; i < gm.clueCards.Count; i++)
         {
             if (clueCards[i] == null)

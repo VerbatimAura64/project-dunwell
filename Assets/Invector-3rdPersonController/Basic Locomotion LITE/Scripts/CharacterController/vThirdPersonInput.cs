@@ -375,6 +375,7 @@ namespace Invector.CharacterController
                     GM.caseBoard.SetActive(true);
                     cc.lockMovement = true;
                     caseFocused = true;
+                    ccm.UpdateCardPosition();
                 }
             }
             else if (caseFocused && !focused)
@@ -540,7 +541,7 @@ namespace Invector.CharacterController
                 {
                     Application.Quit();
 #if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPlaying = false;
+                    UnityEditor.EditorApplication.isPaused = true;
 #endif
                 }
             }

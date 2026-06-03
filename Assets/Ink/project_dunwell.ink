@@ -233,7 +233,6 @@ The scanner needs a different kind of authentication, a handshake that seems too
 
 
 === obsRoom ===
-# SCENE_OBS_ROOM
 {not seenObsRoom:
     One way glass. Four apartments visible from here, Dexter's included. There's a door in the wall — service corridor access. This is how he got in. This is how he got out.
 ~seenObsRoom = true
