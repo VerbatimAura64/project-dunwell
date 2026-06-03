@@ -4,7 +4,7 @@ public class ScreenVisibility : MonoBehaviour
 {
     public GameObject screen;
 
-    private void OnTriggerEnter(GameObject other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("MainCamera"))
         {
