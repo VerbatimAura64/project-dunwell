@@ -303,9 +303,12 @@ namespace Invector.CharacterController
                         cc.input = Vector2.zero;
                         focused = true;
                         cc.lockMovement = true;
+                        keepDirection = true;
+                        //this.enabled = false;    //Need to disable input to prevent camera movement while focused, but this also prevents the player from exiting focus, so instead I will just set movement input to 0 and lock movement while focused
+
                         tpCamera.enabled = false;
-                        //tpCamera.lockCamera = true;
-                        //tpCamera._camera.enabled = false;
+                        //tpCamera.lockCamera = true; //Uncommenting this will make the camera  rotate back to a different angle when exiting focus
+                        tpCamera._camera.enabled = false;
                         tpCamera.inspectCam.enabled = true;
                         
                         
@@ -590,9 +593,11 @@ namespace Invector.CharacterController
 
         protected virtual void RotateWithCamera(Transform cameraTransform)
         {
+            if (!focused || !caseFocused) { 
             if (cc.isStrafing && !cc.lockMovement && !cc.lockMovement)
-            {                
-                cc.RotateWithAnotherTransform(cameraTransform);                
+            {
+                cc.RotateWithAnotherTransform(cameraTransform);
+            }
             }
         }
 
