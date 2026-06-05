@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using static GM;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 
 
@@ -14,7 +15,7 @@ using UnityEngine.SceneManagement;
 
 namespace Invector.CharacterController
 {
-    public class vThirdPersonInput : MonoBehaviour
+    public class vThirdPersonInput : MonoBehaviour, IDragHandler
     {
         #region variables
 
@@ -27,6 +28,10 @@ namespace Invector.CharacterController
         public KeyCode strafeInput = KeyCode.Tab;
         public KeyCode sprintInput = KeyCode.LeftShift;
         public KeyCode interactInput = KeyCode.E;
+
+        private RaycastHit raycastHit;
+        private int layerMask;
+        private int layerIndex = 6;
 
         [Header("Camera Settings")]
         public string rotateCameraXInput ="Mouse X";
@@ -69,6 +74,7 @@ namespace Invector.CharacterController
         {
             CharacterInit();
             prompt.SetActive(false);
+            layerMask = 1 << layerIndex;
         }
 
         protected virtual void CharacterInit()
@@ -302,7 +308,15 @@ namespace Invector.CharacterController
                                 GM.dialogue.SetActive(true);
                         cc.isSprinting = false;
                         cc.input = Vector2.zero;
-                        
+                        if (itemToFocus.GetComponent<Clue>().isInteractable)
+                        {
+                            itemToFocus.GetComponent<Transform>().position = tpCamera.anchor.transform.position;
+                            Ray ray = tpCamera.inspectCam.ScreenPointToRay(Input.mousePosition);
+                            if(Physics.Raycast(ray, out raycastHit, Mathf.Infinity, layerMask))
+                            Debug.Log("Ray hit " + raycastHit.transform.gameObject.layer);
+                            //Debug.DrawRay(tpCamera.inspectCam.transform.forward, ray, Color.green);
+                            //Inspecting();
+                        }
                         cc.lockMovement = true;
                         //tpCamera.lockCamera = true;
                         //tpCamera.enabled = false;
@@ -313,7 +327,7 @@ namespace Invector.CharacterController
                         
                         if (mapCollided)
                         {
-                            tpCamera._camera.GetComponent<Camera>().fieldOfView = 60;
+                            tpCamera.inspectCam.fieldOfView = 60;
                             prompt.GetComponent<TMP_Text>().text = "Press F to back out";
                         } 
                         else if (clueTriggered)
@@ -334,12 +348,13 @@ namespace Invector.CharacterController
                         tpCamera.enabled = true;
                         tpCamera.inspectCam.enabled = false;
                         tpCamera._camera.enabled = true;
-                        
+                        itemToFocus.GetComponent<Transform>().position = itemToFocus.GetComponent<Clue>().ogPos;
+                        itemToFocus.GetComponent<Transform>().rotation = itemToFocus.GetComponent<Clue>().ogDirection;
                         //tpCamera.ReturnOldRotate();
                         tpCamera.lockCamera = false;
                         if (mapCollided)
                         {
-                            tpCamera._camera.GetComponent<Camera>().fieldOfView = 98.5f;
+                            tpCamera.inspectCam.fieldOfView = 78.5f;
                             prompt.GetComponent<TMP_Text>().text = "Press F to focus";
                         }
                         else if (clueTriggered)
@@ -363,6 +378,19 @@ namespace Invector.CharacterController
                 //prompt.SetActive(false);
                 //dialogue.SetActive(false);
             }
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            if (focused && itemToFocus != null)
+            {
+                itemToFocus.transform.eulerAngles = new Vector3 (-eventData.delta.y, -eventData.delta.x);
+            }
+        } 
+
+        void Inspecting()
+        {
+
         }
 
         protected virtual void OpenCaseBoard()

@@ -1,5 +1,6 @@
 using Invector.CharacterController;
 using TMPro;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -12,6 +13,10 @@ public class Clue : MonoBehaviour
     public bool relevant;
     public bool discovered;
     public bool isClueCard;
+    public bool isInteractable;
+    //[SerializeField]
+    public Vector3 ogPos;
+    public Quaternion ogDirection;
     public GameObject clueCardObj;
     public string clueName;
     public string description;
@@ -39,7 +44,8 @@ public class Clue : MonoBehaviour
     void Awake()
     {
         this.gameObject.name = clueName;
-        
+        ogPos = this.transform.position;
+        ogDirection = this.transform.rotation;
         gm = GameObject.FindWithTag("GameController").GetComponent<GM>();
         
         if(isClueCard)

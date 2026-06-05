@@ -597,6 +597,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_MapTable_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1412227332149806, guid: c1dee4b30774e314d8395853c0c5e03f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4194670218996332, guid: c1dee4b30774e314d8395853c0c5e03f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.97136
@@ -1551,7 +1555,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -1575,6 +1579,9 @@ MonoBehaviour:
   relevant: 0
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Junk
   description: 
@@ -1653,7 +1660,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -1677,6 +1684,9 @@ MonoBehaviour:
   relevant: 1
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Body
   description: 
@@ -3292,15 +3302,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4655052210597358, guid: 4493b9786df76d64fad99c1e9ac91ace, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 38.73
+      value: 15.993
       objectReference: {fileID: 0}
     - target: {fileID: 4655052210597358, guid: 4493b9786df76d64fad99c1e9ac91ace, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4655052210597358, guid: 4493b9786df76d64fad99c1e9ac91ace, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.724
+      value: -7.91
       objectReference: {fileID: 0}
     - target: {fileID: 4655052210597358, guid: 4493b9786df76d64fad99c1e9ac91ace, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4012,7 +4022,7 @@ GameObject:
   m_Layer: 0
   m_Name: InspectionAnchor
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -4025,7 +4035,7 @@ Transform:
   m_GameObject: {fileID: 142274911}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7598,6 +7608,7 @@ GameObject:
   - component: {fileID: 311700892}
   - component: {fileID: 311700891}
   - component: {fileID: 311700890}
+  - component: {fileID: 311700893}
   m_Layer: 0
   m_Name: Inspection Camera
   m_TagString: MainCamera
@@ -7724,6 +7735,22 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &311700893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311700887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49b4cc203aa6414fae5c798d1d0e7d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.PhysicsRaycaster
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1001 &313279581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9180,6 +9207,9 @@ MonoBehaviour:
   relevant: 1
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Locked Door
   description: 
@@ -11352,8 +11382,8 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.101960786, g: 0.8666667, b: 0.7764706, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Intensity: 0.44
+  m_Range: 1.05
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
@@ -13141,8 +13171,10 @@ MonoBehaviour:
   targetLookAt: {fileID: 0}
   _camera: {fileID: 1324982037}
   inspectCam: {fileID: 311700892}
+  anchor: {fileID: 0}
   _lockOnTarget: {fileID: 0}
   _playerTarget: {fileID: 0}
+  cullingDistance: 0
 --- !u!1001 &507915924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14189,6 +14221,9 @@ MonoBehaviour:
   relevant: 0
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Grafitti
   description: 
@@ -14973,14 +15008,14 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 1.05
-  m_Center: {x: -0.03, y: -0.27, z: -0.22}
+  m_Center: {x: 0, y: -0.27, z: 0}
 --- !u!114 &585640723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14997,6 +15032,9 @@ MonoBehaviour:
   relevant: 1
   discovered: 0
   isClueCard: 0
+  isInteractable: 1
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Neighbor Datapad
   description: 
@@ -21810,6 +21848,9 @@ MonoBehaviour:
   relevant: 1
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Desk
   description: 
@@ -21831,7 +21872,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -22378,6 +22419,9 @@ MonoBehaviour:
   relevant: 0
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Junk
   description: 
@@ -22399,7 +22443,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -24630,6 +24674,9 @@ MonoBehaviour:
   relevant: 1
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Wall Screen
   description: 
@@ -24956,6 +25003,9 @@ MonoBehaviour:
   relevant: 1
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Fine Doc
   description: 
@@ -25177,6 +25227,9 @@ MonoBehaviour:
   relevant: 1
   discovered: 0
   isClueCard: 0
+  isInteractable: 1
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Dexter's Drive
   description: 
@@ -25198,14 +25251,14 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.5
-  m_Center: {x: 1.9, y: 0.61, z: -0.76}
+  m_Radius: 2.84
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &968855710 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4248050944851236, guid: 44651a1ac81d76e4099136b57cfdd83b, type: 3}
@@ -27697,6 +27750,9 @@ MonoBehaviour:
   relevant: 0
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: junk
   description: 
@@ -27718,7 +27774,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -32491,7 +32547,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -37151,6 +37207,9 @@ MonoBehaviour:
   relevant: 1
   discovered: 0
   isClueCard: 0
+  isInteractable: 1
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Dexter Datapad
   description: 
@@ -37172,14 +37231,14 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.74
-  m_Center: {x: 0, y: 0.09, z: -0.22}
+  m_Radius: 0.9
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1579202967 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4406833289850124, guid: 31d3b58fa3a075d418f8778190a3ab84, type: 3}
@@ -40061,6 +40120,10 @@ PrefabInstance:
       value: SM_Veh_WarpGate_Glow_01
       objectReference: {fileID: 0}
     - target: {fileID: 1864574796233646, guid: 901a92290d92c5943b54390bd57b2e48, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864574796233646, guid: 901a92290d92c5943b54390bd57b2e48, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -41876,6 +41939,9 @@ MonoBehaviour:
   relevant: 1
   discovered: 0
   isClueCard: 0
+  isInteractable: 1
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Gun
   description: 
@@ -41884,27 +41950,6 @@ MonoBehaviour:
   inkKnotTitle: clueGun
   inkChoice: 
   cardClueName: {fileID: 0}
---- !u!65 &1841074067
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1700824871440615}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 2
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5, y: 1, z: 1}
-  m_Center: {x: -0.25, y: 0, z: 0.10836145}
 --- !u!1001 &1843597486
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44108,7 +44153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4454580006987200, guid: 1dc55f6dbc165ca4486ab6bbaa048d5c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.246
+      value: -0.215
       objectReference: {fileID: 0}
     - target: {fileID: 4454580006987200, guid: 1dc55f6dbc165ca4486ab6bbaa048d5c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -44906,8 +44951,10 @@ MonoBehaviour:
   targetLookAt: {fileID: 0}
   _camera: {fileID: 0}
   inspectCam: {fileID: 0}
+  anchor: {fileID: 0}
   _lockOnTarget: {fileID: 0}
   _playerTarget: {fileID: 0}
+  cullingDistance: 0
 --- !u!1 &1949192637 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1496441230401456, guid: 1dc55f6dbc165ca4486ab6bbaa048d5c, type: 3}
@@ -45422,6 +45469,9 @@ MonoBehaviour:
   relevant: 1
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Test
   description: 
@@ -46299,6 +46349,9 @@ MonoBehaviour:
   relevant: 0
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Junk
   description: 
@@ -46320,7 +46373,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -51230,7 +51283,7 @@ GameObject:
   - component: {fileID: 52960446}
   m_Layer: 0
   m_Name: SM_Prop_Oven_Broken_01
-  m_TagString: Untagged
+  m_TagString: Clue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51455,7 +51508,7 @@ GameObject:
   - component: {fileID: 33814062676908833}
   - component: {fileID: 23612036960544579}
   - component: {fileID: 1841074063}
-  - component: {fileID: 1841074067}
+  - component: {fileID: 33814062676908834}
   m_Layer: 0
   m_Name: SM_Wep_Pistol_01
   m_TagString: Clue
@@ -54359,6 +54412,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1700824871440615}
   m_Mesh: {fileID: 4300000, guid: b95723a86e64ccc41b2c65d6ebf7b76f, type: 3}
+--- !u!135 &33814062676908834
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700824871440615}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 2
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &33827564303131315
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -54450,7 +54524,7 @@ MeshCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -54626,7 +54700,7 @@ MeshCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -57068,7 +57142,7 @@ GameObject:
   - component: {fileID: 4752587866836704819}
   m_Layer: 1
   m_Name: SM_Prop_Pad_Screen_01
-  m_TagString: Untagged
+  m_TagString: Clue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -57247,6 +57321,9 @@ MonoBehaviour:
   relevant: 1
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Dexter's Code Signature
   description: 
