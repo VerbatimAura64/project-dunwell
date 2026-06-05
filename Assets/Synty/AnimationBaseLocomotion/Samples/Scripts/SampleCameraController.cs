@@ -66,6 +66,7 @@ namespace Synty.AnimationBaseLocomotion.Samples
         private float _rotationX;
         private float _rotationY;
 
+        [SerializeField]
         private Transform _syntyCamera;
 
         /// <inheritdoc cref="Start" />
@@ -111,6 +112,7 @@ namespace Synty.AnimationBaseLocomotion.Samples
             if (_isLockedOn)
             {
                 Vector3 aimVector = _lockOnTarget.position - _playerTarget.position;
+                Debug.DrawLine(_lockOnTarget.position, _playerTarget.position, Color.red);
                 Quaternion targetRotation = Quaternion.LookRotation(aimVector);
                 targetRotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationalFollowSpeed * Time.deltaTime);
                 _newAngleY = targetRotation.eulerAngles.y;

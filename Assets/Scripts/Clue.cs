@@ -98,9 +98,9 @@ public class Clue : MonoBehaviour
                
                 this.clueObj.GetComponent<Clue>().enabled = false;
                 this.clueObj.GetComponent<BoxCollider>().enabled = false;
-                this.clueObj.tag = "Terminal";
-                this.clueObj.GetComponent<MeshRenderer>().enabled = true;
-                this.clueObj.GetComponent<SphereCollider>().enabled = true;
+                //this.clueObj.tag = "Terminal";
+                GameObject.Find("WallPanelClue").GetComponent<MeshRenderer>().enabled = true;
+                GameObject.Find("WallPanelClue").GetComponent<SphereCollider>().enabled = true;
                 //GameObject.Find("Dunwell").GetComponent<vThirdPersonInput>().clueTriggered = false;
                 
             }

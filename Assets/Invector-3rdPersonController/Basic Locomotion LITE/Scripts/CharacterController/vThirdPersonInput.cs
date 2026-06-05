@@ -125,7 +125,7 @@ namespace Invector.CharacterController
         {
             if (focused)
             {
-                tpCamera.target = itemToFocus.transform;//.transform;
+                tpCamera._lockOnTarget.position = itemToFocus.transform.localPosition;//.transform;
                 tpCamera.currentTarget = tpCamera.target;
             } else
             {
@@ -296,18 +296,17 @@ namespace Invector.CharacterController
                     prompt.SetActive(true);
                     if (Input.GetKeyDown(focusInput) && !caseFocused)
                     { 
+                        focused = true;
                         if (itemToFocus.GetComponent<Clue>()!= null)
                             if(!itemToFocus.GetComponent<Clue>().discovered && clueTriggered)
                                 GM.dialogue.SetActive(true);
                         cc.isSprinting = false;
                         cc.input = Vector2.zero;
-                        focused = true;
+                        
                         cc.lockMovement = true;
-                        keepDirection = true;
-                        //this.enabled = false;    //Need to disable input to prevent camera movement while focused, but this also prevents the player from exiting focus, so instead I will just set movement input to 0 and lock movement while focused
-
-                        tpCamera.enabled = false;
-                        //tpCamera.lockCamera = true; //Uncommenting this will make the camera  rotate back to a different angle when exiting focus
+                        //tpCamera.lockCamera = true;
+                        //tpCamera.enabled = false;
+                        //tpCamera.lockCamera = true;
                         tpCamera._camera.enabled = false;
                         tpCamera.inspectCam.enabled = true;
                         
@@ -332,9 +331,10 @@ namespace Invector.CharacterController
                         focused = false;
                         cc.lockMovement = false;
                         tpCamera.enabled = true;
-                        tpCamera._camera.enabled = true;
                         tpCamera.inspectCam.enabled = false;
-                        tpCamera.ReturnOldRotate();
+                        tpCamera._camera.enabled = true;
+                        
+                        //tpCamera.ReturnOldRotate();
                         tpCamera.lockCamera = false;
                         if (mapCollided)
                         {
@@ -593,11 +593,9 @@ namespace Invector.CharacterController
 
         protected virtual void RotateWithCamera(Transform cameraTransform)
         {
-            if (!focused || !caseFocused) { 
             if (cc.isStrafing && !cc.lockMovement && !cc.lockMovement)
-            {
-                cc.RotateWithAnotherTransform(cameraTransform);
-            }
+            {                
+                cc.RotateWithAnotherTransform(cameraTransform);                
             }
         }
 

@@ -19,7 +19,7 @@ public class Door : MonoBehaviour
     void Awake()
     {
 
-        door = this.transform.GetChild(0).gameObject;
+        //door = this.transform.GetChild(0).gameObject;
     
     }
 

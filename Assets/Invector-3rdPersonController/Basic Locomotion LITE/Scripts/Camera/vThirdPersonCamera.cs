@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Invector;
 using Unity.Mathematics;
+using Invector.CharacterController;
 //using System.Numerics;
 
 public class vThirdPersonCamera : MonoBehaviour
@@ -34,14 +35,14 @@ public class vThirdPersonCamera : MonoBehaviour
     [Tooltip("Debug purposes, lock the camera behind the character for better align the states")]
     public bool lockCamera;
     
-    public float rightOffset = 0f;
-    public float defaultDistance = 2.5f;
-    public float height = 1.4f;
-    public float smoothFollow = 10f;
-    public float xMouseSensitivity = 3f;
-    public float yMouseSensitivity = 3f;
-    public float yMinLimit = -40f;
-    public float yMaxLimit = 80f; 
+    public float rightOffset = 0f; //_cameraHorizontalOffset
+    public float defaultDistance = 2.5f; //_cameraDistance
+    public float height = 1.4f; //_cameraHeightOffset
+    public float smoothFollow = 10f; //_positionalCameraLag
+    public float xMouseSensitivity = 3f; //_mouseSensitivity
+    public float yMouseSensitivity = 3f; //_mouseSensitivity
+    public float yMinLimit = -40f; //cameraTiltBounds.x
+    public float yMaxLimit = 80f; //cameraTiltBounds.y
     #endregion
 
     #region hide properties    
@@ -59,6 +60,7 @@ public class vThirdPersonCamera : MonoBehaviour
     [SerializeField]
     private Quaternion lockedRotation;
     public Vector3 oldPos;
+    [SerializeField]
     private Transform targetLookAt;
     private Vector3 currentTargetPos;
     private Vector3 lookPoint;
@@ -67,6 +69,10 @@ public class vThirdPersonCamera : MonoBehaviour
     public Camera _camera;
     //[SerializeField]
     public Camera inspectCam;
+    [SerializeField]
+    public Transform _lockOnTarget;
+    //[SerializeField]
+    public Transform _playerTarget;
     private float distance = 5f;
     private float mouseY = 0f;
     private float mouseX = 0f;
@@ -79,6 +85,10 @@ public class vThirdPersonCamera : MonoBehaviour
     private float xMaxLimit = 360f;
     private float cullingHeight = 0.2f;
     private float cullingMinDist = 0.1f;
+    private float newAngleY;
+    private Vector3 _newPosition;
+    private float _rotationX;
+    private float _rotationY;
 
     #endregion
 
@@ -92,13 +102,13 @@ public class vThirdPersonCamera : MonoBehaviour
         if (target == null)
             return;
 
-        _camera = GetComponent<Camera>();
+        _camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         currentTarget = target;
         currentTargetPos = new Vector3(currentTarget.position.x, currentTarget.position.y + offSetPlayerPivot, currentTarget.position.z);
 
         targetLookAt = new GameObject("targetLookAt").transform;
         targetLookAt.position = currentTarget.position;
-        targetLookAt.hideFlags = HideFlags.HideInHierarchy;
+        //targetLookAt.hideFlags = HideFlags.HideInHierarchy;
         targetLookAt.rotation = currentTarget.rotation;     
 
         mouseY = currentTarget.eulerAngles.x;
@@ -106,6 +116,47 @@ public class vThirdPersonCamera : MonoBehaviour
 
         distance = defaultDistance;
         currentHeight = height;
+
+        _playerTarget = target.transform.Find("SyntyPlayer_LookAt");
+        _lockOnTarget = target.transform.Find("TargetLockOnPos");
+
+        transform.position = _playerTarget.position;
+        transform.rotation = _playerTarget.rotation;
+
+        inspectCam.transform.localPosition = new Vector3(rightOffset, currentHeight/4, distance);
+        inspectCam.transform.localEulerAngles = new Vector3(offSetPlayerPivot, 0f, 0f);
+    }
+
+    private void Update()
+    {
+        Debug.Log(currentTarget.GetComponent<vThirdPersonInput>().focused);
+        //Debug.DrawLine(_lockOnTarget.position, _playerTarget.position, Color.red);
+        //Debug.Log(_lockOnTarget.localPosition);
+        if (currentTarget.GetComponent<vThirdPersonInput>().focused)
+        {
+            
+            Vector3 aimVector = _playerTarget.position - _lockOnTarget.position;
+            Debug.DrawLine(_lockOnTarget.position, _playerTarget.position, Color.red);
+            inspectCam.transform.forward = (aimVector.normalized *-1);
+            //Debug.DrawRay(_playerTarget.position, aimVector, Color.red);
+            //Quaternion targetRotation = Quaternion.LookRotation(aimVector);
+            //targetRotation = Quaternion.Lerp(transform.rotation, targetRotation, smoothCameraRotation * Time.deltaTime);
+            //newAngleY = targetRotation.eulerAngles.y;
+        } else
+        {
+            newAngleY += mouseY;
+            newAngleY = Mathf.Lerp(lockedRotation.eulerAngles.y, newAngleY, smoothCameraRotation * Time.deltaTime);
+        }
+
+        inspectCam.transform.position= _playerTarget.position;
+        Debug.DrawLine(_lockOnTarget.position, _playerTarget.position, Color.red);
+        //_newPosition = Vector3.Lerp(oldPos, _newPosition, smoothCameraRotation * Time.deltaTime);
+
+        //transform.position = _newPosition;
+        //transform.eulerAngles = new Vector3(mouseX, mouseY, smoothCameraRotation * Time.deltaTime);
+
+        //oldPos = _newPosition;
+
     }
 
     void FixedUpdate()
@@ -176,13 +227,13 @@ public class vThirdPersonCamera : MonoBehaviour
             mouseY = vExtensions.ClampAngle(mouseY, yMinLimit, yMaxLimit);
             mouseX = vExtensions.ClampAngle(mouseX, xMinLimit, xMaxLimit);
             //this.transform.position = oldPos;
-            lockedRotation = this.transform.rotation;
-            oldPos = this.transform.position;
+            //lockedRotation = transform.localRotation;
+            //oldPos = this.transform.position;
             //this.transform.rotation = oldAngle;
         }
         else
         {
-            this.transform.position = oldPos;
+            transform.position = oldPos;
             this.transform.rotation = lockedRotation;
             mouseY = currentTarget.root.localEulerAngles.x;
             mouseX = currentTarget.root.localEulerAngles.y;

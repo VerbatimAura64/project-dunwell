@@ -284,7 +284,7 @@ GameObject:
   m_Layer: 7
   m_Name: SyntyPlayer_LookAt
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -762,7 +762,7 @@ MonoBehaviour:
   terminal: {fileID: 0}
   clueInvestigated: 0
   screen: {fileID: 0}
-  ccm: {fileID: 791918971}
+  ccm: {fileID: 1064175938}
   customCameraState: 
   customlookAtPoint: 
   changeCameraState: 0
@@ -1187,13 +1187,13 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 3000
-  field of view: 61.095
+  field of view: 66.26414
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 383
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1578,11 +1578,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
---- !u!224 &456807039 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3842099414815955872, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
-  m_PrefabInstance: {fileID: 456807038}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &507595626
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,6 +1587,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 507595627}
+  - component: {fileID: 507595628}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1616,6 +1612,45 @@ Transform:
   - {fileID: 311700888}
   m_Father: {fileID: 130300949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &507595628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507595626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1bfe72fbc87d04e885296b53e91c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::vThirdPersonCamera
+  target: {fileID: 130300949}
+  smoothCameraRotation: 30
+  cullingLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  lockCamera: 0
+  rightOffset: 0
+  defaultDistance: 3
+  height: 1.4
+  smoothFollow: 1
+  xMouseSensitivity: 3
+  yMouseSensitivity: 3
+  yMinLimit: -1
+  yMaxLimit: 80
+  indexList: 0
+  indexLookPoint: 0
+  offSetPlayerPivot: 0
+  currentStateName: 
+  currentTarget: {fileID: 130300949}
+  movementSpeed: {x: 0, y: -0}
+  lockedRotation: {x: 0, y: 0, z: 0, w: 0}
+  oldPos: {x: 0, y: 0, z: 0}
+  targetLookAt: {fileID: 0}
+  _camera: {fileID: 1324982037}
+  inspectCam: {fileID: 311700892}
+  _lockOnTarget: {fileID: 0}
+  _playerTarget: {fileID: 0}
 --- !u!1 &730527220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1894,56 +1929,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 2.5, z: 1}
   m_Center: {x: -4.01, y: -0.000000074505806, z: 0.53}
---- !u!1 &791918970
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 791918972}
-  - component: {fileID: 791918971}
-  m_Layer: 0
-  m_Name: ClueCardManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &791918971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 791918970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdc903d7b89b9ca4fbd1f326630519f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ClueCardManager
-  gm: {fileID: 0}
-  maxClueCards: 9
-  clueCardPrefab: {fileID: 0}
-  clueCardPath: {fileID: 0}
-  cardSpawnpoint: {fileID: 456807039}
-  clueCards: []
---- !u!4 &791918972
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 791918970}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 717.5, y: 403.46228, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &818825485
 GameObject:
   m_ObjectHideFlags: 0
@@ -2300,9 +2285,6 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4398874139125376, guid: a707d88dcbb19844d9bad90838e17917, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1732459213}
-    - targetCorrespondingSourceObject: {fileID: 4398874139125376, guid: a707d88dcbb19844d9bad90838e17917, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1196366768}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1930418634889312, guid: a707d88dcbb19844d9bad90838e17917, type: 3}
@@ -2641,7 +2623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ClueCardManager
   gm: {fileID: 0}
   maxClueCards: 9
-  clueCardPrefab: {fileID: 0}
+  clueCardPrefab: {fileID: 7905338974331181838, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
   clueCardPath: {fileID: 1519798238}
   cardSpawnpoint: {fileID: 1296010060}
   clueCards: []
@@ -3324,7 +3306,7 @@ GameObject:
   m_Layer: 7
   m_Name: TargetLockOnPos
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3676,7 +3658,6 @@ GameObject:
   - component: {fileID: 1324982037}
   - component: {fileID: 1324982041}
   - component: {fileID: 1324982040}
-  - component: {fileID: 1324982039}
   - component: {fileID: 1324982038}
   m_Layer: 0
   m_Name: Main Camera
@@ -3718,7 +3699,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 3000
-  field of view: 35.406036
+  field of view: 61.095
   orthographic: 0
   orthographic size: 5
   m_Depth: 5
@@ -3753,46 +3734,10 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.00001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1324982039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1324982036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a1bfe72fbc87d04e885296b53e91c66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::vThirdPersonCamera
-  target: {fileID: 130300949}
-  smoothCameraRotation: 30
-  cullingLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  lockCamera: 0
-  rightOffset: 0
-  defaultDistance: 3
-  height: 1.4
-  smoothFollow: 1
-  xMouseSensitivity: 3
-  yMouseSensitivity: 3
-  yMinLimit: -1
-  yMaxLimit: 80
-  indexList: 0
-  indexLookPoint: 0
-  offSetPlayerPivot: 0
-  currentStateName: 
-  currentTarget: {fileID: 130300949}
-  movementSpeed: {x: 0, y: -0}
-  lockedRotation: {x: 0, y: 0, z: 0, w: 0}
-  oldPos: {x: 0, y: 0, z: 0}
-  _camera: {fileID: 1324982037}
-  inspectCam: {fileID: 311700892}
 --- !u!114 &1324982040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4832,37 +4777,6 @@ MonoBehaviour:
   inkKnotTitle: 
   inkChoice: 
   cardClueName: {fileID: 0}
---- !u!1 &1732459212
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1732459213}
-  m_Layer: 8
-  m_Name: InspectTransform
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1732459213
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1732459212}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.553, y: 0.883, z: 0.819}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 961378813}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1799547414
 GameObject:
   m_ObjectHideFlags: 0
@@ -5888,7 +5802,6 @@ SceneRoots:
   - {fileID: 770810644}
   - {fileID: 2132905898}
   - {fileID: 1082947191}
-  - {fileID: 791918972}
   - {fileID: 961378811}
   - {fileID: 1019017780}
   - {fileID: 1441755760}
