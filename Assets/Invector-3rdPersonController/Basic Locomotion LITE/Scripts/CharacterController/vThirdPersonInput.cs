@@ -313,6 +313,7 @@ namespace Invector.CharacterController
                         
                         if (mapCollided)
                         {
+                            tpCamera._camera.GetComponent<Camera>().fieldOfView = 60;
                             prompt.GetComponent<TMP_Text>().text = "Press F to back out";
                         } 
                         else if (clueTriggered)
@@ -338,6 +339,7 @@ namespace Invector.CharacterController
                         tpCamera.lockCamera = false;
                         if (mapCollided)
                         {
+                            tpCamera._camera.GetComponent<Camera>().fieldOfView = 98.5f;
                             prompt.GetComponent<TMP_Text>().text = "Press F to focus";
                         }
                         else if (clueTriggered)

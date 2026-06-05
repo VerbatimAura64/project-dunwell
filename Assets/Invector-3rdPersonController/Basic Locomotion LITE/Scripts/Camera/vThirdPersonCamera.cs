@@ -77,6 +77,7 @@ public class vThirdPersonCamera : MonoBehaviour
     private float mouseY = 0f;
     private float mouseX = 0f;
     private float currentHeight;
+    [SerializeField]
     private float cullingDistance;
     private float checkHeightRadius = 0.4f;
     private float clipPlaneMargin = 0f;

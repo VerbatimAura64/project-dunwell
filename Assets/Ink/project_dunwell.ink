@@ -63,7 +63,8 @@ This isn't Dexter's Apartment...
 
 ===notRelevant===
 {~ Doesn't look important... | Sificity needs a facelift... | Maybe it's decorative... | Really? | Nothing here that helps me | Marcus looks. Moves on.}
--{not seenIntMonologue && not managerAlerted: ->intMonologue}
+-{not seenIntMonologue: ->intMonologue}
+-{not managerAlerted: ->intMonologue}
 -{not seenClueRoom: ->aptUnlocked}
 //-{seenClueRoom: ->clueHub}
  ->DONE
