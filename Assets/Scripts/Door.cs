@@ -5,6 +5,7 @@ public class Door : MonoBehaviour
 {
     public bool locked = true;
     private bool opening = false;
+    private bool opened = false;
     public bool hinged = true;
     public bool forced = false;
     public bool knocked;
@@ -14,6 +15,14 @@ public class Door : MonoBehaviour
     private float left = 0;
     private float down = 0;
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("BldManager"))
+        {
+            OpenDoor();
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -30,10 +39,15 @@ public class Door : MonoBehaviour
 
     public void OpenDoor()
     {
-        door.transform.Rotate(0, 90, 0); // Adjust the rotation angles as needed
-        this.GetComponent<BoxCollider>().enabled = false; // Disable the collider to allow passage
-        this.GetComponent<Door>().enabled = false;
-
+        if (!locked && !opened)
+        {
+            //if(door.transform.rotation == Vector3(0f,90f,0f))
+            door.transform.Rotate(0, 90, 0); // Adjust the rotation angles as needed
+            opened = true;
+            this.GetComponent<BoxCollider>().enabled = false; // Disable the collider to allow passage
+            this.GetComponent<Door>().enabled = false;
+            //GetComponent<Door>().door = null;
+        }
     }
 
     public void UnlockDoor()

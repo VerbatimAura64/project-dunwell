@@ -8,6 +8,7 @@ public class BldingManager : MonoBehaviour
     public bool endingB;
     public bool bluffed;
     public GameObject player;
+    public GameObject newDestination;
     private vThirdPersonController cc;
     public GM gm;
     public Animator animController;
@@ -99,6 +100,9 @@ public class BldingManager : MonoBehaviour
         gm.isConversation = false;
         cc.lockMovement = false;
         player.GetComponentInChildren<vThirdPersonCamera>().enabled = true;
+
+        m_Agent.destination = newDestination.transform.position;
+        distance = Vector3.Distance(m_Agent.transform.position, newDestination.transform.position);
     }
 }
 

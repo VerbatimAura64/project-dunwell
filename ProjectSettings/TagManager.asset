@@ -8,6 +8,7 @@ TagManager:
   - Terminal
   - Focus
   - Door
+  - BldManager
   layers:
   - Default
   - TransparentFX

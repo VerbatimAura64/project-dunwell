@@ -10,6 +10,8 @@ public class Clue : MonoBehaviour
 {
     [SerializeField]
     private GM gm;
+    [SerializeField]
+    private GameObject player;
     public bool relevant;
     public bool discovered;
     public bool isClueCard;
@@ -57,6 +59,7 @@ public class Clue : MonoBehaviour
         ogPos = this.transform.position;
         ogDirection = this.transform.rotation;
         gm = GameObject.FindWithTag("GameController").GetComponent<GM>();
+        player = GameObject.Find("Dunwell");
         
         if(isClueCard)
         {
@@ -121,8 +124,47 @@ public class Clue : MonoBehaviour
                 
             }
         }
+
+        if (clueObj.name == "Dexter's Login")
+        {
+            //if ((int)gm._inkStory.variablesState["good_count"] >= 5)
+            if ((bool)gm._inkStory.variablesState["foundMorrowTrace"] == true)
+            {
+
+                //this.clueObj.GetComponent<Clue>().enabled = false;
+                //this.clueObj.GetComponent<BoxCollider>().enabled = false;
+                //this.clueObj.tag = "Terminal";
+                //GameObject.Find("Datapads").GetComponent<MeshRenderer>().enabled = true;
+                //player.GetComponent<vThirdPersonInput>().prompt.GetComponent<TMP_Text>().text = "Hi";
+                GameObject.Find("Datapads").GetComponent<BoxCollider>().enabled = true;
+                //GameObject.Find("Dunwell").GetComponent<vThirdPersonInput>().clueTriggered = false;
+
+            }
+        }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (gameObject.name.Equals("Datapads"))
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                //Debug.Log("Activate choices");
+                
+                gm.datapadChoice = true;
+                gm.ContinueStory();
+
+                gm.dialogue.SetActive(true);
+            }
+        }
+
+        if (other.gameObject.CompareTag("BldManager"))
+        {
+            Debug.Log("Activate Ending B");
+
+            
+        }
+    }
 
     private void Start()
     {

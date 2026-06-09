@@ -23,6 +23,7 @@ public class GM : MonoBehaviour
     public GameObject manager;
     public bool managerAlerted;
     public bool isConversation;
+    public bool datapadChoice;
     public GameObject choiceButtonPrefab;
     public Transform choicesContainer;
     public Clue clueScript;
@@ -222,7 +223,7 @@ public class GM : MonoBehaviour
 
             dialogue.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
             arrow.SetActive(false);
-            if (isConversation)
+            if (isConversation || datapadChoice)
             {
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
@@ -230,7 +231,7 @@ public class GM : MonoBehaviour
             //choices = new List<bool>();
             for (int i = 0; i < _inkStory.currentChoices.Count; i++)
             {
-                if(isConversation)
+                if(isConversation || datapadChoice)
                     DisplayChoices();
                 else
                     dialogue.SetActive(false);
@@ -251,6 +252,7 @@ public class GM : MonoBehaviour
 
         for (int i = 0; i < _inkStory.currentChoices.Count; i++)
         {
+
             Choice choice = _inkStory.currentChoices[i];
             GameObject choiceButton = Instantiate(choiceButtonPrefab, choicesContainer);
             choiceButton.GetComponentInChildren<TMP_Text>().text = choice.text;

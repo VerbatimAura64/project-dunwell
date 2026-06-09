@@ -36,7 +36,8 @@ VAR seenObsRoom = false
 The message came in at 2:47 a.m. I read it at 6:12.
 Three hours and twenty-five minutes. In this city, that's not a window. That's a eulogy.
 His name was in the header. Dexter Clear. I didn't recognize it. I almost deleted it — the kind of encrypted routing he used, you see it from cranks mostly, people who think the city is listening. At least he was smart enough about that.
-He said he found something in the walls, that he needed someone who knew how the old network was built. What more was in the walls besides rats and mold? He didn’t say how he heard my name, maybe he didn’t want to risk it. But he did know I was the kind of person who kept a spare key to all the locked doors.
+He said he found something in the walls, that he needed someone who knew how the old network was built. 
+What more was in the walls besides rats and mold? He didn’t say how he heard my name, maybe he didn’t want to risk it. But he did know I was the kind of person who kept a spare key to all the locked doors.
 The rain is coming down harder now, and I need to get inside.
 
 + [Go inside] -> intMonologue
@@ -180,44 +181,48 @@ There's a notice pinned to the door. A fine - a tapestry hung over a wall screen
 
 === clueNeighborDatapad ===
 # CLUE_FOUND_6B
+~ foundNeighborDatapad = true
+~ good_count = good_count + 1
 According to the observer's notes, they were suspicious of this tenant's behavior and awareness — he'd put up a tapestry. He's blocking the view.
 I don't think he knows. Rebellion without awareness.
 There's a request written at the end. Have the tenant placed under further investigation. Followed.
 { foundFineDoc: The letterhead on this datapad matches the fine notice on the door. Same corporation. Same enforcement. }
-~ foundNeighborDatapad = true
-~ good_count = good_count + 1
+
 -> obsRoom
 
 === clueDexterDatapad ===
 # CLUE_FOUND_7
+~ foundDexterDatapad = true
+~ good_count = good_count + 1
 Here's Dexter's file. His occupation was listed as a disgruntled droid engineer and repairman, but I don't think the feeling of disgruntle is an occupation.
 Initial label — innocuous resident. No known connections to resistance groups or verified threat assessment.
 But there's a postmark. An addendum at the bottom, profiling his callstack to rebellious anarchists. A whole list of names at the end of the file.
 The one that stuck out the most was mine.
-~ foundDexterDatapad = true
-~ good_count = good_count + 1
+
 -> obsRoom
 
 === clueBackupDrive ===
 # CLUE_FOUND_8
+~ foundFiles = true
+~ foundSignature = true
+~ good_count = good_count + 1
 The center command terminal has a backup drive plugged in, and it needs no authentication. Who doesn't lock their station before stepping away, unless they needed to leave in a hurry.
 But there's something more pressing. The directory list has a set of applications only I could recognize — applications I know I personally named. Not some corpo slave making a quick buck.
 Phelps. Chief. Morgan. Names from the History Archive Museum that seemed inspiring at the time.
 My architecture. My work. In the wild and in violation of everything I imagined its use for.
-~ foundFiles = true
-~ foundSignature = true
-~ good_count = good_count + 1
+
 -> obsRoom
 
 === morrowRevealed ===
 # CLUE_FOUND_9
 # ALARM_TRIGGERED
+~ foundMorrowTrace = true
+~ good_count = good_count + 1
 Last authentication — 5:45 a.m. this morning.
 The name attached to it: Dante Morrow.
 I know that name. I worked alongside him on the original infrastructure contracts. He knew this architecture because he helped build it. He knew where the skeleton keys were because I showed him.
 Morgan flags the trace. The alarm is live. I need to move.
-~ foundMorrowTrace = true
-~ good_count = good_count + 1
+
 -> datapadsChoice
 
  
@@ -289,10 +294,15 @@ But there's no time.
 
 === bldManagerConv ===
 { managerAlerted:
-    He was already in the hallway when I came out. The lock system must've flagged the override. He had the walk of a man who'd been called up for something and wasn't sure yet how serious it was.
+    The lock system must've flagged the override. He had the walk of a man who'd been called up for something and wasn't sure yet how serious it was.
 - else:
     He was already in the hallway when I came out of the service corridor. Doing his rounds, or something close enough to rounds that he'd call it that. He clocked me the way building managers clock everyone — not suspicion, just inventory.
 }
+
+{ managerCaught:
+    I've called the droids. They'll sentence you for this murder! 
+    ->endingB
+- else:
 
 "Help you with something?"
 
@@ -327,6 +337,7 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
     }
 
     ~ convManagerDone = true
+
     -> conveManagerDone
 
 * ["Wrong floor. Sorry."]
@@ -341,6 +352,8 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
 
     ~ convManagerDone = true
     -> conveManagerDone
+
+}
 
 === conveManagerDone ===
 #CONVO_DONE
@@ -362,10 +375,10 @@ I summon the elevator before I even approach the doors to avoid waiting for it.
 { managerCaught:
     -> endingB
 - else:
-    { good_count >= 9 && datapadsChoice > 0:
+    { good_count >= 9 && datapadsChoiceMade > 0:
         -> endingA
     - else:
-        { good_count >= 9 && datapadsChoice == 0:
+        { good_count >= 9 && datapadsChoiceMade == 0:
             -> endingC
         - else:
             -> endingB

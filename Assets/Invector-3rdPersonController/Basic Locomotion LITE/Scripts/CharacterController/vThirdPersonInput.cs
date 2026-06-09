@@ -209,6 +209,8 @@ namespace Invector.CharacterController
                             GM.typeWriter._readyForNewText = true;
                             GM.typeWriter.PrepareForNewText(GM.dialogue);
                             terminal.GetComponent<Terminal>().StartTerminal();
+                            GM.manager.transform.position = new Vector3(5f, 0f, -27.5f);
+                            GM.manager.SetActive(true);
                         }
                     } else
                     {
