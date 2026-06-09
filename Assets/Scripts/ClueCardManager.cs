@@ -26,7 +26,7 @@ public class ClueCardManager : MonoBehaviour
     {
         if (clueCards.Count == 0) return;
         float cardSpacing = 1f/clueCards.Count;
-        float firstCardPosition = 0.5f - (clueCards.Count - 1) * cardSpacing/2;
+        float firstCardPosition = 0.5f - (clueCards.Count - 1) * cardSpacing/2f;
         Spline spline = clueCardPath.Spline;
 
         for(int i = 0; i < clueCards.Count; i++)

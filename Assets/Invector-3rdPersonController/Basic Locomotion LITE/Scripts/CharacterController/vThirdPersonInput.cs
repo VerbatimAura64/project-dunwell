@@ -6,16 +6,13 @@ using static GM;
 using System.Linq;
 using UnityEngine.EventSystems;
 
-
-
-
 #if UNITY_5_3_OR_NEWER
 using UnityEngine.SceneManagement;
 #endif
 
 namespace Invector.CharacterController
 {
-    public class vThirdPersonInput : MonoBehaviour, IDragHandler
+    public class vThirdPersonInput : MonoBehaviour
     {
         #region variables
 
@@ -52,6 +49,9 @@ namespace Invector.CharacterController
         public bool clueInvestigated;
         public GameObject screen;
         public ClueCardManager ccm;
+        public Vector3 _rotation;
+        public float rotateSpeed = 5f;
+        private Vector3 previousMousePosition;
         //public GameObject clueToInvestigate;
 
         protected vThirdPersonCamera tpCamera;                // acess camera info        
@@ -112,6 +112,7 @@ namespace Invector.CharacterController
 
         protected virtual void InputHandle()
         {
+            Inspecting();
             ExitGameInput();
             InteractInput();
             FocusInput();
@@ -303,20 +304,23 @@ namespace Invector.CharacterController
                     if (Input.GetKeyDown(focusInput) && !caseFocused)
                     { 
                         focused = true;
-                        if (itemToFocus.GetComponent<Clue>()!= null)
-                            if(!itemToFocus.GetComponent<Clue>().discovered && clueTriggered)
+                        if (itemToFocus.GetComponent<Clue>() != null)
+                        {
+                            if (!itemToFocus.GetComponent<Clue>().discovered && clueTriggered)
                                 GM.dialogue.SetActive(true);
+                            if (itemToFocus.GetComponent<Clue>().isInteractable)
+                            {
+                                if (!Cursor.visible)
+                                {
+                                    Cursor.lockState = CursorLockMode.Confined;
+                                    Cursor.visible = true;
+                                }
+                                itemToFocus.GetComponent<Transform>().position = tpCamera.anchor.transform.position;
+                            }
+                        }
                         cc.isSprinting = false;
                         cc.input = Vector2.zero;
-                        if (itemToFocus.GetComponent<Clue>().isInteractable)
-                        {
-                            itemToFocus.GetComponent<Transform>().position = tpCamera.anchor.transform.position;
-                            Ray ray = tpCamera.inspectCam.ScreenPointToRay(Input.mousePosition);
-                            if(Physics.Raycast(ray, out raycastHit, Mathf.Infinity, layerMask))
-                            Debug.Log("Ray hit " + raycastHit.transform.gameObject.layer);
-                            //Debug.DrawRay(tpCamera.inspectCam.transform.forward, ray, Color.green);
-                            //Inspecting();
-                        }
+                        
                         cc.lockMovement = true;
                         //tpCamera.lockCamera = true;
                         //tpCamera.enabled = false;
@@ -348,8 +352,17 @@ namespace Invector.CharacterController
                         tpCamera.enabled = true;
                         tpCamera.inspectCam.enabled = false;
                         tpCamera._camera.enabled = true;
-                        itemToFocus.GetComponent<Transform>().position = itemToFocus.GetComponent<Clue>().ogPos;
-                        itemToFocus.GetComponent<Transform>().rotation = itemToFocus.GetComponent<Clue>().ogDirection;
+                        if (itemToFocus.GetComponent<Clue>() != null)
+                        {
+                            if (itemToFocus.GetComponent<Clue>().isInteractable)
+                            {
+                                if (Cursor.visible)
+                                    Cursor.visible = false;
+                                Cursor.lockState = CursorLockMode.Locked;
+                                itemToFocus.GetComponent<Transform>().position = itemToFocus.GetComponent<Clue>().ogPos;
+                                itemToFocus.GetComponent<Transform>().rotation = itemToFocus.GetComponent<Clue>().ogDirection;
+                            }
+                        }
                         //tpCamera.ReturnOldRotate();
                         tpCamera.lockCamera = false;
                         if (mapCollided)
@@ -380,18 +393,31 @@ namespace Invector.CharacterController
             }
         }
 
-        public void OnDrag(PointerEventData eventData)
-        {
-            if (focused && itemToFocus != null)
-            {
-                itemToFocus.transform.eulerAngles = new Vector3 (-eventData.delta.y, -eventData.delta.x);
-            }
-        } 
+
 
         void Inspecting()
         {
+            if (focused && clueTriggered)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    previousMousePosition = Input.mousePosition;
+                }
 
+                if (Input.GetMouseButton(0))
+                {
+                    Vector3 deltaMousePosition = Input.mousePosition - previousMousePosition;
+                    float rotationX = (deltaMousePosition.y * rotateSpeed * Time.deltaTime);
+                    float rotationY = -(deltaMousePosition.x * rotateSpeed * Time.deltaTime);
+
+                    Quaternion rotation = Quaternion.Euler(rotationX, rotationY, 0);
+                    itemToFocus.transform.rotation = rotation * itemToFocus.transform.rotation;
+
+                    previousMousePosition = Input.mousePosition;
+                }
+            }
         }
+        
 
         protected virtual void OpenCaseBoard()
         {

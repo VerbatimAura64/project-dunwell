@@ -1,15 +1,34 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Invector.CharacterController
 {
-    public class vThirdPersonController : vThirdPersonAnimator
+    public class vThirdPersonController : vThirdPersonAnimator, IPointerDownHandler, IDragHandler
     {
         protected virtual void Start()
         {
 #if !UNITY_EDITOR
                 Cursor.visible = false;
 #endif
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            // Rotate the item with the mouse
+            Debug.Log("Rotating: ");// + itemToFocus.name);
+            //_rotation += eventData.delta;
+            //itemToFocus.transform.Rotate(_rotation * Time.deltaTime);
+            //transform.position = Input.mousePosition;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            // Store the original position and parent of the card
+            Debug.Log("Pointer down on card: ");// + itemToFocus.name);
+            //_canvasGroup = GetComponent<CanvasGroup>();
+            //_startPosition = transform.position;
+            //_originalParent = transform.parent;
         }
 
         public virtual void Sprint(bool value)
