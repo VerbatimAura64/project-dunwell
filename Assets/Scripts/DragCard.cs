@@ -24,7 +24,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Debug.Log("Pointer down on card: " + gameObject.name);
             _canvasGroup = GetComponent<CanvasGroup>();
         } 
-            Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
            //Debug.Log("This is " + gameObject.name);
         
         //_startPosition = transform.position;

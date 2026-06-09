@@ -21,6 +21,7 @@ public class Clue : MonoBehaviour
     public string clueName;
     public string description;
     public Sprite clueSprite;
+    private bool _selected;
 
     public GameObject clueObj;
     public string inkKnotTitle;
@@ -32,6 +33,15 @@ public class Clue : MonoBehaviour
     //public Image cardClueImage;
     //Texture2D clueTexture;
     #endregion
+
+    public void SetSelected(bool selected)
+    {
+        _selected = selected;
+        GetComponent<Image>().color = selected ? Color.red : Color.green;
+
+    }
+
+    public bool IsSelected() => _selected;
 
     private void Update()
     {
