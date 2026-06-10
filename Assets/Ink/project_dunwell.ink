@@ -406,12 +406,12 @@ The city keeps raining. I keep looking.
 # ENDING_B
 The cell is smaller than the apartments in The Studios. Not by much.
 
-I keep doing what I always do — noticing things. The crack in the upper left corner of the ceiling that suggests the building settled unevenly. The guard who favors his right leg on the evening shift. The way the light through the slot in the door hits the floor at exactly the same angle every morning, which means I'm facing east.
+I keep doing what I always do — noticing things. The crack in the upper left corner of the ceiling that suggests the building settled unevenly. The guard who favors his right leg on the evening shift. 
 
 Observation without application. The instinct running on nothing, like an engine with nowhere to go.
-
+{seenObsRoom:
 Dante Morrow is outside these walls. Dexter Clear is in the ground. The observation network is still running in every Studio apartment in Sificity, behind every screen, through every sightline nobody thought to cover.
-
+}
 { managerCaught:
     I had the thread. I just ran out of room to pull it.
 - else:

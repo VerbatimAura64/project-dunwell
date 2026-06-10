@@ -7,13 +7,16 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private Transform _originalParent;
     private CanvasGroup _canvasGroup;
     [SerializeField]private Canvas canvas;
-    private void Awake()
+    [SerializeField]
+    private ConnectionManager connectManager;
+   private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         if (gameObject.GetComponent<Clue>().isClueCard)
         {
             canvas = GetComponentInParent<Canvas>();
         }
+        connectManager = GameObject.Find("CaseBoard").GetComponent<ConnectionManager>();
         //_canvasGroup = GetComponent<CanvasGroup>();
     }
     public void OnPointerDown(PointerEventData eventData)
@@ -23,6 +26,13 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             // Store the original position and parent of the card
             Debug.Log("Pointer down on card: " + gameObject.name);
             _canvasGroup = GetComponent<CanvasGroup>();
+            //if (!gameObject.GetComponent<Clue>().IsSelected()) {
+            connectManager.OnCardClicked(gameObject.GetComponent<Clue>());
+                //gameObject.GetComponent<Clue>().SetSelected(true); 
+           // else
+            {
+                //gameObject.GetComponent<Clue>().SetSelected(false);
+            }
         } 
             //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
            //Debug.Log("This is " + gameObject.name);

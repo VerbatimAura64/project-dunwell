@@ -35,6 +35,7 @@ namespace Invector.CharacterController
         public string rotateCameraYInput = "Mouse Y";
         [Header("Will's Settings")]
         public GM GM;
+        public bool inApt = false;
         public bool mapCollided = false;
         public bool focused = false;
         public bool caseFocused = false;
@@ -175,223 +176,233 @@ namespace Invector.CharacterController
 
         protected virtual void InteractInput()
         {
-            if (doorCollided)
+            if (!GM.isConversation)
             {
-                //prompt.SetActive(true);
-                if (!door.GetComponent<Door>().locked)
+                if (doorCollided)
                 {
-                    prompt.GetComponent<TMP_Text>().text = "Press E to open";
-                }
-                else
-                {
-                    if(door.name.Equals("APT4") && door.GetComponent<Door>().knocked)
+                    //prompt.SetActive(true);
+                    if (!door.GetComponent<Door>().locked)
                     {
-                        prompt.GetComponent<TMP_Text>().text = "Press E to Brute force";
+                        prompt.GetComponent<TMP_Text>().text = "Press E to open";
                     }
                     else
                     {
-                        prompt.GetComponent<TMP_Text>().text = "Press E to Knock";
-                    }
-                }
-                
-            }
-
-            if (terminalCollided)
-            {
-                prompt.GetComponent<TMP_Text>().text = "Press E to use terminal";
-
-                if (Input.GetKeyDown(interactInput))
-                {
-                    if (terminal.GetComponent<Terminal>().storageTerminal) { 
-                        if (terminal.GetComponent<Terminal>().door.locked) {
-                            if (!GM.dialogue.activeInHierarchy)
-                                GM.dialogue.SetActive(true);
-                            GM.typeWriter._readyForNewText = true;
-                            GM.typeWriter.PrepareForNewText(GM.dialogue);
-                            terminal.GetComponent<Terminal>().StartTerminal();
-                            GM.manager.transform.position = new Vector3(5f, 0f, -27.5f);
-                            GM.manager.SetActive(true);
-                        }
-                    } else
-                    {
-                        if (terminal.GetComponent<Terminal>().door.locked)
+                        if (door.name.Equals("APT4") && door.GetComponent<Door>().knocked)
                         {
-                            terminal.GetComponent<Terminal>().StartTerminal();
-                            if (!GM.dialogue.activeInHierarchy)
-                                GM.dialogue.SetActive(true);
-                            GM.typeWriter.PrepareForNewText(GM.dialogue);
-                            
-                        }
-                    }
-                    
-                }
-            }
-            else
-            {
-                //prompt.SetActive(false);
-            }
-
-            if (Input.GetKeyDown(interactInput) && (doorCollided || terminalCollided))
-            {
-                if(door.GetComponent<Door>().enabled && !door.GetComponent<Door>().locked)
-                {
-                    door.GetComponent<Door>().OpenDoor();
-                    door.GetComponent<Door>().enabled = false;
-                    doorCollided = false;
-                    prompt.SetActive(false);
-                }
-                else if(door.GetComponent<Door>().enabled && door.GetComponent<Door>().locked)
-                {
-                    //Knock();
-                    if(!door.name.Equals("APT4"))
-                    {
-                        Debug.Log("Knock Knock " + door.name);
-                        Knock();
-                        if(!GM.dialogue.activeInHierarchy)
-                            GM.dialogue.SetActive(true);
-                        GM.typeWriter._readyForNewText = true;
-                        GM.typeWriter.PrepareForNewText(GM.dialogue);
-                        GM._inkStory.ChoosePathString("wrongApt");
-                        GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
-                        GM._inkStory.Continue();
-                    }
-                    else
-                    {
-                        if (door.GetComponent<Door>().knocked)
-                        {
-                            Debug.Log("Brute Forcing " + door.name);
-                            GM.managerAlerted = true;
-                            door.GetComponent<Door>().forced = true;
-                            door.GetComponent<Door>().UnlockDoor();
-                            doorCollided = false;
-                            prompt.SetActive(false);
-                            if (!GM.dialogue.activeInHierarchy)
-                                GM.dialogue.SetActive(true);
-                            GM.typeWriter._readyForNewText = true;
-                            GM.typeWriter.PrepareForNewText(GM.dialogue);
-                            GM._inkStory.ChoosePathString("bruteForce");
-                            GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                            prompt.GetComponent<TMP_Text>().text = "Press E to Brute force";
                         }
                         else
                         {
+                            prompt.GetComponent<TMP_Text>().text = "Press E to Knock";
+                        }
+                    }
 
+                }
+
+                if (terminalCollided)
+                {
+                    prompt.GetComponent<TMP_Text>().text = "Press E to use terminal";
+
+                    if (Input.GetKeyDown(interactInput))
+                    {
+                        if (terminal.GetComponent<Terminal>().storageTerminal)
+                        {
+                            if (terminal.GetComponent<Terminal>().door.locked)
+                            {
+                                if (!GM.dialogue.activeInHierarchy)
+                                    GM.dialogue.SetActive(true);
+                                GM.typeWriter._readyForNewText = true;
+                                GM.typeWriter.PrepareForNewText(GM.dialogue);
+                                terminal.GetComponent<Terminal>().StartTerminal();
+                                GM.manager.transform.position = new Vector3(5f, 0f, -27.5f);
+                                GM.manager.SetActive(true);
+                            }
+                        }
+                        else
+                        {
+                            if (terminal.GetComponent<Terminal>().door.locked)
+                            {
+                                terminal.GetComponent<Terminal>().StartTerminal();
+                                if (!GM.dialogue.activeInHierarchy)
+                                    GM.dialogue.SetActive(true);
+                                GM.typeWriter.PrepareForNewText(GM.dialogue);
+
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    //prompt.SetActive(false);
+                }
+
+                if (Input.GetKeyDown(interactInput) && (doorCollided || terminalCollided))
+                {
+                    if (door.GetComponent<Door>().enabled && !door.GetComponent<Door>().locked)
+                    {
+                        door.GetComponent<Door>().OpenDoor();
+                        door.GetComponent<Door>().enabled = false;
+                        doorCollided = false;
+                        prompt.SetActive(false);
+                    }
+                    else if (door.GetComponent<Door>().enabled && door.GetComponent<Door>().locked)
+                    {
+                        //Knock();
+                        if (!door.name.Equals("APT4"))
+                        {
+                            Debug.Log("Knock Knock " + door.name);
                             Knock();
                             if (!GM.dialogue.activeInHierarchy)
                                 GM.dialogue.SetActive(true);
                             GM.typeWriter._readyForNewText = true;
                             GM.typeWriter.PrepareForNewText(GM.dialogue);
-                            GM._inkStory.ChoosePathString("dextersDoor");
+                            GM._inkStory.ChoosePathString("wrongApt");
                             GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                            GM._inkStory.Continue();
                         }
-                        
+                        else
+                        {
+                            if (door.GetComponent<Door>().knocked)
+                            {
+                                Debug.Log("Brute Forcing " + door.name);
+                                GM.managerAlerted = true;
+                                door.GetComponent<Door>().forced = true;
+                                door.GetComponent<Door>().UnlockDoor();
+                                doorCollided = false;
+                                prompt.SetActive(false);
+                                if (!GM.dialogue.activeInHierarchy)
+                                    GM.dialogue.SetActive(true);
+                                GM.typeWriter._readyForNewText = true;
+                                GM.typeWriter.PrepareForNewText(GM.dialogue);
+                                GM._inkStory.ChoosePathString("bruteForce");
+                                GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                            }
+                            else
+                            {
+
+                                Knock();
+                                if (!GM.dialogue.activeInHierarchy)
+                                    GM.dialogue.SetActive(true);
+                                GM.typeWriter._readyForNewText = true;
+                                GM.typeWriter.PrepareForNewText(GM.dialogue);
+                                GM._inkStory.ChoosePathString("dextersDoor");
+                                GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                            }
+
+                        }
+
+
+
                     }
 
-                    
 
                 }
-
-
             }
 
         }
 
         protected virtual void FocusInput()
         {
-            if (mapCollided || clueTriggered )
+            if (!GM.isConversation)
             {
-                prompt.SetActive(true);
-                if (!focused)
+                if (mapCollided || clueTriggered)
                 {
                     prompt.SetActive(true);
-                    if (Input.GetKeyDown(focusInput) && !caseFocused)
-                    { 
-                        focused = true;
-                        if (itemToFocus.GetComponent<Clue>() != null)
+                    if (!focused)
+                    {
+                        prompt.SetActive(true);
+                        if (Input.GetKeyDown(focusInput) && !caseFocused)
                         {
-                            if (!itemToFocus.GetComponent<Clue>().discovered && clueTriggered)
-                                GM.dialogue.SetActive(true);
-                            if (itemToFocus.GetComponent<Clue>().isInteractable)
+                            focused = true;
+                            if (itemToFocus.GetComponent<Clue>() != null)
                             {
-                                if (!Cursor.visible)
+                                if (!itemToFocus.GetComponent<Clue>().discovered && clueTriggered)
+                                    GM.dialogue.SetActive(true);
+                                if (itemToFocus.GetComponent<Clue>().isInteractable)
                                 {
-                                    Cursor.lockState = CursorLockMode.Confined;
-                                    Cursor.visible = true;
+                                    if (!Cursor.visible)
+                                    {
+                                        Cursor.lockState = CursorLockMode.Confined;
+                                        Cursor.visible = true;
+                                    }
+                                    itemToFocus.GetComponent<Transform>().position = tpCamera.anchor.transform.position;
                                 }
-                                itemToFocus.GetComponent<Transform>().position = tpCamera.anchor.transform.position;
                             }
-                        }
-                        cc.isSprinting = false;
-                        cc.input = Vector2.zero;
-                        
-                        cc.lockMovement = true;
-                        //tpCamera.lockCamera = true;
-                        //tpCamera.enabled = false;
-                        //tpCamera.lockCamera = true;
-                        tpCamera._camera.enabled = false;
-                        tpCamera.inspectCam.enabled = true;
-                        
-                        
-                        if (mapCollided)
-                        {
-                            tpCamera.inspectCam.fieldOfView = 60;
-                            prompt.GetComponent<TMP_Text>().text = "Press F to back out";
-                        } 
-                        else if (clueTriggered)
-                        {
-                            
-                            InspectClue();
-                            prompt.GetComponent<TMP_Text>().text = "Press F to back out";
-                        }
+                            cc.isSprinting = false;
+                            cc.input = Vector2.zero;
+
+                            cc.lockMovement = true;
+                            //tpCamera.lockCamera = true;
+                            //tpCamera.enabled = false;
+                            //tpCamera.lockCamera = true;
+                            tpCamera._camera.enabled = false;
+                            tpCamera.inspectCam.enabled = true;
+
+
+                            if (mapCollided)
+                            {
+                                tpCamera.inspectCam.fieldOfView = 60;
+                                prompt.GetComponent<TMP_Text>().text = "Press F to back out";
+                            }
+                            else if (clueTriggered)
+                            {
+
+                                InspectClue();
+                                prompt.GetComponent<TMP_Text>().text = "Press F to back out";
+                            }
                             SetFocus();
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetKeyDown(focusInput))
+                        {
+                            focused = false;
+                            cc.lockMovement = false;
+                            tpCamera.enabled = true;
+                            tpCamera.inspectCam.enabled = false;
+                            tpCamera._camera.enabled = true;
+                            if (itemToFocus.GetComponent<Clue>() != null)
+                            {
+                                if (itemToFocus.GetComponent<Clue>().isInteractable)
+                                {
+                                    if (Cursor.visible)
+                                        Cursor.visible = false;
+                                    Cursor.lockState = CursorLockMode.Locked;
+                                    itemToFocus.GetComponent<Transform>().position = itemToFocus.GetComponent<Clue>().ogPos;
+                                    itemToFocus.GetComponent<Transform>().rotation = itemToFocus.GetComponent<Clue>().ogDirection;
+                                }
+                            }
+                            //tpCamera.ReturnOldRotate();
+                            tpCamera.lockCamera = false;
+                            if (mapCollided)
+                            {
+                                tpCamera.inspectCam.fieldOfView = 78.5f;
+                                prompt.GetComponent<TMP_Text>().text = "Press F to focus";
+                            }
+                            else if (clueTriggered)
+                            {
+                                prompt.GetComponent<TMP_Text>().text = "Press F to investigate";
+                            }
+                            SetFocus();
+                        }
                     }
                 }
                 else
                 {
-                    if (Input.GetKeyDown(focusInput))
+                    /*if (Input.GetKeyDown(focusInput) && focused)
                     {
-                        focused = false;
                         cc.lockMovement = false;
-                        tpCamera.enabled = true;
-                        tpCamera.inspectCam.enabled = false;
+                        focused = false;
                         tpCamera._camera.enabled = true;
-                        if (itemToFocus.GetComponent<Clue>() != null)
-                        {
-                            if (itemToFocus.GetComponent<Clue>().isInteractable)
-                            {
-                                if (Cursor.visible)
-                                    Cursor.visible = false;
-                                Cursor.lockState = CursorLockMode.Locked;
-                                itemToFocus.GetComponent<Transform>().position = itemToFocus.GetComponent<Clue>().ogPos;
-                                itemToFocus.GetComponent<Transform>().rotation = itemToFocus.GetComponent<Clue>().ogDirection;
-                            }
-                        }
-                        //tpCamera.ReturnOldRotate();
+                        tpCamera.inspectCam.enabled = false;
                         tpCamera.lockCamera = false;
-                        if (mapCollided)
-                        {
-                            tpCamera.inspectCam.fieldOfView = 78.5f;
-                            prompt.GetComponent<TMP_Text>().text = "Press F to focus";
-                        }
-                        else if (clueTriggered)
-                        {
-                            prompt.GetComponent<TMP_Text>().text = "Press F to investigate";
-                        }
-                        SetFocus();
-                    }
+                        tpCamera.ReturnOldRotate();
+                    }*/
+                    //prompt.SetActive(false);
+                    //dialogue.SetActive(false);
                 }
-            } else
-            {
-                /*if (Input.GetKeyDown(focusInput) && focused)
-                {
-                    cc.lockMovement = false;
-                    focused = false;
-                    tpCamera._camera.enabled = true;
-                    tpCamera.inspectCam.enabled = false;
-                    tpCamera.lockCamera = false;
-                    tpCamera.ReturnOldRotate();
-                }*/
-                //prompt.SetActive(false);
-                //dialogue.SetActive(false);
             }
         }
 
@@ -423,34 +434,37 @@ namespace Invector.CharacterController
 
         protected virtual void OpenCaseBoard()
         {
-            if (!caseFocused && !focused)
+            if (!GM.isConversation)
             {
-                if (Input.GetKeyDown(caseBoardInput))
+                if (!caseFocused && !focused)
                 {
-                    if (!Cursor.visible)
-                        Cursor.lockState = CursorLockMode.Confined;
+                    if (Input.GetKeyDown(caseBoardInput))
+                    {
+                        if (!Cursor.visible)
+                            Cursor.lockState = CursorLockMode.Confined;
                         Cursor.visible = true;
-                    cc.isSprinting = false;
-                    cc.input = Vector2.zero;
-                    tpCamera.enabled = false;
-                    GM.caseBoard.SetActive(true);
-                    cc.lockMovement = true;
-                    caseFocused = true;
-                    ccm.UpdateCardPosition();
+                        cc.isSprinting = false;
+                        cc.input = Vector2.zero;
+                        tpCamera.enabled = false;
+                        GM.caseBoard.SetActive(true);
+                        cc.lockMovement = true;
+                        caseFocused = true;
+                        ccm.UpdateCardPosition();
+                    }
                 }
-            }
-            else if (caseFocused && !focused)
-            {
-                if (Input.GetKeyDown(caseBoardInput))
+                else if (caseFocused && !focused)
                 {
-                    if (Cursor.visible)
-                        Cursor.visible = false;
+                    if (Input.GetKeyDown(caseBoardInput))
+                    {
+                        if (Cursor.visible)
+                            Cursor.visible = false;
                         Cursor.lockState = CursorLockMode.Locked;
-                    GM.caseBoard.SetActive(false);
-                    cc.lockMovement = false;
-                    tpCamera.enabled = true;
-                    tpCamera.ReturnOldRotate();
-                    caseFocused = false;
+                        GM.caseBoard.SetActive(false);
+                        cc.lockMovement = false;
+                        tpCamera.enabled = true;
+                        tpCamera.ReturnOldRotate();
+                        caseFocused = false;
+                    }
                 }
             }
         }
@@ -495,6 +509,10 @@ namespace Invector.CharacterController
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other.gameObject.CompareTag("Apt4"))
+            {
+                inApt = true;
+            }
             if (other.gameObject.CompareTag("Focus"))
             {
                 mapCollided = true;
@@ -582,6 +600,10 @@ namespace Invector.CharacterController
                 doorCollided = false;   
                 door  = null;
                 prompt.SetActive(false);
+            }
+            if (other.gameObject.CompareTag("Apt4"))
+            {
+                inApt = false;
             }
         }
 

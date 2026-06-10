@@ -71,7 +71,12 @@ public class BldingManager : MonoBehaviour
                 Vector3 playerDirection = -(player.transform.position - m_Agent.transform.position);
                 Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
                 float angle = Quaternion.Angle(targetRotation, transform.rotation);
-                
+                if (player.GetComponent<vThirdPersonInput>().focused)
+                    player.GetComponent<vThirdPersonInput>().focused = false;
+                    
+                if (player.GetComponent<vThirdPersonInput>().caseFocused)
+                    player.GetComponent<vThirdPersonInput>().caseFocused = false;
+                    gm.caseBoard.SetActive(false);
                 player.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, angle);
                 gm.isConversation = true;
                 //player = other.gameObject;
@@ -92,6 +97,23 @@ public class BldingManager : MonoBehaviour
                 Debug.Log("Player detected");
                 playerCaught = true;
             }
+        }
+
+        if (other.gameObject.CompareTag("Apt4"))
+        {
+            if (player.GetComponent<vThirdPersonInput>().inApt)
+            {
+                Debug.Log("Activate Ending B");
+                gm._inkStory.variablesState["managerCaught"] = true;
+                GetComponent<SphereCollider>().radius = 27f;
+                GetComponent<NavMeshAgent>().isStopped = true;
+                GetComponent<NavMeshAgent>().enabled = false;
+                //other.GetComponent<BoxCollider>().size = new Vector3(25, 2, 30);
+                //Transition to Jail Scene or view
+                
+                //Debug.LogError(gm._inkStory.variablesState["managerCaught"]);
+            }
+
         }
     }
 

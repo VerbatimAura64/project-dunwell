@@ -10,6 +10,7 @@ public class EnterBuilding : MonoBehaviour
     public GameObject choiceScreen;
     public GameObject player;
     private Collider PC;
+    public string level;
     public int loadLevel;
 
     void OnTriggerEnter(Collider PC)
@@ -23,7 +24,7 @@ public class EnterBuilding : MonoBehaviour
     public void Confirm()
     {
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        SceneManager.LoadSceneAsync(loadLevel);
+        SceneManager.LoadSceneAsync(level);
         Time.timeScale = 1;
     }
 

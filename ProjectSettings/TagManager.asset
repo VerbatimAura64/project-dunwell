@@ -9,6 +9,7 @@ TagManager:
   - Focus
   - Door
   - BldManager
+  - Apt4
   layers:
   - Default
   - TransparentFX

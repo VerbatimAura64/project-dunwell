@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Clue : MonoBehaviour
@@ -39,7 +40,7 @@ public class Clue : MonoBehaviour
     public void SetSelected(bool selected)
     {
         _selected = selected;
-        GetComponent<Image>().color = selected ? Color.red : Color.green;
+        GetComponent<Image>().color = selected ? Color.red : Color.black;
 
     }
 
@@ -158,12 +159,18 @@ public class Clue : MonoBehaviour
             }
         }
 
-        if (other.gameObject.CompareTag("BldManager"))
+        /*if (other.gameObject.CompareTag("BldManager"))
         {
             Debug.Log("Activate Ending B");
+            other.GetComponent<NavMeshAgent>().isStopped = true;
+            other.GetComponent<NavMeshAgent>().enabled = false;
+            other.GetComponent<BoxCollider>().size = new Vector3(25, 2, 30);
+            //Transition to Jail Scene or view
+            gm._inkStory.variablesState["managerCaught"] = true;
+            //Debug.LogError(gm._inkStory.variablesState["managerCaught"]);
 
             
-        }
+        }*/
     }
 
     private void Start()
