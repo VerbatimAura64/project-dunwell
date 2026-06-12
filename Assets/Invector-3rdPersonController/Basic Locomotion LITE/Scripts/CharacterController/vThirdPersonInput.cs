@@ -35,6 +35,8 @@ namespace Invector.CharacterController
         public string rotateCameraYInput = "Mouse Y";
         [Header("Will's Settings")]
         public GM GM;
+        [SerializeField]
+        private ConnectionManager CM;
         public bool inApt = false;
         public bool mapCollided = false;
         public bool focused = false;
@@ -459,6 +461,12 @@ namespace Invector.CharacterController
                         if (Cursor.visible)
                             Cursor.visible = false;
                         Cursor.lockState = CursorLockMode.Locked;
+                        CM.ClearConnections();
+                        foreach (GameObject clue in GM.clueCards)
+                        {
+                           clue.GetComponent<Clue>().SetSelected(false);
+                           Debug.LogError(clue.name + clue.GetComponent<Clue>().IsSelected());
+                        }
                         GM.caseBoard.SetActive(false);
                         cc.lockMovement = false;
                         tpCamera.enabled = true;

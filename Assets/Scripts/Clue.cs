@@ -24,6 +24,7 @@ public class Clue : MonoBehaviour
     public string clueName;
     public string description;
     public Sprite clueSprite;
+    [SerializeField]
     private bool _selected;
 
     public GameObject clueObj;
@@ -65,6 +66,7 @@ public class Clue : MonoBehaviour
         if(isClueCard)
         {
             clueCardObj = this.gameObject;
+            gm.clueCards.Add(clueCardObj);
             //clueSprite = Resources.Load<Sprite>(clueName);
             //clueTexture = AssetPreview.GetAssetPreview(clueObj);
             

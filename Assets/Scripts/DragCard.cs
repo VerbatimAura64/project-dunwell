@@ -49,6 +49,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             _canvasGroup.blocksRaycasts = false;
             //transform.SetParent(transform.root); // Move to root to avoid being clipped by other UI elements
             Debug.Log("Begin dragging card: " + gameObject.name);
+            connectManager.OnCardClicked(gameObject.GetComponent<Clue>());
         } else
         {
 

@@ -6,11 +6,34 @@ public class ConnectionManager : MonoBehaviour
 {
     public RectTransform connectionContainer;
     [SerializeField]private Clue _firstSelected = null;
+    private List<CardConnection> activeConnections = new List<CardConnection>();
     private GM GM;
 
     private void Awake()
     {
         GM = GameObject.FindGameObjectWithTag("GameController").GetComponent<GM>();
+    }
+
+    private void Update()
+    {
+        foreach (CardConnection connection in activeConnections)
+        {
+            UpdateLine(connection);
+        }
+    }
+
+    private void UpdateLine(CardConnection connection)
+    {
+        Vector2 localA = connectionContainer.InverseTransformPoint(connection.cardA.GetComponent<RectTransform>().position);
+        Vector2 localB = connectionContainer.InverseTransformPoint(connection.cardB.GetComponent<RectTransform>().position);
+
+        Vector2 midpoint = (localA + localB) / 2f;
+        float distance = Vector2.Distance(localA, localB);
+        float angle = Mathf.Atan2(localB.y - localA.y, localB.x - localA.x) * Mathf.Rad2Deg;
+
+        connection.lineRect.anchoredPosition = midpoint;
+        connection.lineRect.sizeDelta = new Vector2(distance, 3f);
+        connection.lineRect.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     public void OnCardClicked(Clue clueCard)
@@ -37,7 +60,7 @@ public class ConnectionManager : MonoBehaviour
 
     private void TryConnect(Clue a, Clue b)
     {
-        Debug.Log(a.name +"_"+ b.name);
+        //Debug.Log(a.name +"_"+ b.name);
         string connectionKey = GetConnectionKey(a.name, b.name);
 
         if (_madeConnections.Contains(connectionKey)) return;
@@ -47,9 +70,21 @@ public class ConnectionManager : MonoBehaviour
             _madeConnections.Add(connectionKey);
             //GM.TriggerClueKnot(validConnections[connectionKey]);
             Debug.Log("Connection Made");
-            DrawConnection(a, b);
+            RectTransform lineRect = CreateLineObject();
+            activeConnections.Add(new CardConnection(a,b,lineRect));
+            //DrawConnection(a, b);
         }
 
+    }
+
+    private RectTransform CreateLineObject()
+    {
+        GameObject lineObj = new GameObject("ConnectionLine");
+        lineObj.transform.SetParent(connectionContainer, false);
+        Image line = lineObj.AddComponent<Image>();
+        line.color = Color.black;
+
+        return lineObj.GetComponent<RectTransform>();
     }
 
     private string GetConnectionKey(string clueA, string clueB)
@@ -76,12 +111,26 @@ public class ConnectionManager : MonoBehaviour
 
         RectTransform lineRect = lineObj.GetComponent<RectTransform>();
 
-        Vector2 posA = a.GetComponent<RectTransform>().localPosition;
-        Vector2 posB = b.GetComponent<RectTransform>().localPosition;
+        Vector2 posA = a.GetComponent<RectTransform>().anchoredPosition;
+        RectTransform rectA = a.GetComponent<RectTransform>();
+        RectTransform rectB = b.GetComponent<RectTransform>();
 
-        Vector2 midpoint = (posA + posB) / 2f;
-        float distance = Vector2.Distance(posA,posB);
-        float angle = Mathf.Atan2(posB.y - posA.y, posB.x - posA.x) * Mathf.Rad2Deg;
+        // World position reflects the card's true on-screen location,
+        // whether placed by spline, drag, or layout
+        Vector2 localA = connectionContainer.InverseTransformPoint(rectA.position);
+        Vector2 localB = connectionContainer.InverseTransformPoint(rectB.position);
+
+        Vector2 midpoint = (localA + localB) / 2f;
+        float distance = Vector2.Distance(localA, localB);
+        float angle = Mathf.Atan2(localB.y - localA.y, localB.x - localA.x) * Mathf.Rad2Deg;
+
+
+
+        //Vector2 posB = b.GetComponent<RectTransform>().anchoredPosition;
+
+        //Vector2 midpoint = -(posA + posB) /4f ;
+        //float distance = Vector2.Distance(posA,posB);
+        //float angle = Mathf.Atan2(posB.y - posA.y, posB.x - posA.x) * Mathf.Rad2Deg;
 
         lineRect.anchoredPosition = midpoint;
         lineRect.sizeDelta = new Vector2(distance, 3f);
@@ -108,4 +157,22 @@ public class ConnectionManager : MonoBehaviour
     
 
    
+}
+
+[System.Serializable]
+public class CardConnection
+{
+    public Clue cardA;
+    public Clue cardB;
+    public RectTransform lineRect;
+
+    public CardConnection (Clue a, Clue b, RectTransform line)
+    {
+        cardA = a;
+        cardB = b;
+        lineRect = line;
+    }
+
+    private List<CardConnection> _activeConnections = new List<CardConnection>();
+
 }
