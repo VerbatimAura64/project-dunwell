@@ -131,6 +131,7 @@ What can I find here, I don't have a lot of time.
 # CLUE_FOUND_1
 ~ foundLockedDoor = true
 ~ good_count = good_count + 1
+~ seenClueRoom = true
 An overrided privacy lock can only come from the inside, and the stack trace from the terminal didn't log any entry requests or breach attempts after the lock was set. 
 So how did our killer get in? How did they get out?
 
@@ -140,6 +141,7 @@ So how did our killer get in? How did they get out?
 # CLUE_FOUND_2
 ~ foundWipedDesk = true
 ~ good_count = good_count + 1
+~ seenClueRoom = true
 The rest of the place is tossed, or maybe this is how he lived. Boxes of junk, trash piling up in the corner. But his desk? Clean and empty, but the trash around it doesn't look like it's been there long. Tools on the wrong side, leftover food thrown over where it didn't belong.
 This place had been wrecked.
 -> clueHub
@@ -148,6 +150,7 @@ This place had been wrecked.
 # CLUE_FOUND_3
 ~ foundBody = true
 ~ good_count = good_count + 1
+~ seenClueRoom = true
 It looks like Dexter, but I can't be sure. Not with the bag on his head and the blood splatter dripping into his shirt and onto the floor. I never met the guy, but something tells me there wouldn't be anyone else in here except him anyhow.
 One shot, straight between the eyes.
 
@@ -158,6 +161,7 @@ One shot, straight between the eyes.
 # CLUE_FOUND_4
 ~ foundGun = true
 ~ good_count = good_count + 1
+~ seenClueRoom = true
 I shouldn't be touching the gun, but I need to know if this was what left Dexter in the chair for good. There's a round missing from its chamber.
 But why leave it to be found? Why drop it here from where they shot Dexter?
 
@@ -168,6 +172,7 @@ But why leave it to be found? Why drop it here from where they shot Dexter?
 # CLUE_FOUND_5
 ~ foundMonitor = true
 ~ good_count = good_count + 1
+~ seenClueRoom = true
 There's no windows in these apartments by design, but these wallscreens weren't any better as a source of artificial sunshine. But why is it still on, glowing with life if the rest of the room has died.
 There's something more off though, the emitted light is further behind the glass instead of on it. I'm beginning to feel more disconnected than the panel from where it ought to be emitting from.
 -> clueHub
@@ -348,7 +353,7 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
 
     "I know. Thanks."
 
-    He watched me go. I could feel the inventory running — does he belong, does he not — and I walked like the answer was obvious until I turned the corner.
+   I could feel the inventory running — does he belong, does he not — I didn't want to stick around to find out.
 
     ~ convManagerDone = true
     -> conveManagerDone
@@ -363,12 +368,13 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
 
 === closingMonologue ===
 # SCENE_CLOSING
+
 Dante was here. He might've just left the building as I walked in, and he left the door wide open for me to be caught in it.
 I have his credential now. And an address to the central hub he's pinged authentications from.
 With the drive in my possession, I look back at the room to see Dexter still sitting there. I'm sorry I couldn't have been here sooner for him.
 I never intended for my work to be used like this. Targeting innocent civilians for the wrong reasons. Nobody is safe if everyone is distrustful.
-There's a long list of things I need to do to nail Dante to this elaborate scheme. Will Sificity know what to do with something as large as this? Would there even be justice.
-I summon the elevator before I even approach the doors to avoid waiting for it.
+There's a long list of things I need to do to nail Dante to this elaborate scheme. 
+
 -> endingCheck
 
 === endingCheck ===
@@ -390,7 +396,9 @@ I summon the elevator before I even approach the doors to avoid waiting for it.
 # ENDING_A
 The case closed the way cases rarely do in Sificity — with the right person named.
 
-Dante Morrow is in the wind. He was before I walked through that door, and he will be long after whatever passes for justice here finishes deliberating. The city doesn't move fast enough to catch men like him. It barely moves fast enough to catch men like me.
+Dante Morrow is in the wind. He was before I walked through that door, and he will be long after whatever passes for justice here finishes deliberating. 
+
+The city doesn't move fast enough to catch men like him. It barely moves fast enough to catch men like me.
 
 But the record is clean. My name is off it.
 
@@ -403,7 +411,7 @@ The city keeps raining. I keep looking.
 -> END
 
 === endingB ===
-# ENDING_B
+#ENDING_B
 The cell is smaller than the apartments in The Studios. Not by much.
 
 I keep doing what I always do — noticing things. The crack in the upper left corner of the ceiling that suggests the building settled unevenly. The guard who favors his right leg on the evening shift. 
@@ -428,11 +436,14 @@ I left the datapads where I found them.
 
 That's not the instinct. The instinct is to take everything, build the case, hand it to someone with a badge and watch the machinery move. That's what I came here to do. That's what Dexter's message asked me to do, even if he didn't know he was asking.
 
-But my name is in that network. My directories. My architecture. Chief, Phelps, Morgan — running surveillance on civilians in their own homes, and it doesn't matter that I didn't know. It doesn't matter that Dante took it without asking. The code is mine. The sightlines are mine. Any case built on that drive has me in it, and a case with me in it is a case Dante Morrow can dismantle in an afternoon.
+But my name is in that network. My directories. My architecture. Chief, Phelps, Morgan — running surveillance on civilians in their own homes, and it doesn't matter that I didn't know. 
+It doesn't matter that Dante took it without asking. The code is mine. The sightlines are mine. Any case built on that drive has me in it, and a case with me in it is a case Dante Morrow can dismantle in an afternoon.
 
 So I left it for someone else.
 
-Dexter Clear spent the last months of his life trying to assemble something — evidence, a droid, a contingency. He didn't trust institutions. He trusted systems he built himself. I understand that now in a way I didn't when I walked through that door.
+Dexter Clear spent the last months of his life trying to assemble something — evidence, a droid, a contingency. He didn't trust institutions. He trusted systems he built himself. 
+
+I understand that now in a way I didn't when I walked through that door.
 
 Will Sificity know what to do with something as large as this? Would there even be justice.
 

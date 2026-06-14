@@ -12,6 +12,9 @@ public class GM : MonoBehaviour
     public TextAsset inkAsset;
     public Story inkStory;
     //public TextMeshProUGUI dialogueText;
+    public GameObject objective;
+    public Camera jailCam;
+    public Camera mainCam;
     public GameObject caseBoard;
     public bool isClipPlaying;
     public AudioSource auPlayer;
@@ -213,6 +216,22 @@ public class GM : MonoBehaviour
                     string clueName = tag.Substring(0); // Extract the clue number after "CLUE_"
                     // Load the scene using SceneManager.LoadScene(sceneName);
                     Debug.Log("Clue found triggered: " + clueName);
+                    continue;
+                }
+                if (tag.StartsWith("ENDING_"))
+                {
+                    string clueName = tag.Substring(0); // Extract the clue number after "ENDING_"
+                    // Load the scene using SceneManager.LoadScene(sceneName);
+                    mainCam.enabled = false;
+                    //Fade logic here
+                    //
+                    //
+                    jailCam.enabled = true;
+                    //disable input logic
+                    //
+                    //
+                    //Debug.Log("Clue found triggered: " + clueName);
+                    //Trigger Ending sequence
                     continue;
                 }
             }

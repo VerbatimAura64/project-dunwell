@@ -36,7 +36,7 @@ public class BldingManager : MonoBehaviour
             {
                 m_Agent.isStopped = true;
             } 
-            else
+            else if (gm.managerAlerted)
             {
                 //m_Agent.velocity = (animController.deltaPosition / Time.deltaTime);
                 m_Agent.isStopped = false;
@@ -78,6 +78,11 @@ public class BldingManager : MonoBehaviour
                     player.GetComponent<vThirdPersonInput>().caseFocused = false;
                     gm.caseBoard.SetActive(false);
                 player.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, angle);
+                //player.GetComponent<vThirdPersonInput>().tpCamera._camera.enabled = false;
+                //player.GetComponent<vThirdPersonInput>().tpCamera._lockOnTarget = this.transform;
+
+//                player.GetComponent<vThirdPersonInput>().tpCamera.inspectCam.enabled = true;
+
                 gm.isConversation = true;
                 //player = other.gameObject;
                 cc = player.GetComponent<vThirdPersonController>();

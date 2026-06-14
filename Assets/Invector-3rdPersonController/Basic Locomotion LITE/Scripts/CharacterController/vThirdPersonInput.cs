@@ -57,7 +57,7 @@ namespace Invector.CharacterController
         private Vector3 previousMousePosition;
         //public GameObject clueToInvestigate;
 
-        protected vThirdPersonCamera tpCamera;                // acess camera info        
+        public vThirdPersonCamera tpCamera;                // acess camera info        
         [HideInInspector]
         public string customCameraState;                    // generic string to change the CameraState        
         [HideInInspector]
