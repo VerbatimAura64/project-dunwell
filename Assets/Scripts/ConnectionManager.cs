@@ -100,7 +100,8 @@ public class ConnectionManager : MonoBehaviour
         {"Body_Gun", "connectionBodyGun" },
         {"Fine Doc_Neighbor Datapad", "connectionNeighborFine" },
         {"Wall Screen_Fine Doc", "connectionScreenFine" },
-        {"Desk_Gun", "connectionDeskGun"}
+        {"Desk_Gun", "connectionDeskGun"},
+        {"Neighbor Datapad_Dexter Datapad","connectionDatapads"}
     };
 
     private void DrawConnection(Clue a, Clue b)

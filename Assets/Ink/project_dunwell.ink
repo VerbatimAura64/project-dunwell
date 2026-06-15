@@ -144,6 +144,10 @@ Maybe Dexter told his neighbor about feeling like he was watched, but something 
 Seems like Dexter put up a fight before he lost to the best of his oponent and ended up, well, in the chair.
 ->DONE
 
+===connectionDatapads===
+There's a bunch of these just laying around and on this floor alone. I can't imagine the whole building is like this...
+->DONE
+
 === clueLockedDoor ===
 # CLUE_FOUND_1
 ~ foundLockedDoor = true

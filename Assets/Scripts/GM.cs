@@ -437,6 +437,9 @@ public class GM : MonoBehaviour
             manager.SetActive(true);
             //_inkStory.ChoosePathString("bldManagerConv");
             //AdvanceDialogue();
+        } else
+        {
+            manager.SetActive(false);
         }
     }
 }
