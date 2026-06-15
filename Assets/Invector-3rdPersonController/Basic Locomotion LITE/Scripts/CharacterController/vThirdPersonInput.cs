@@ -449,6 +449,7 @@ namespace Invector.CharacterController
                         cc.input = Vector2.zero;
                         tpCamera.enabled = false;
                         GM.caseBoard.SetActive(true);
+                        GM.dialogue.transform.localPosition = new Vector3(0,415f,0);
                         cc.lockMovement = true;
                         caseFocused = true;
                         ccm.UpdateCardPosition();
@@ -468,6 +469,8 @@ namespace Invector.CharacterController
                            Debug.LogError(clue.name + clue.GetComponent<Clue>().IsSelected());
                         }
                         GM.caseBoard.SetActive(false);
+                        GM.dialogue.SetActive(true);
+                        GM.dialogue.transform.localPosition = new Vector3(0f,-415f, 0);
                         cc.lockMovement = false;
                         tpCamera.enabled = true;
                         tpCamera.ReturnOldRotate();

@@ -113,6 +113,13 @@ public class GM : MonoBehaviour
         //ContinueStory();
     }
 
+    public void TriggerConnectionKnot(string knotTitle)
+    {
+
+        _inkStory.ChoosePathString(knotTitle);
+        AdvanceDialogue();
+    }
+
     public void AdvanceDialogue()
     {
         if (_inkStory.canContinue)

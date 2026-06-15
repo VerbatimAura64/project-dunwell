@@ -63,13 +63,14 @@ public class ConnectionManager : MonoBehaviour
         //Debug.Log(a.name +"_"+ b.name);
         string connectionKey = GetConnectionKey(a.name, b.name);
 
-        if (_madeConnections.Contains(connectionKey)) return;
+        if (_madeConnections.Contains(connectionKey)) { RectTransform lineRect = CreateLineObject(); }
+        ;
 
         if (validConnections.ContainsKey(connectionKey))
         {
             _madeConnections.Add(connectionKey);
-            //GM.TriggerClueKnot(validConnections[connectionKey]);
-            Debug.Log("Connection Made");
+            GM.TriggerConnectionKnot(validConnections[connectionKey]);
+            //Debug.Log(connectionKey);
             RectTransform lineRect = CreateLineObject();
             activeConnections.Add(new CardConnection(a,b,lineRect));
             //DrawConnection(a, b);
@@ -96,7 +97,10 @@ public class ConnectionManager : MonoBehaviour
 
     private Dictionary<string, string> validConnections = new Dictionary<string, string>()
     {
-        {"Body_Gun", "connection_body_gun" }
+        {"Body_Gun", "connectionBodyGun" },
+        {"Fine Doc_Neighbor Datapad", "connectionNeighborFine" },
+        {"Wall Screen_Fine Doc", "connectionScreenFine" },
+        {"Desk_Gun", "connectionDeskGun"}
     };
 
     private void DrawConnection(Clue a, Clue b)

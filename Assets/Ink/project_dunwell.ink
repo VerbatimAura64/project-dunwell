@@ -127,6 +127,23 @@ What can I find here, I don't have a lot of time.
     +[Who is that] ->clueBody
 }
 
+
+===connectionBodyGun===
+If the gun is on the table, then it couldn't have been suicide...
+->DONE
+
+===connectionNeighborFine===
+This guy better watch his back, or he might wind up like Dexter. If only I could warn him or something.
+->DONE
+
+===connectionScreenFine===
+Maybe Dexter told his neighbor about feeling like he was watched, but something must've got Dexter to take down the tapestry. Unless someone else took it down for him.
+->DONE
+
+===connectionDeskGun===
+Seems like Dexter put up a fight before he lost to the best of his oponent and ended up, well, in the chair.
+->DONE
+
 === clueLockedDoor ===
 # CLUE_FOUND_1
 ~ foundLockedDoor = true
@@ -236,7 +253,7 @@ Something about that wallscreen isn't sitting right with me. Tracing the edge tr
 The something in the walls.
 { foundStorageTerminal: That ghost signal from the storage terminal. It was coming from here. }
 Could this have been what Dexter was thinking? How did he find it himself, what was he looking for, what did he find? Could he have left something behind that whoever killed him was looking for? Where would he hide that kind of thing.
-The scanner needs a different kind of authentication, a handshake that seems too familiar though. My work credential token isn't something I'd plug in here, but you don't leave your proudest work behind a lock without a skeleton key that could save your skin in a moment like this.
+The scanner needs a different kind of authentication, a handshake that seems too familiar though.
 ~ foundWallTerminal = true
 ~ good_count = good_count + 1
 + [Use the skeleton key] -> obsRoom
@@ -291,7 +308,7 @@ And it's incredibly fulfilling to do so.
 -> closingMonologue
 
 === datapadsSceneLeave ===
-I don't have the time to think about these datapads. I have to get out of here. I'd love to smash them all, but I don't want to leave any more fingerprints. If I could carry them or back them up to the drive to wipe them, I would.
+I don't have the time to think about these datapads. I have to get out of here. I'd love to smash them, but I can't leave any more fingerprints. If I could carry them or back them up, I would.
 But there's no time.
 ~ datapadsChoiceMade = 0
 -> closingMonologue
@@ -301,7 +318,7 @@ But there's no time.
 { managerAlerted:
     The lock system must've flagged the override. He had the walk of a man who'd been called up for something and wasn't sure yet how serious it was.
 - else:
-    He was already in the hallway when I came out of the service corridor. Doing his rounds, or something close enough to rounds that he'd call it that. He clocked me the way building managers clock everyone — not suspicion, just inventory.
+    He was already in the hallway, doing his rounds, or something close enough to rounds that he'd call it that. He clocked me the way building managers clock everyone — not suspicion, just inventory.
 }
 
 { managerCaught:
@@ -434,7 +451,7 @@ The city keeps raining. I stop looking.
 # ENDING_C
 I left the datapads where I found them.
 
-That's not the instinct. The instinct is to take everything, build the case, hand it to someone with a badge and watch the machinery move. That's what I came here to do. That's what Dexter's message asked me to do, even if he didn't know he was asking.
+My instinct is to take everything, build the case, hand it to someone with a badge and watch the machinery move. That's what I came here to do. That's what Dexter's message asked me to do, even if he didn't know he was asking.
 
 But my name is in that network. My directories. My architecture. Chief, Phelps, Morgan — running surveillance on civilians in their own homes, and it doesn't matter that I didn't know. 
 It doesn't matter that Dante took it without asking. The code is mine. The sightlines are mine. Any case built on that drive has me in it, and a case with me in it is a case Dante Morrow can dismantle in an afternoon.
