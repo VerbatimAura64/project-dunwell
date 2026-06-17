@@ -111,6 +111,18 @@ public class Clue : MonoBehaviour
 
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            //Debug.Log("Activate choices");
+            player.GetComponent<vThirdPersonInput>().focused = false;
+            player.GetComponent<vThirdPersonController>().lockMovement = false;
+            player.GetComponent<vThirdPersonInput>().tpCamera.GetComponent<vThirdPersonCamera>().inspectCam.enabled = false;
+            player.GetComponent<vThirdPersonInput>().tpCamera.GetComponent<vThirdPersonCamera>()._camera.enabled = true;
+        }
+    }
+
     void WallReveal()
     {
         if(clueObj.name == "Wall Screen")

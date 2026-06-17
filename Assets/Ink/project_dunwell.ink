@@ -17,13 +17,14 @@ VAR morrowSuspicion = 0
 VAR managerCaught = false
 VAR foundWallTerminal = false
 VAR foundOneWayGlass = false
-VAR foundAccessDoor = false
+VAR foundScreenLast = false
 VAR foundNeighborDatapad = false
 VAR foundDexterDatapad = false
 VAR good_count = 0
 VAR seenIntMonologue = false
 VAR seenClueRoom = false
 VAR seenObsRoom = false
+VAR gameOver = false
 
 
 
@@ -85,13 +86,13 @@ Four override prompts and some patience. The lock gives.
 -> aptUnlocked
 
 ===findTerminal ===
+~ foundStorageTerminal = true
 The terminal was in the storage closet. Go figure. This terminal is older than the building deserves though. Repurposed city-issue, the kind that felt familiar six, seven years ago. Before droids took over the jobs and contracts.
 Before I left.
 ~ managerAlerted = false
 -> storageTerminal
 
 ===storageTerminal===
-~ foundStorageTerminal = true
 City-issue hardware running apartment management software it was never designed for. Whoever set this up knew what they were doing — or knew someone who did.
 I found Dexter's unit in the directory. Ran the unlock sequence.
 There's something else in here. A ghost signal, low bandwidth, encrypted. I can't read it from here.
@@ -148,6 +149,10 @@ Seems like Dexter put up a fight before he lost to the best of his oponent and e
 There's a bunch of these just laying around and on this floor alone. I can't imagine the whole building is like this...
 ->DONE
 
+===connectionDexDrive===
+It's Dexter's drive, but it has my programs on it. I think the observer was trying to plant evidence against Dexter. Maybe as a deal gone wrong, or something.
+->DONE
+
 === clueLockedDoor ===
 # CLUE_FOUND_1
 ~ foundLockedDoor = true
@@ -191,6 +196,9 @@ But why leave it to be found? Why drop it here from where they shot Dexter?
 
 === clueMonitor ===
 # CLUE_FOUND_5
+{ good_count == 4:  
+    ~foundScreenLast = true 
+}
 ~ foundMonitor = true
 ~ good_count = good_count + 1
 ~ seenClueRoom = true
@@ -232,7 +240,7 @@ The one that stuck out the most was mine.
 ~ foundFiles = true
 ~ foundSignature = true
 ~ good_count = good_count + 1
-The center command terminal has a backup drive plugged in, and it needs no authentication. Who doesn't lock their station before stepping away, unless they needed to leave in a hurry.
+There's a terminal drive on the center command table and my interface says it needs no authentication. Who doesn't lock their data before stepping away, unless they needed to leave in a hurry.
 But there's something more pressing. The directory list has a set of applications only I could recognize — applications I know I personally named. Not some corpo slave making a quick buck.
 Phelps. Chief. Morgan. Names from the History Archive Museum that seemed inspiring at the time.
 My architecture. My work. In the wild and in violation of everything I imagined its use for.
@@ -253,8 +261,10 @@ Morgan flags the trace. The alarm is live. I need to move.
 
  
  === beatTwo ===
+ { foundScreenLast:
 Something about that wallscreen isn't sitting right with me. Tracing the edge trying to bring the lights to the front glass, there's a click and a reader shows itself from out behind the wall.
 The something in the walls.
+}
 { foundStorageTerminal: That ghost signal from the storage terminal. It was coming from here. }
 Could this have been what Dexter was thinking? How did he find it himself, what was he looking for, what did he find? Could he have left something behind that whoever killed him was looking for? Where would he hide that kind of thing.
 The scanner needs a different kind of authentication, a handshake that seems too familiar though.
@@ -266,7 +276,7 @@ The scanner needs a different kind of authentication, a handshake that seems too
 
 === obsRoom ===
 {not seenObsRoom:
-    One way glass. Four apartments visible from here, Dexter's included. There's a door in the wall — service corridor access. This is how he got in. This is how he got out.
+    One way glass. Four apartments visible from here, Dexter's included. There's a elevator too — an interior service one . This is how he got in. This is how he got out.
 ~seenObsRoom = true
 - else: 
     What are they doing here...
@@ -388,8 +398,6 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
 -> DONE
 
 === closingMonologue ===
-# SCENE_CLOSING
-
 Dante was here. He might've just left the building as I walked in, and he left the door wide open for me to be caught in it.
 I have his credential now. And an address to the central hub he's pinged authentications from.
 With the drive in my possession, I look back at the room to see Dexter still sitting there. I'm sorry I couldn't have been here sooner for him.
@@ -428,7 +436,7 @@ Dexter Clear died trying to hand someone a truth they weren't ready for. He hand
 I don't know if that counts as winning.
 
 The city keeps raining. I keep looking.
-
+~gameOver = true
 -> END
 
 === endingB ===
@@ -448,7 +456,7 @@ Dante Morrow is outside these walls. Dexter Clear is in the ground. The observat
 }
 
 The city keeps raining. I stop looking.
-
+~gameOver = true
 -> END
 
 === endingC ===
@@ -458,6 +466,7 @@ I left the datapads where I found them.
 My instinct is to take everything, build the case, hand it to someone with a badge and watch the machinery move. That's what I came here to do. That's what Dexter's message asked me to do, even if he didn't know he was asking.
 
 But my name is in that network. My directories. My architecture. Chief, Phelps, Morgan — running surveillance on civilians in their own homes, and it doesn't matter that I didn't know. 
+
 It doesn't matter that Dante took it without asking. The code is mine. The sightlines are mine. Any case built on that drive has me in it, and a case with me in it is a case Dante Morrow can dismantle in an afternoon.
 
 So I left it for someone else.
@@ -468,9 +477,9 @@ I understand that now in a way I didn't when I walked through that door.
 
 Will Sificity know what to do with something as large as this? Would there even be justice.
 
-I don't know. But I know who to ask.
+I don't know. But I think I know who to ask.
 
 The city keeps raining. Someone else keeps looking.
-
+~gameOver = true
 -> END
 

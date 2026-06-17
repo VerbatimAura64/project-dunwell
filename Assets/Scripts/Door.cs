@@ -87,14 +87,12 @@ public class Door : MonoBehaviour
 
     void Slide()
     {
-        if (!locked)
+        if (!locked && !hinged)
         {
-            if (!hinged)
-            {
                 float step = .35f;
                 if (left >= door.transform.localPosition.x)
                 door.transform.Translate(step * Time.deltaTime * Vector3.right); // Adjust the sliding direction and distance as needed
-            }
+            
         }
            
 

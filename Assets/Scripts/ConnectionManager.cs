@@ -63,8 +63,8 @@ public class ConnectionManager : MonoBehaviour
         //Debug.Log(a.name +"_"+ b.name);
         string connectionKey = GetConnectionKey(a.name, b.name);
 
-        if (_madeConnections.Contains(connectionKey)) { RectTransform lineRect = CreateLineObject(); }
-        ;
+        if (_madeConnections.Contains(connectionKey)) { return; };//RectTransform lineRect = CreateLineObject(); }
+        
 
         if (validConnections.ContainsKey(connectionKey))
         {
@@ -101,7 +101,8 @@ public class ConnectionManager : MonoBehaviour
         {"Fine Doc_Neighbor Datapad", "connectionNeighborFine" },
         {"Wall Screen_Fine Doc", "connectionScreenFine" },
         {"Desk_Gun", "connectionDeskGun"},
-        {"Neighbor Datapad_Dexter Datapad","connectionDatapads"}
+        {"Neighbor Datapad_Dexter Datapad","connectionDatapads"},
+        {"Dexter's Drive_Desk","connectionDexDrive"}
     };
 
     private void DrawConnection(Clue a, Clue b)

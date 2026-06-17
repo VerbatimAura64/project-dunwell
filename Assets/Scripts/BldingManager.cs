@@ -36,7 +36,7 @@ public class BldingManager : MonoBehaviour
             {
                 m_Agent.isStopped = true;
             } 
-            else if (gm.managerAlerted)
+            else if (gm.managerAlerted || (bool)gm._inkStory.variablesState["foundStorageTerminal"])
             {
                 //m_Agent.velocity = (animController.deltaPosition / Time.deltaTime);
                 m_Agent.isStopped = false;

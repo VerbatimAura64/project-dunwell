@@ -27,6 +27,7 @@ public class GM : MonoBehaviour
     public bool managerAlerted;
     public bool isConversation;
     public bool datapadChoice;
+    public bool gameOver;
     public GameObject choiceButtonPrefab;
     public Transform choicesContainer;
     public Clue clueScript;
@@ -91,6 +92,7 @@ public class GM : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
             if(arrow.activeInHierarchy)
                 ContinueStory();
+        IsDemoOver();
         //if(Input.GetKeyDown(KeyCode.Return))
           //  PlayNext();
         //DiscoverClue();
@@ -103,6 +105,20 @@ public class GM : MonoBehaviour
         //ToBePlayed();
 
         //toBePlayed.Enqueue(queueList.First());
+    }
+
+    void IsDemoOver()
+    {
+        gameOver = (bool)_inkStory.variablesState["gameOver"];
+        EndGame();
+    }
+
+    void EndGame()
+    {
+        if (gameOver)
+        {
+
+        }
     }
 
     public void TriggerClueKnot(string knotTitle)
@@ -227,8 +243,9 @@ public class GM : MonoBehaviour
                 }
                 if (tag.StartsWith("ENDING_"))
                 {
-                    string clueName = tag.Substring(0); // Extract the clue number after "ENDING_"
+                    string ending = tag.Substring(0); // Extract the clue number after "ENDING_"
                     // Load the scene using SceneManager.LoadScene(sceneName);
+                    Debug.Log(ending);
                     mainCam.enabled = false;
                     //Fade logic here
                     //
@@ -432,12 +449,17 @@ public class GM : MonoBehaviour
 
     void ManagerAlerted()
     {
-        if(managerAlerted)
+        if (managerAlerted)
         {
             manager.SetActive(true);
             //_inkStory.ChoosePathString("bldManagerConv");
             //AdvanceDialogue();
-        } else
+        } else if((bool)_inkStory.variablesState["foundStorageTerminal"])
+        {
+            manager.SetActive(true);
+            
+        }
+        else
         {
             manager.SetActive(false);
         }
