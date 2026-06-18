@@ -639,15 +639,18 @@ namespace Invector.CharacterController
             // just a example to quit the application 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                GM.pauseScreen.SetActive(true);
                 if (!Cursor.visible)
                     Cursor.visible = true;
-                else
+                Cursor.lockState = CursorLockMode.Confined;
+                Time.timeScale = 0f;
+                /*else
                 {
                     Application.Quit();
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPaused = true;
 #endif
-                }
+                }*/
             }
         }
 

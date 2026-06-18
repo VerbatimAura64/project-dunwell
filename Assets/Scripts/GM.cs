@@ -19,6 +19,7 @@ public class GM : MonoBehaviour
     public Canvas canvas;
     public GameObject objective;
     public GameObject instruct;
+    public GameObject pauseScreen;
     public Camera jailCam;
     public Camera mainCam;
     public GameObject caseBoard;
@@ -142,24 +143,24 @@ public class GM : MonoBehaviour
 
     public IEnumerator InstructFade(float startAlpha, float endAlpha, float duration)
     {
-        //instruct.SetActive(true);
-        //float duration = 2f;
         float elapsed = 0f;
-        float fadeDuration = 3f;
+        //Color tC = instruct.GetComponentInChildren<TextMeshProUGUI>().color;
         Color c = instruct.GetComponent<Image>().color;
         c.a = startAlpha;
 
-        while (elapsed < fadeDuration)
+        while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
-            float t = elapsed / fadeDuration;
+            float t = elapsed / duration;
             t = t * t * (3f - 2f * t);
-
+            tC.a = Mathf.Lerp(startAlpha, endAlpha, t);
             c.a = Mathf.Lerp(startAlpha, endAlpha, t);
             instruct.GetComponent<Image>().color = c;
             yield return null;
         }
+        //tC.a = endAlpha;
         c.a = endAlpha;
+        //instruct.GetComponentInChildren<TextMeshProUGUI>().color = tC;
         instruct.GetComponent<Image>().color = c;
         instruct.SetActive(false);
     }
@@ -185,10 +186,27 @@ public class GM : MonoBehaviour
     {
         StartCoroutine(LoadNewScene());
     }
+    public void Menu() 
+    {
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1.0f;
+    }
+
+    public void Resume()
+    {
+        pauseScreen.SetActive(false);
+        Time.timeScale = 1.0f;
+        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
 
     public void QuitGame()
     {
         Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     private IEnumerator EndingBTransition() {
