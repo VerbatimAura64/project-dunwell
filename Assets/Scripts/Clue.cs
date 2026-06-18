@@ -135,7 +135,8 @@ public class Clue : MonoBehaviour
                 //this.clueObj.tag = "Terminal";
                 GameObject.Find("WallPanelClue").GetComponent<MeshRenderer>().enabled = true;
                 GameObject.Find("WallPanelClue").GetComponent<SphereCollider>().enabled = true;
-                GameObject.Find("Locked Door").GetComponent<Transform>().Rotate(0,-90f,0);
+                GameObject.Find("Locked Door").GetComponent<Transform>().rotation = Quaternion.Euler(0F, 90f, 0f);
+                //GameObject.Find("Locked Door").GetComponent<Transform>().Rotate(0F,-90f, 0f);
                 gm.managerAlerted = false;
                 //GameObject.Find("Dunwell").GetComponent<vThirdPersonInput>().clueTriggered = false;
                 

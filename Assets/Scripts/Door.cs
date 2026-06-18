@@ -13,7 +13,7 @@ public class Door : MonoBehaviour
     //public GameObject doorObj;
     public GameObject door;
     private float left = 0;
-    private float down = 0;
+    private float down = 02.4f;
 
 
     private void OnTriggerEnter(Collider other)
@@ -89,10 +89,21 @@ public class Door : MonoBehaviour
     {
         if (!locked && !hinged)
         {
+            if (!door.name.Equals("ServiceElevator"))
+            {
                 float step = .35f;
                 if (left >= door.transform.localPosition.x)
-                door.transform.Translate(step * Time.deltaTime * Vector3.right); // Adjust the sliding direction and distance as needed
-            
+                    door.transform.Translate(step * Time.deltaTime * Vector3.right); // Adjust the sliding direction and distance as needed
+            }
+            else
+            {
+                if (GameObject.Find("GM").GetComponent<GM>().gameOver)
+                {
+                    float step = .35f;
+                    if (down >= door.transform.localPosition.y)
+                        door.transform.Translate(step * Time.deltaTime * Vector3.up);
+                }
+            }
         }
            
 

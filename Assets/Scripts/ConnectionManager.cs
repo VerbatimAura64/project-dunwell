@@ -60,7 +60,9 @@ public class ConnectionManager : MonoBehaviour
 
     private void TryConnect(Clue a, Clue b)
     {
-        //Debug.Log(a.name +"_"+ b.name);
+        a.name = a.name.Replace(" ", "");
+        b.name = b.name.Replace(" ", "");
+        Debug.Log(a.name +"_"+ b.name);
         string connectionKey = GetConnectionKey(a.name, b.name);
 
         if (_madeConnections.Contains(connectionKey)) { return; };//RectTransform lineRect = CreateLineObject(); }
@@ -69,6 +71,7 @@ public class ConnectionManager : MonoBehaviour
         if (validConnections.ContainsKey(connectionKey))
         {
             _madeConnections.Add(connectionKey);
+            if (!GM.dialogue.activeInHierarchy) GM.dialogue.SetActive(true);
             GM.TriggerConnectionKnot(validConnections[connectionKey]);
             //Debug.Log(connectionKey);
             RectTransform lineRect = CreateLineObject();
@@ -90,6 +93,7 @@ public class ConnectionManager : MonoBehaviour
 
     private string GetConnectionKey(string clueA, string clueB)
     {
+        
         string[] sorted = new string[] { clueA, clueB };
         System.Array.Sort(sorted);
         return sorted[0] + "_" + sorted[1];
@@ -98,11 +102,11 @@ public class ConnectionManager : MonoBehaviour
     private Dictionary<string, string> validConnections = new Dictionary<string, string>()
     {
         {"Body_Gun", "connectionBodyGun" },
-        {"Fine Doc_Neighbor Datapad", "connectionNeighborFine" },
-        {"Wall Screen_Fine Doc", "connectionScreenFine" },
+        {"FineDoc_NeighborDatapad", "connectionNeighborFine" },
+        {"FineDoc_WallScreen", "connectionScreenFine" },
         {"Desk_Gun", "connectionDeskGun"},
-        {"Neighbor Datapad_Dexter Datapad","connectionDatapads"},
-        {"Dexter's Drive_Desk","connectionDexDrive"}
+        {"DexterDatapad_NeighborDatapad","connectionDatapads"},
+        {"Desk_Dexter'sDrive","connectionDexDrive"}
     };
 
     private void DrawConnection(Clue a, Clue b)

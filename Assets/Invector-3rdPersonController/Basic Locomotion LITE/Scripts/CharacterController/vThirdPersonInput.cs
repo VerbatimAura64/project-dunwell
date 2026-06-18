@@ -110,6 +110,10 @@ namespace Invector.CharacterController
         {
             cc.UpdateMotor();                   // call ThirdPersonMotor methods               
             cc.UpdateAnimator();                // call ThirdPersonAnimator methods
+            if (inApt)
+            {
+                GM._inkStory.variablesState["seenIntMonologue"] = true;
+            }
             //SetFocus();                         // 		               
         }
 
@@ -182,7 +186,7 @@ namespace Invector.CharacterController
             {
                 if (doorCollided)
                 {
-                    //prompt.SetActive(true);
+                    prompt.SetActive(true);
                     if (!door.GetComponent<Door>().locked)
                     {
                         prompt.GetComponent<TMP_Text>().text = "Press E to open";
@@ -200,6 +204,7 @@ namespace Invector.CharacterController
                     }
 
                 }
+               
 
                 if (terminalCollided)
                 {
@@ -228,6 +233,7 @@ namespace Invector.CharacterController
                                 if (!GM.dialogue.activeInHierarchy)
                                     GM.dialogue.SetActive(true);
                                 GM.typeWriter.PrepareForNewText(GM.dialogue);
+                                prompt.SetActive(false);
 
                             }
                         }
@@ -466,11 +472,12 @@ namespace Invector.CharacterController
                         foreach (GameObject clue in GM.clueCards)
                         {
                            clue.GetComponent<Clue>().SetSelected(false);
-                           Debug.LogError(clue.name + clue.GetComponent<Clue>().IsSelected());
+                           //Debug.LogError(clue.name + clue.GetComponent<Clue>().IsSelected());
                         }
                         GM.caseBoard.SetActive(false);
-                        GM.dialogue.SetActive(true);
-                        GM.dialogue.transform.localPosition = new Vector3(0f,-415f, 0);
+                        if (GM.dialogue.activeInHierarchy) GM.dialogue.SetActive(true);
+                        else GM.dialogue.SetActive(false);
+                        GM.dialogue.transform.localPosition = new Vector3(0f, -415f, 0);
                         cc.lockMovement = false;
                         tpCamera.enabled = true;
                         tpCamera.ReturnOldRotate();
@@ -553,11 +560,9 @@ namespace Invector.CharacterController
                 door = other.gameObject;
                 if (doorCollided)
                 {
-                    
                     if (!door.GetComponent<Door>().locked)
                     {
                         prompt.GetComponent<TMP_Text>().text = "Press E to open";
-                        
                     }
                     else
                     {

@@ -82,7 +82,7 @@ The door is locked. Override lock, not a standard residential fit. I can force t
 === bruteForce ===
 # DOOR_FORCED
 ~ managerAlerted = true
-Four override prompts and some patience. The lock gives.
+Four override attempts and some patience. The lock gives.
 -> aptUnlocked
 
 ===findTerminal ===
@@ -100,7 +100,7 @@ There's something else in here. A ghost signal, low bandwidth, encrypted. I can'
 
 
 ===aptUnlocked===
-The door unlocks and swings open. It's dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
+The door swings open. It's dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
 I can make him out. Sitting in a chair, head down like he fell asleep watching something. But there's something on his head.
 A bag. And around his feet — a pool of blood.
 I've just forced my way into a crime scene. The droids are going to pop in eventually. When they do, they'll harden the logic around whatever they find — and right now everything they find points at me.
@@ -110,7 +110,7 @@ If only I had answered him sooner.
 
 ===clueHub===
 {not managerAlerted: 
-The door unlocks and swings open. It's dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
+The door swings open. It's dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
 I can make him out. Sitting in a chair, head down like he fell asleep watching something. But there's something on his head.
 A bag. And around his feet — a pool of blood.
 I've just forced my way into a crime scene. The droids are going to pop in eventually. When they do, they'll harden the logic around whatever they find — and right now everything they find points at me.
@@ -158,7 +158,8 @@ It's Dexter's drive, but it has my programs on it. I think the observer was tryi
 ~ foundLockedDoor = true
 ~ good_count = good_count + 1
 ~ seenClueRoom = true
-An overrided privacy lock can only come from the inside, and the stack trace from the terminal didn't log any entry requests or breach attempts after the lock was set. 
+An overrided privacy lock can only come from the inside. 
+{ foundStorageTerminal: The stack trace from the terminal didn't log any entry requests or breach attempts after the lock was set.} 
 So how did our killer get in? How did they get out?
 
 -> clueHub
@@ -271,12 +272,12 @@ The scanner needs a different kind of authentication, a handshake that seems too
 ~ foundWallTerminal = true
 ~ good_count = good_count + 1
 + [Use the skeleton key] -> obsRoom
-
+->DONE
 
 
 === obsRoom ===
 {not seenObsRoom:
-    One way glass. Four apartments visible from here, Dexter's included. There's a elevator too — an interior service one . This is how he got in. This is how he got out.
+    One way glass. Four apartments visible from here, Dexter's included. There's an elevator too — an interior service one . This is how he got in. This is how he got out.
 ~seenObsRoom = true
 - else: 
     What are they doing here...
@@ -413,7 +414,7 @@ There's a long list of things I need to do to nail Dante to this elaborate schem
     { good_count >= 9 && datapadsChoiceMade > 0:
         -> endingA
     - else:
-        { good_count >= 9 && datapadsChoiceMade == 0:
+        { datapadsChoiceMade == 0:
             -> endingC
         - else:
             -> endingB

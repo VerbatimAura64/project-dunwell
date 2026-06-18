@@ -1,17 +1,22 @@
 //using Ink.Parsed;
 using Ink.Runtime;
 using Ink.UnityIntegration;
+using Invector.CharacterController;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class GM : MonoBehaviour
 {
+    private static GM instance;
+    private static Canvas screenInstance;
     public TextAsset inkAsset;
     public Story inkStory;
-    //public TextMeshProUGUI dialogueText;
+    public Canvas canvas;
     public GameObject objective;
     public Camera jailCam;
     public Camera mainCam;
@@ -24,6 +29,8 @@ public class GM : MonoBehaviour
     public TypeWriterEffect typeWriter;
     public GameObject arrow;
     public GameObject manager;
+    public GameObject fadeScreen;
+    public GameObject endMenu;
     public bool managerAlerted;
     public bool isConversation;
     public bool datapadChoice;
@@ -63,10 +70,27 @@ public class GM : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //StartCoroutine(Timer());
+        StartCoroutine(RevealScene());  
         caseBoard.SetActive(false);
         _inkStory = new Story(inkAsset.text);
-        InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
-        if (window != null) { InkPlayerWindow.Attach(_inkStory); }
+        //InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
+        //if (window != null) { InkPlayerWindow.Attach(_inkStory); }
+        if(instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        if(screenInstance != null && screenInstance != canvas)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        screenInstance = canvas;
+        //DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(canvas);
 
         if(SceneManager.GetActiveScene().name == "Interior")
         {
@@ -89,12 +113,13 @@ public class GM : MonoBehaviour
         IsClipOn();
         //DiscoverClue();
         ManagerAlerted();
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Tab))
             if(arrow.activeInHierarchy)
                 ContinueStory();
         IsDemoOver();
+        EndGameB();
         //if(Input.GetKeyDown(KeyCode.Return))
-          //  PlayNext();
+        //  PlayNext();
         //DiscoverClue();
         //while (_inkStory.canContinue)
         {
@@ -107,20 +132,93 @@ public class GM : MonoBehaviour
         //toBePlayed.Enqueue(queueList.First());
     }
 
+    private IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(3f);
+    }
+
     void IsDemoOver()
     {
         gameOver = (bool)_inkStory.variablesState["gameOver"];
-        EndGame();
+        
     }
 
-    void EndGame()
+    public void EndGameB()
     {
-        if (gameOver)
-        {
-
-        }
+        if(gameOver && (bool)_inkStory.variablesState["managerCaught"])
+            StartCoroutine(FadeAndShowMenu());
     }
 
+    public void EndGame()
+    {
+            StartCoroutine(FadeAndShowMenu());
+    }
+
+    private IEnumerator EndingBTransition() {
+        yield return StartCoroutine(FadeScreen(0f, 1f, 2f));
+        mainCam.enabled = false;
+        jailCam.enabled = true;
+        yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
+    }
+
+    public IEnumerator LoadNewScene()
+    {
+        yield return StartCoroutine(FadeScreen(0f, 1f, 2f));
+        yield return SceneManager.LoadSceneAsync("Interior");
+        yield return new WaitForSecondsRealtime(5f);
+        yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
+        fadeScreen.SetActive(false);
+    }
+
+    public IEnumerator RevealScene()
+    {
+        yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
+        fadeScreen.SetActive(false);
+    }
+
+    private IEnumerator FadeAndShowMenu()
+    {
+        fadeScreen.SetActive(true);
+        float duration = 2f;
+        float elapsed = 0f;
+        Color c = fadeScreen.GetComponent<Image>().color;
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            c.a = Mathf.Clamp01(elapsed / duration);
+            fadeScreen.GetComponent<Image>().color = c;
+            yield return null;
+        }
+        yield return new WaitForSecondsRealtime(1.5f);
+        
+        endMenu.SetActive(true);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
+
+
+    public IEnumerator FadeScreen(float startAlpha, float endAlpha, float duration)
+    {
+        fadeScreen.SetActive(true);
+        //float duration = 2f;
+        float elapsed = 0f;
+        float fadeDuration = 3f;
+        Color c = fadeScreen.GetComponent<Image>().color;
+        c.a = startAlpha;
+
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = elapsed / fadeDuration;
+            t = t * t * (3f - 2f * t);
+
+            c.a = Mathf.Lerp(startAlpha, endAlpha,t);
+            fadeScreen.GetComponent<Image>().color = c;
+            yield return null;
+        }
+        c.a = endAlpha;
+        fadeScreen.GetComponent<Image>().color = c;
+    }
     public void TriggerClueKnot(string knotTitle)
     {
         
@@ -246,11 +344,19 @@ public class GM : MonoBehaviour
                     string ending = tag.Substring(0); // Extract the clue number after "ENDING_"
                     // Load the scene using SceneManager.LoadScene(sceneName);
                     Debug.Log(ending);
-                    mainCam.enabled = false;
+                    if (ending.Equals("ENDING_B"))
+                    {
+                        //Fade logic here
+                        StartCoroutine(EndingBTransition());
+                        
+                        GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonController>().lockMovement = true;
+                        GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonCamera>().lockCamera = true;
+                    }
+                    
                     //Fade logic here
                     //
                     //
-                    jailCam.enabled = true;
+                    
                     //disable input logic
                     //
                     //
@@ -449,19 +555,23 @@ public class GM : MonoBehaviour
 
     void ManagerAlerted()
     {
-        if (managerAlerted)
+        if (manager != null)
         {
-            manager.SetActive(true);
-            //_inkStory.ChoosePathString("bldManagerConv");
-            //AdvanceDialogue();
-        } else if((bool)_inkStory.variablesState["foundStorageTerminal"])
-        {
-            manager.SetActive(true);
-            
-        }
-        else
-        {
-            manager.SetActive(false);
+            if (managerAlerted)
+            {
+                manager.SetActive(true);
+                //_inkStory.ChoosePathString("bldManagerConv");
+                //AdvanceDialogue();
+            }
+            else if ((bool)_inkStory.variablesState["foundStorageTerminal"])
+            {
+                manager.SetActive(true);
+
+            }
+            else
+            {
+                manager.SetActive(false);
+            }
         }
     }
 }

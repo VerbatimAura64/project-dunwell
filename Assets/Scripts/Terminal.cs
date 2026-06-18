@@ -51,6 +51,7 @@ public class Terminal : MonoBehaviour
         {
             door.locked = false;
             gm._inkStory.ChoosePathString("obsRoom");
+            gm.AdvanceDialogue();
             gm.typeWriter._readyForNewText = true;
             
             
