@@ -134,27 +134,10 @@ public class ConnectionManager : MonoBehaviour
         float distance = Vector2.Distance(localA, localB);
         float angle = Mathf.Atan2(localB.y - localA.y, localB.x - localA.x) * Mathf.Rad2Deg;
 
-
-
-        //Vector2 posB = b.GetComponent<RectTransform>().anchoredPosition;
-
-        //Vector2 midpoint = -(posA + posB) /4f ;
-        //float distance = Vector2.Distance(posA,posB);
-        //float angle = Mathf.Atan2(posB.y - posA.y, posB.x - posA.x) * Mathf.Rad2Deg;
-
         lineRect.anchoredPosition = midpoint;
         lineRect.sizeDelta = new Vector2(distance, 3f);
         lineRect.rotation = Quaternion.Euler(0, 0, angle);
-
-        /*
-        line.positionCount = 2;
-        line.startWidth = 2f;
-        line.endWidth = 2f;
-        //line.material = connectionLineMaterial;
-
-        line.SetPosition(0, a.transform.position);
-        line.SetPosition(1, b.transform.position);
-    */}
+}
 
     public void ClearConnections()
     {

@@ -24,7 +24,9 @@ VAR good_count = 0
 VAR seenIntMonologue = false
 VAR seenClueRoom = false
 VAR seenObsRoom = false
+VAR seenExt = false
 VAR gameOver = false
+VAR bluffed = false
 
 
 
@@ -34,22 +36,23 @@ VAR gameOver = false
 ===extMonologue===
 #SCENE_EXTERIOR
 
-The message came in at 2:47 a.m. I read it at 6:12.
+The message came in at 1:47 a.m. I read it at 5:12.
 Three hours and twenty-five minutes. In this city, that's not a window. That's a eulogy.
 His name was in the header. Dexter Clear. I didn't recognize it. I almost deleted it — the kind of encrypted routing he used, you see it from cranks mostly, people who think the city is listening. At least he was smart enough about that.
 He said he found something in the walls, that he needed someone who knew how the old network was built. 
 What more was in the walls besides rats and mold? He didn’t say how he heard my name, maybe he didn’t want to risk it. But he did know I was the kind of person who kept a spare key to all the locked doors.
-The rain is coming down harder now, and I need to get inside.
-
+The evening curfew hasn't been lifted yet, I need to get inside.
+~seenExt = true
 + [Go inside] -> intMonologue
 
 ->intMonologue
 
 ===intMonologue===
 #SCENE_INTERIOR_HALLWAY
+~seenExt = true
 { not seenIntMonologue: 
 These apartments were cheap, The Studios they called them, basically saving space in the building by building the hallways around the outside of the apartments instead of between them. Leaner buildings, smaller but equally sized apartments, and cheaper rents.
- It didn’t take too many override prompts to convince the artificial reception to let me through and up to his floor. 
+ It didn’t take too many persuasion prompts to convince the artificial reception to let me through and up to his floor. 
   ~ seenIntMonologue = true
  - else: Where should I go
  }
@@ -60,11 +63,14 @@ These apartments were cheap, The Studios they called them, basically saving spac
 
 ===wrongApt===
 This isn't Dexter's Apartment...
--{not seenIntMonologue && not managerAlerted: ->intMonologue}
+{ not seenIntMonologue && not managerAlerted:
+    ->intMonologue
+}
 ->DONE
 
 ===notRelevant===
 {~ Doesn't look important... | Sificity needs a facelift... | Maybe it's decorative... | Really? | Nothing here that helps me | Marcus looks. Moves on.}
+-{not seenExt: ->extMonologue}
 -{not seenIntMonologue: ->intMonologue}
 -{not managerAlerted: ->intMonologue}
 -{not seenClueRoom: ->aptUnlocked}
@@ -72,7 +78,7 @@ This isn't Dexter's Apartment...
  ->DONE
 
 ===dextersDoor===
-I knocked on the door. The room sounds hollow, like it couldn't possibly have anyone inside. He told me to meet here. Maybe he fell asleep - I'm three hours late.
+I knocked on the door. The room sounds hollow, like no one could possibly be inside. He told me to meet here. Maybe he fell asleep - I'm three hours late.
 The door is locked. Override lock, not a standard residential fit. I can force the lock, or maybe there's a floor terminal around here somewhere.
 
 *[Force the lock] ->bruteForce
@@ -95,7 +101,7 @@ Before I left.
 ===storageTerminal===
 City-issue hardware running apartment management software it was never designed for. Whoever set this up knew what they were doing — or knew someone who did.
 I found Dexter's unit in the directory. Ran the unlock sequence.
-There's something else in here. A ghost signal, low bandwidth, encrypted. I can't read it from here.
+There's something else in here. A ghost signal, low bandwidth, encrypted. I can't access it from here.
 ->DONE
 
 
@@ -103,7 +109,7 @@ There's something else in here. A ghost signal, low bandwidth, encrypted. I can'
 The door swings open. It's dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
 I can make him out. Sitting in a chair, head down like he fell asleep watching something. But there's something on his head.
 A bag. And around his feet — a pool of blood.
-I've just forced my way into a crime scene. The droids are going to pop in eventually. When they do, they'll harden the logic around whatever they find — and right now everything they find points at me.
+I've found my way into a crime scene. The droids will pop in eventually. When they do, they'll harden the logic around whatever they find — and right now everything they'll find points to me.
 If only I had answered him sooner.
 ~seenClueRoom = true
 -> clueHub
@@ -113,7 +119,7 @@ If only I had answered him sooner.
 The door swings open. It's dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
 I can make him out. Sitting in a chair, head down like he fell asleep watching something. But there's something on his head.
 A bag. And around his feet — a pool of blood.
-I've just forced my way into a crime scene. The droids are going to pop in eventually. When they do, they'll harden the logic around whatever they find — and right now everything they find points at me.
+I've found my way into a crime scene. The droids will pop in eventually. When they do, they'll harden the logic around whatever they find — and right now everything they'll find points to me.
 If only I had answered him sooner.
 ~seenClueRoom = true
 }
@@ -378,7 +384,7 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
     -> conveManagerDone
 
 * ["Wrong floor. Sorry."]
-
+{bluffed:
     He looked at me the way people look at someone who has said something slightly too convenient.
 
     "Elevator's back that way."
@@ -389,7 +395,10 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
 
     ~ convManagerDone = true
     -> conveManagerDone
-
+- else:
+    You're trespassing. You need to leave.
+    ->endingB
+    }
 }
 
 === conveManagerDone ===
@@ -401,7 +410,7 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
 === closingMonologue ===
 Dante was here. He might've just left the building as I walked in, and he left the door wide open for me to be caught in it.
 I have his credential now. And an address to the central hub he's pinged authentications from.
-With the drive in my possession, I look back at the room to see Dexter still sitting there. I'm sorry I couldn't have been here sooner for him.
+My interface saves the drive scan and I can't help but think back to the room. Seeing Dexter still sitting there. I'm sorry I couldn't have been here sooner for him.
 I never intended for my work to be used like this. Targeting innocent civilians for the wrong reasons. Nobody is safe if everyone is distrustful.
 There's a long list of things I need to do to nail Dante to this elaborate scheme. 
 
@@ -442,19 +451,20 @@ The city keeps raining. I keep looking.
 
 === endingB ===
 #ENDING_B
+{seenObsRoom:
+Dante Morrow is outside these walls. Dexter Clear is in the ground. The observation network is still running in every Studio apartment in Sificity, behind every screen, through every sightline nobody thought to cover.
+}
+{ managerCaught:
 The cell is smaller than the apartments in The Studios. Not by much.
 
 I keep doing what I always do — noticing things. The crack in the upper left corner of the ceiling that suggests the building settled unevenly. The guard who favors his right leg on the evening shift. 
 
 Observation without application. The instinct running on nothing, like an engine with nowhere to go.
-{seenObsRoom:
-Dante Morrow is outside these walls. Dexter Clear is in the ground. The observation network is still running in every Studio apartment in Sificity, behind every screen, through every sightline nobody thought to cover.
-}
-{ managerCaught:
-    I had the thread. I just ran out of room to pull it.
+I had the thread. I just ran out of room to pull it.
 - else:
-    I had everything. The city just didn't want to hear it.
+    I could've had everything. The city just didn't want to hear it.
 }
+I don't know what I'm doing here.
 
 The city keeps raining. I stop looking.
 ~gameOver = true
@@ -470,7 +480,7 @@ But my name is in that network. My directories. My architecture. Chief, Phelps, 
 
 It doesn't matter that Dante took it without asking. The code is mine. The sightlines are mine. Any case built on that drive has me in it, and a case with me in it is a case Dante Morrow can dismantle in an afternoon.
 
-So I left it for someone else.
+So I'll leave it for someone else.
 
 Dexter Clear spent the last months of his life trying to assemble something — evidence, a droid, a contingency. He didn't trust institutions. He trusted systems he built himself. 
 

@@ -49,8 +49,6 @@ public class Clue : MonoBehaviour
 
     private void Update()
     {
-        //clueTexture = AssetPreview.GetAssetPreview(clueObj);
-        //Debug.Log(clueTexture);
         WallReveal();
     }
 
@@ -77,18 +75,7 @@ public class Clue : MonoBehaviour
                 cardClueName = GameObject.Find("ClueName").GetComponent<TextMeshProUGUI>();
                 cardClueName.name = clueCardObj.name;
                 cardClueName.text = clueName;
-                //cardClueImage = GameObject.Find("ClueImage").GetComponent<Image>();
-                //cardClueImage.sprite = clueSprite;
-                //cardClueImage.name = clueCardObj.name;
-                //if (clueTexture != null)
-                //{
-                 //   Rect rect = new Rect(0, 0, clueTexture.width, clueTexture.height);
-                   // Vector2 pivot = new Vector2(0.5f, 0.5f);
-                    //Sprite newSprite = Sprite.Create(clueTexture, rect, pivot);
-                    
-                  //  cardClueImage.sprite = newSprite;
-                //clueSprite = Sprite.Create(clueTexture, new Rect(0, 0, clueTexture.width, clueTexture.height), new Vector2(0.5f, 0.5f));
-                //}
+
                 
             }
         }
@@ -97,13 +84,7 @@ public class Clue : MonoBehaviour
             clueObj = this.gameObject;
             if (discovered && clueCardObj == null)
             {
-                //clueCardObj = GameObject.Find(clueName);
-                //cardClueName = GameObject.Find("ClueName").GetComponent<TextMeshProUGUI>();
-                //cardClueName.name = clueCardObj.name;
-                //cardClueName.text = clueName;
-                //clueCardObj.GetComponent<Clue>().cardClueName = cardClueName;
-                //clueCardObj.GetComponent<Clue>().cardClueName.text = clueName;
-                //clueCardObj = GameObject.FindWithTag("ClueCard");
+
             } 
         }
         
@@ -149,11 +130,6 @@ public class Clue : MonoBehaviour
             if ((bool)gm._inkStory.variablesState["foundMorrowTrace"] == true)
             {
 
-                //this.clueObj.GetComponent<Clue>().enabled = false;
-                //this.clueObj.GetComponent<BoxCollider>().enabled = false;
-                //this.clueObj.tag = "Terminal";
-                //GameObject.Find("Datapads").GetComponent<MeshRenderer>().enabled = true;
-                //player.GetComponent<vThirdPersonInput>().prompt.GetComponent<TMP_Text>().text = "Hi";
                 GameObject.Find("Datapads").GetComponent<BoxCollider>().enabled = true;
                 //GameObject.Find("Dunwell").GetComponent<vThirdPersonInput>().clueTriggered = false;
 
@@ -176,46 +152,7 @@ public class Clue : MonoBehaviour
             }
         }
 
-        /*if (other.gameObject.CompareTag("BldManager"))
-        {
-            Debug.Log("Activate Ending B");
-            other.GetComponent<NavMeshAgent>().isStopped = true;
-            other.GetComponent<NavMeshAgent>().enabled = false;
-            other.GetComponent<BoxCollider>().size = new Vector3(25, 2, 30);
-            //Transition to Jail Scene or view
-            gm._inkStory.variablesState["managerCaught"] = true;
-            //Debug.LogError(gm._inkStory.variablesState["managerCaught"]);
-
-            
-        }*/
     }
 
-    private void Start()
-    {
-        /*Texture2D clueTexture = AssetPreview.GetAssetPreview(clueObj);
-        if(clueTexture != null)
-        {
-            Rect rect = new Rect(0, 0, clueTexture.width, clueTexture.height);
-            Vector2 pivot = new Vector2(0.5f, 0.5f);
-            Sprite newSprite = Sprite.Create(clueTexture, rect, pivot);
-            //clueSprite = Sprite.Create(clueTexture, new Rect(0, 0, clueTexture.width, clueTexture.height), new Vector2(0.5f, 0.5f));
-        }*/
-    }
-
-
-    /* private void OnTriggerEnter(Collider other)
-     {
-         if (other.gameObject.CompareTag("Player"))
-         {
-             GameObject Player = other.gameObject;
-             if (Player.GetComponent<vThirdPersonInput>().focused)
-             {
-                 this.discovered = true;
-             }
-
-         }
-     }*/
-
-    // Update is called once per frame
 
 }

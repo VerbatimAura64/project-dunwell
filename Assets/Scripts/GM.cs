@@ -18,6 +18,7 @@ public class GM : MonoBehaviour
     public Story inkStory;
     public Canvas canvas;
     public GameObject objective;
+    public GameObject instruct;
     public Camera jailCam;
     public Camera mainCam;
     public GameObject caseBoard;
@@ -42,7 +43,7 @@ public class GM : MonoBehaviour
     public List<GameObject> cluesFound;
     public List<GameObject> clueCards;
     public Story _inkStory;
-    
+
     private List<GameObject> choiceButtons = new List<GameObject>();
     //public Queue<AudioClip> toBePlayed;
     //public List<bool> choices;
@@ -58,30 +59,30 @@ public class GM : MonoBehaviour
         public string inkKnotTitle;
         public int[] inkChoice;
     }
-    
+
     [System.Serializable]
     public class ClueList
     {
         public ClueInfo[] clues;
-        
+
     }
 
     public ClueList clueList = new();
     // Start is called before the first frame update
     void Awake()
     {
-        //StartCoroutine(Timer());
-        StartCoroutine(RevealScene());  
+
+        StartCoroutine(RevealScene());
         caseBoard.SetActive(false);
         _inkStory = new Story(inkAsset.text);
         //InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
         //if (window != null) { InkPlayerWindow.Attach(_inkStory); }
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        if(screenInstance != null && screenInstance != canvas)
+        if (screenInstance != null && screenInstance != canvas)
         {
             Destroy(gameObject);
             return;
@@ -92,13 +93,13 @@ public class GM : MonoBehaviour
         //DontDestroyOnLoad(this);
         //DontDestroyOnLoad(canvas);
 
-        if(SceneManager.GetActiveScene().name == "Interior")
+        if (SceneManager.GetActiveScene().name == "Interior")
         {
             _inkStory.ChoosePathString("intMonologue");
             _inkStory.Continue();
         }
         Queue<AudioClip> queueList = new();
-        
+
         //auPlayer = GetComponent<AudioSource>();
         //_inkStory.variablesState["good_count"] = goodChoice;
         //_inkStory.variablesState["bad_count"] = badChoice;
@@ -114,7 +115,7 @@ public class GM : MonoBehaviour
         //DiscoverClue();
         ManagerAlerted();
         if (Input.GetKeyDown(KeyCode.Tab))
-            if(arrow.activeInHierarchy)
+            if (arrow.activeInHierarchy)
                 ContinueStory();
         IsDemoOver();
         EndGameB();
@@ -132,26 +133,62 @@ public class GM : MonoBehaviour
         //toBePlayed.Enqueue(queueList.First());
     }
 
-    private IEnumerator Timer()
+    private IEnumerator Instructions()
     {
         yield return new WaitForSeconds(3f);
+        StartCoroutine(InstructFade(1f, 0f, 2f));
+
+    }
+
+    public IEnumerator InstructFade(float startAlpha, float endAlpha, float duration)
+    {
+        //instruct.SetActive(true);
+        //float duration = 2f;
+        float elapsed = 0f;
+        float fadeDuration = 3f;
+        Color c = instruct.GetComponent<Image>().color;
+        c.a = startAlpha;
+
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = elapsed / fadeDuration;
+            t = t * t * (3f - 2f * t);
+
+            c.a = Mathf.Lerp(startAlpha, endAlpha, t);
+            instruct.GetComponent<Image>().color = c;
+            yield return null;
+        }
+        c.a = endAlpha;
+        instruct.GetComponent<Image>().color = c;
+        instruct.SetActive(false);
     }
 
     void IsDemoOver()
     {
         gameOver = (bool)_inkStory.variablesState["gameOver"];
-        
+
     }
 
     public void EndGameB()
     {
-        if(gameOver && (bool)_inkStory.variablesState["managerCaught"])
+        if (gameOver && ((bool)_inkStory.variablesState["managerCaught"] || !(bool)_inkStory.variablesState["bluffed"]))
             StartCoroutine(FadeAndShowMenu());
     }
 
     public void EndGame()
     {
             StartCoroutine(FadeAndShowMenu());
+    }
+
+    public void StartGame()
+    {
+        StartCoroutine(LoadNewScene());
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     private IEnumerator EndingBTransition() {
@@ -163,17 +200,23 @@ public class GM : MonoBehaviour
 
     public IEnumerator LoadNewScene()
     {
-        yield return StartCoroutine(FadeScreen(0f, 1f, 2f));
-        yield return SceneManager.LoadSceneAsync("Interior");
+        fadeScreen.SetActive(true);
+        int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        yield return StartCoroutine(FadeScreen(0f, 1f, 4f));
+        yield return SceneManager.LoadSceneAsync(sceneIndex +1);
         yield return new WaitForSecondsRealtime(5f);
-        yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
-        fadeScreen.SetActive(false);
+        //yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
+        //fadeScreen.SetActive(false);
     }
 
     public IEnumerator RevealScene()
     {
-        yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
+        yield return StartCoroutine(FadeScreen(1f, 0f, 3f));
         fadeScreen.SetActive(false);
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            StartCoroutine(Instructions());
+        }
     }
 
     private IEnumerator FadeAndShowMenu()
@@ -328,6 +371,7 @@ public class GM : MonoBehaviour
                     dialogue.SetActive(false);
                     // Load the scene using SceneManager.LoadScene(sceneName);
                     manager.GetComponent<BldingManager>().Restore();
+                    //manager.GetComponent<BldingManager>().BluffChance();
                     Debug.Log("Conversation is Done ");
                     //ui will produce a blank line, so we need to advance the dialogue again to skip it
                     continue;

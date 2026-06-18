@@ -14,6 +14,7 @@ public class EnterBuilding : MonoBehaviour
     private Collider PC;
     public string level;
     public int loadLevel;
+    private vThirdPersonController cc;
 
     void OnTriggerEnter(Collider PC)
     {
@@ -21,13 +22,18 @@ public class EnterBuilding : MonoBehaviour
         choiceScreen.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        cc = player.GetComponent<vThirdPersonController>();
     }
 
     public void Confirm()
     {
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         StartCoroutine(gm.LoadNewScene());
-        player.GetComponent<vThirdPersonController>().lockMovement = true;
+        player.GetComponent<vThirdPersonInput>().tpCamera.GetComponent<vThirdPersonCamera>().lockCamera = true;
+        cc.isSprinting = false;
+        cc.input = Vector2.zero;
+        cc.lockMovement = true;
+        choiceScreen.SetActive(false);
         //SceneManager.LoadSceneAsync(level);
         Time.timeScale = 1;
     }
@@ -39,7 +45,7 @@ public class EnterBuilding : MonoBehaviour
 
     public void Quit()
     {
-        Application.Quit();
+        SceneManager.LoadScene(0);
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
@@ -47,7 +53,7 @@ public class EnterBuilding : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadSceneAsync(0);
+        SceneManager.LoadSceneAsync(2);
         Time.timeScale = 1;
     }
 

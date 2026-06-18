@@ -21367,6 +21367,7 @@ MonoBehaviour:
   doorCollided: 0
   terminalCollided: 0
   prompt: {fileID: 223419383}
+  objective: {fileID: 1217253374}
   itemToFocus: {fileID: 0}
   dialogue: {fileID: 923553507}
   door: {fileID: 0}
@@ -123456,7 +123457,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.4249878}
+  m_AnchoredPosition: {x: 0, y: -0.42504883}
   m_SizeDelta: {x: 0, y: 0.8499739}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &734722155
@@ -193980,9 +193981,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176622027}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7128549, y: -0, z: -0, w: 0.7013116}
-  m_LocalPosition: {x: 16.048, y: 0.9212, z: -3.423}
-  m_LocalScale: {x: 0.2, y: 0.4000002, z: 0.10000005}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.56, y: 0.9212, z: -4.547}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4134353305917941}
@@ -194007,8 +194008,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.84
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 1.4
+  m_Center: {x: 0.45, y: -0.39, z: -0.48}
 --- !u!114 &1176622030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201016,9 +201017,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Prompt Text
-
-'
+  m_text: Find Dexter's Apartment
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -299357,7 +299356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4247653899987350, guid: b532cb4afb82ac04c91e8cf9b388266f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.149998
+      value: 2.55
       objectReference: {fileID: 0}
     - target: {fileID: 4247653899987350, guid: b532cb4afb82ac04c91e8cf9b388266f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -306385,7 +306384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4247653899987350, guid: b532cb4afb82ac04c91e8cf9b388266f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.150002
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 4247653899987350, guid: b532cb4afb82ac04c91e8cf9b388266f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -351298,14 +351297,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868297565946193}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.4, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4293810947687169}
   m_Father: {fileID: 1176622028}
-  m_LocalEulerAnglesHint: {x: 90.935, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4143258770238218
 Transform:
   m_ObjectHideFlags: 0
@@ -356701,14 +356700,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4755720217542200776}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 14.913, y: 0.885, z: -4.765}
+  m_LocalRotation: {x: -0, y: 0.19213907, z: -0, w: 0.9813677}
+  m_LocalPosition: {x: 15.38, y: 0.885, z: -2.603}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 185849576}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 22.155, z: 0}
 --- !u!23 &4752587866836704819
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -356990,12 +356989,17 @@ BoxCollider:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1468266918}
+  - {fileID: 391733353}
+  - {fileID: 591028126}
+  - {fileID: 130300946}
+  - {fileID: 869882425}
+  - {fileID: 832575519}
   - {fileID: 410087041}
   - {fileID: 1197089437}
   - {fileID: 1095623196}
   - {fileID: 1507597439}
   - {fileID: 345710179}
-  - {fileID: 832575519}
   - {fileID: 455369332}
   - {fileID: 797684372}
   - {fileID: 927543981}
@@ -357015,9 +357019,4 @@ SceneRoots:
   - {fileID: 4340034556696470}
   - {fileID: 1176622028}
   - {fileID: 4185234886359701}
-  - {fileID: 130300946}
-  - {fileID: 1468266918}
-  - {fileID: 391733353}
-  - {fileID: 591028126}
   - {fileID: 1275480188}
-  - {fileID: 869882425}

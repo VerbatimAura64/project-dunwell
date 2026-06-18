@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 23623386149045628}
   - component: {fileID: 6441123554765630916}
   - component: {fileID: 5560665951451482685}
+  - component: {fileID: 7780475147377083411}
+  - component: {fileID: 1464741073044694719}
   m_Layer: 0
   m_Name: SM_Prop_RubbishPile_01
-  m_TagString: Untagged
+  m_TagString: Clue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,3 +137,53 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0.4, y: 0.25, z: 0.3}
+--- !u!135 &7780475147377083411
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029199709335636}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.57
+  m_Center: {x: -0.43, y: 0.35228506, z: -0.71}
+--- !u!114 &1464741073044694719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029199709335636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Clue
+  gm: {fileID: 0}
+  player: {fileID: 0}
+  relevant: 0
+  discovered: 0
+  isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
+  clueCardObj: {fileID: 0}
+  clueName: Junk
+  description: 
+  clueSprite: {fileID: 0}
+  _selected: 0
+  clueObj: {fileID: 0}
+  inkKnotTitle: 
+  inkChoice: 
+  cardClueName: {fileID: 0}

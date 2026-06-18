@@ -6,6 +6,7 @@ using static GM;
 using System.Linq;
 using UnityEngine.EventSystems;
 
+
 #if UNITY_5_3_OR_NEWER
 using UnityEngine.SceneManagement;
 #endif
@@ -45,6 +46,7 @@ namespace Invector.CharacterController
         public bool doorCollided = false;
         public bool terminalCollided = false;
         public GameObject prompt;
+        public GameObject objective;
         public GameObject itemToFocus;
         public GameObject dialogue;
         public GameObject door;
@@ -221,8 +223,9 @@ namespace Invector.CharacterController
                                 GM.typeWriter._readyForNewText = true;
                                 GM.typeWriter.PrepareForNewText(GM.dialogue);
                                 terminal.GetComponent<Terminal>().StartTerminal();
-                                GM.manager.transform.position = new Vector3(5f, 0f, -27.5f);
+                                GM.manager.transform.position = new Vector3(-8f, 0f, -27.5f);
                                 GM.manager.SetActive(true);
+                                objective.GetComponent<TMP_Text>().text = "Investigate the room";
                             }
                         }
                         else
@@ -261,6 +264,7 @@ namespace Invector.CharacterController
                         {
                             Debug.Log("Knock Knock " + door.name);
                             Knock();
+                            
                             if (!GM.dialogue.activeInHierarchy)
                                 GM.dialogue.SetActive(true);
                             GM.typeWriter._readyForNewText = true;
@@ -285,11 +289,12 @@ namespace Invector.CharacterController
                                 GM.typeWriter.PrepareForNewText(GM.dialogue);
                                 GM._inkStory.ChoosePathString("bruteForce");
                                 GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                                objective.GetComponent<TMP_Text>().text = "Investigate the room";
                             }
                             else
                             {
-
                                 Knock();
+                                objective.GetComponent<TMP_Text>().text = "Find a way in";
                                 if (!GM.dialogue.activeInHierarchy)
                                     GM.dialogue.SetActive(true);
                                 GM.typeWriter._readyForNewText = true;

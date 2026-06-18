@@ -56,10 +56,18 @@ public class BldingManager : MonoBehaviour
         }
     }
 
-    void OnAnimatorMove()
+    void BluffChance()
     {
-       //if(animController.)
-       //m_Agent.speed = (animController.deltaPosition/Time.deltaTime).magnitude;
+        if (Random.value < .5)
+        {
+            Debug.LogError("Failed to bluff!");
+        } else
+        {
+            Debug.LogError("BLUFFED!");
+            bluffed = true;
+            gm._inkStory.variablesState["bluffed"] = true;
+        }
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -68,6 +76,7 @@ public class BldingManager : MonoBehaviour
         {
             if (!playerCaught)
             {
+                BluffChance();
                 Vector3 playerDirection = -(player.transform.position - m_Agent.transform.position);
                 Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
                 float angle = Quaternion.Angle(targetRotation, transform.rotation);
@@ -78,10 +87,6 @@ public class BldingManager : MonoBehaviour
                     player.GetComponent<vThirdPersonInput>().caseFocused = false;
                     gm.caseBoard.SetActive(false);
                 player.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, angle);
-                //player.GetComponent<vThirdPersonInput>().tpCamera._camera.enabled = false;
-                //player.GetComponent<vThirdPersonInput>().tpCamera._lockOnTarget = this.transform;
-
-//                player.GetComponent<vThirdPersonInput>().tpCamera.inspectCam.enabled = true;
 
                 gm.isConversation = true;
                 //player = other.gameObject;
@@ -90,9 +95,6 @@ public class BldingManager : MonoBehaviour
                 cc.input = Vector2.zero;
                 cc.lockMovement = true;
                 player.GetComponentInChildren<vThirdPersonCamera>().enabled = false;
-                
-                //player.transform.rotation = Mathf.Lerp()
-                //player.GetComponent<vThirdPersonInput>().enabled = false;
                 if (!gm.dialogue.activeInHierarchy)
                     gm.dialogue.SetActive(true);
                 gm.typeWriter._readyForNewText = true;
@@ -113,10 +115,7 @@ public class BldingManager : MonoBehaviour
                 GetComponent<SphereCollider>().radius = 27f;
                 GetComponent<NavMeshAgent>().isStopped = true;
                 GetComponent<NavMeshAgent>().enabled = false;
-                //other.GetComponent<BoxCollider>().size = new Vector3(25, 2, 30);
-                //Transition to Jail Scene or view
-                
-                //Debug.LogError(gm._inkStory.variablesState["managerCaught"]);
+
             }
 
         }
