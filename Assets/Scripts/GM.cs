@@ -1,6 +1,6 @@
 //using Ink.Parsed;
 using Ink.Runtime;
-//using Ink.UnityIntegration;
+using Ink.UnityIntegration;
 using Invector.CharacterController;
 using System.Collections;
 using System.Collections.Generic;
@@ -77,8 +77,8 @@ public class GM : MonoBehaviour
         StartCoroutine(RevealScene());
         caseBoard.SetActive(false);
         _inkStory = new Story(inkAsset.text);
-        //InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
-        //if (window != null) { InkPlayerWindow.Attach(_inkStory); }
+        InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
+        if (window != null) { InkPlayerWindow.Attach(_inkStory); }
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -162,14 +162,13 @@ public class GM : MonoBehaviour
 
     public void EndGameB()
     {
-        if ((bool)_inkStory.variablesState["managerCaught"] || !(bool)_inkStory.variablesState["bluffed"])
+        if ((bool)_inkStory.variablesState["managerCaught"] || ((bool)_inkStory.variablesState["attemptToBluff"] && !(bool)_inkStory.variablesState["bluffed"]))
         {
             Debug.LogWarning(_inkStory.variablesState["managerCaught"]);
+            Debug.LogWarning(_inkStory.variablesState["attemptToBluff"]);
             Debug.LogWarning(_inkStory.variablesState["bluffed"]);
             if (gameOver)
             {
-                //objective.SetActive(false);
-                //GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonInput>().prompt.SetActive(false);
                 StartCoroutine(FadeAndShowMenu());
             }
         }
@@ -398,7 +397,7 @@ public class GM : MonoBehaviour
                 {
                     string ending = tag.Substring(0); // Extract the clue number after "ENDING_"
                     // Load the scene using SceneManager.LoadScene(sceneName);
-                    Debug.Log(ending);
+                    Debug.LogError(ending);
                     if (ending.Equals("ENDING_B"))
                     {
                         //Fade logic here

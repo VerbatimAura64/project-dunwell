@@ -26,6 +26,7 @@ VAR seenClueRoom = false
 VAR seenObsRoom = false
 VAR seenExt = false
 VAR gameOver = false
+VAR attemptToBluff = false
 VAR bluffed = false
 
 
@@ -384,6 +385,7 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
     -> conveManagerDone
 
 * ["Wrong floor. Sorry."]
+~attemptToBluff = true
 {bluffed:
     He looked at me the way people look at someone who has said something slightly too convenient.
 
