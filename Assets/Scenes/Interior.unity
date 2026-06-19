@@ -17817,10 +17817,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClueCardManager
   gm: {fileID: 0}
-  maxClueCards: 9
-  clueCardPrefab: {fileID: 7905338974331181838, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
+  maxClueCards: 12
+  clueCardPrefab: {fileID: 424534582}
   clueCardPath: {fileID: 913773355}
-  cardSpawnpoint: {fileID: 1881875691}
+  cardSpawnpoint: {fileID: 913773356}
   clueCards: []
 --- !u!4 &110809465
 Transform:
@@ -65411,6 +65411,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 913773356}
   - {fileID: 223419386}
   - {fileID: 1217253375}
   - {fileID: 1180756662}
@@ -71570,6 +71571,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 7b68cd54141c78340a9bad375e2c9556, type: 3}
+--- !u!1 &424534582 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7905338974331181838, guid: b6fe73a9a4aad434fb3766715275a563, type: 3}
+  m_PrefabInstance: {fileID: 1419369959618325537}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &424587221
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71772,7 +71778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BldingManager
   endingB: 0
-  bluffed: 0
+  bluffed: 1
   player: {fileID: 130300947}
   newDestination: {fileID: 740399961}
   gm: {fileID: 0}
@@ -152174,59 +152180,39 @@ MonoBehaviour:
       TangentIn:
         x: -0
         y: -0
-        z: -62.301117
+        z: -192.0031
       TangentOut:
         x: 0
         y: 0
-        z: 62.301117
+        z: 192.0031
       Rotation:
         value:
-          x: 0.4917965
-          y: 0.508071
-          z: 0.50807095
-          w: 0.49179655
+          x: 0.49857745
+          y: 0.5014186
+          z: 0.5014186
+          w: 0.49857745
     - Position:
-        x: 622.68115
-        y: 20.275665
+        x: 1920
+        y: 10.91
         z: -0
       TangentIn:
         x: 0
         y: 0
-        z: -660.003
-      TangentOut:
-        x: 0
-        y: 0
-        z: 660.003
-      Rotation:
-        value:
-          x: 0.49924177
-          y: 0.50075686
-          z: 0.5007571
-          w: 0.49924195
-    - Position:
-        x: 1283.6077
-        y: 2.5671997
         z: 0
-      TangentIn:
-        x: -0
-        y: -0
-        z: -66.11637
       TangentOut:
         x: 0
         y: 0
-        z: 66.11637
+        z: 0
       Rotation:
         value:
-          x: 0.50665176
-          y: 0.4932586
-          z: 0.49325866
-          w: 0.50665164
+          x: 0.70710635
+          y: 4.0194343e-14
+          z: 0.000001201183
+          w: 0.7071072
     m_MetaData:
     - Mode: 0
       Tension: 0.5
-    - Mode: 2
-      Tension: 0.5
-    - Mode: 0
+    - Mode: 1
       Tension: 0.5
     m_Closed: 0
     m_IntData:
@@ -152248,11 +152234,11 @@ Transform:
   m_GameObject: {fileID: 913773354}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -917, y: 499, z: 0}
-  m_LocalScale: {x: 3.048, y: 5.5555553, z: 1}
+  m_LocalPosition: {x: -956, y: -240.12692, z: 0}
+  m_LocalScale: {x: 3, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1224607083}
+  m_Father: {fileID: 391733353}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &913921551
 PrefabInstance:
@@ -194170,90 +194156,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4517893018949164, guid: 553d5ab60b93b904896a8af286bdbe32, type: 3}
   m_PrefabInstance: {fileID: 1176059197}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1176622027
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1176622028}
-  - component: {fileID: 1176622030}
-  - component: {fileID: 1176622029}
-  m_Layer: 0
-  m_Name: Parent
-  m_TagString: Clue
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1176622028
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176622027}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.56, y: 0.9212, z: -4.547}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4134353305917941}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1176622029
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176622027}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 2
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.4
-  m_Center: {x: 0.45, y: -0.39, z: -0.48}
---- !u!114 &1176622030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176622027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Clue
-  gm: {fileID: 0}
-  player: {fileID: 0}
-  relevant: 1
-  discovered: 0
-  isClueCard: 0
-  isInteractable: 1
-  ogPos: {x: 0, y: 0, z: 0}
-  ogDirection: {x: 0, y: 0, z: 0, w: 0}
-  clueCardObj: {fileID: 0}
-  clueName: Dexter's Drive
-  description: 
-  clueSprite: {fileID: 0}
-  _selected: 0
-  clueObj: {fileID: 0}
-  inkKnotTitle: clueBackupDrive
-  inkChoice: 
-  cardClueName: {fileID: 0}
 --- !u!1001 &1176732891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -202418,7 +202320,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 0.60094804, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 913773356}
   - {fileID: 110809465}
   - {fileID: 175738693}
   - {fileID: 1881875691}
@@ -241147,6 +241048,7 @@ MonoBehaviour:
   isConversation: 0
   datapadChoice: 0
   gameOver: 0
+  gameEnding: 0
   choiceButtonPrefab: {fileID: 5368163522434258479, guid: 3b62fe2b0e2aa5c4f8ab1f9a5dd31e72, type: 3}
   choicesContainer: {fileID: 767030997}
   clueScript: {fileID: 0}
@@ -351463,6 +351365,8 @@ GameObject:
   - component: {fileID: 33331410739395933}
   - component: {fileID: 23777119508038531}
   - component: {fileID: 64193945673062573}
+  - component: {fileID: 64193945673062575}
+  - component: {fileID: 64193945673062574}
   m_Layer: 0
   m_Name: SM_Prop_Crate_01
   m_TagString: Clue
@@ -351885,13 +351789,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868297565946193}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.4, z: 0.1}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 15.56, y: 0.9212, z: -4.547}
+  m_LocalScale: {x: 0.2, y: 0.40000013, z: 0.10000003}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4293810947687169}
-  m_Father: {fileID: 1176622028}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4143258770238218
 Transform:
@@ -354548,6 +354452,56 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43896138010616926, guid: bbbb651298a8ee2458b836ac3cf427e5, type: 2}
+--- !u!135 &64193945673062574
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868297565946193}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 2
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 4.16
+  m_Center: {x: 1.3, y: 1.02, z: -4.95}
+--- !u!114 &64193945673062575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868297565946193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe33ef3eb598f140b0e8f3b02ed4a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Clue
+  gm: {fileID: 0}
+  player: {fileID: 0}
+  relevant: 1
+  discovered: 0
+  isClueCard: 0
+  isInteractable: 1
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
+  clueCardObj: {fileID: 0}
+  clueName: Dexter's Drive
+  description: 
+  clueSprite: {fileID: 0}
+  _selected: 0
+  clueObj: {fileID: 0}
+  inkKnotTitle: clueBackupDrive
+  inkChoice: 
+  cardClueName: {fileID: 0}
 --- !u!64 &64241662839541037
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -357605,6 +357559,6 @@ SceneRoots:
   - {fileID: 4059512412615873}
   - {fileID: 4340036351983424}
   - {fileID: 4340034556696470}
-  - {fileID: 1176622028}
+  - {fileID: 4134353305917941}
   - {fileID: 4185234886359701}
   - {fileID: 1275480188}

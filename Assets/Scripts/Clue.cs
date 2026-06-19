@@ -78,6 +78,7 @@ public class Clue : MonoBehaviour
 
                 
             }
+
         }
         else
         {

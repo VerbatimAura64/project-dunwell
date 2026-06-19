@@ -35,6 +35,7 @@ public class BldingManager : MonoBehaviour
             if (distance <= catchDistance) 
             {
                 m_Agent.isStopped = true;
+                gm.gameEnding = true;
             } 
             else if (gm.managerAlerted || (bool)gm._inkStory.variablesState["foundStorageTerminal"])
             {
@@ -61,6 +62,7 @@ public class BldingManager : MonoBehaviour
         if (Random.value < .5)
         {
             Debug.LogError("Failed to bluff!");
+            bluffed = false;
         } else
         {
             Debug.LogError("BLUFFED!");
@@ -85,7 +87,8 @@ public class BldingManager : MonoBehaviour
                     
                 if (player.GetComponent<vThirdPersonInput>().caseFocused)
                     player.GetComponent<vThirdPersonInput>().caseFocused = false;
-                    gm.caseBoard.SetActive(false);
+                gm.dialogue.transform.localPosition = new Vector3(0f, -415f, 0);
+                gm.caseBoard.SetActive(false);
                 player.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, angle);
 
                 gm.isConversation = true;
@@ -104,6 +107,7 @@ public class BldingManager : MonoBehaviour
                 Debug.Log("Player detected");
                 playerCaught = true;
             }
+
         }
 
         if (other.gameObject.CompareTag("Apt4"))

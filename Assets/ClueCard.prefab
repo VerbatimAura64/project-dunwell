@@ -381,17 +381,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clue
   gm: {fileID: 0}
+  player: {fileID: 0}
   relevant: 0
   discovered: 0
   isClueCard: 0
+  isInteractable: 0
+  ogPos: {x: 0, y: 0, z: 0}
+  ogDirection: {x: 0, y: 0, z: 0, w: 0}
   clueCardObj: {fileID: 0}
   clueName: Wall Screen
   description: 
   clueSprite: {fileID: 0}
+  _selected: 0
   clueObj: {fileID: 0}
   inkKnotTitle: 
   inkChoice: 
   cardClueName: {fileID: 0}
+  ccm: {fileID: 0}
 --- !u!114 &1644158675192070704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,6 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DragCard
   canvas: {fileID: 0}
+  connectManager: {fileID: 0}
 --- !u!225 &104875448586124799
 CanvasGroup:
   m_ObjectHideFlags: 0

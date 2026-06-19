@@ -447,7 +447,7 @@ namespace Invector.CharacterController
 
         protected virtual void OpenCaseBoard()
         {
-            if (!GM.isConversation)
+            if (!GM.isConversation || !GM.gameEnding)
             {
                 if (!caseFocused && !focused)
                 {
@@ -473,7 +473,7 @@ namespace Invector.CharacterController
                         if (Cursor.visible)
                             Cursor.visible = false;
                         Cursor.lockState = CursorLockMode.Locked;
-                        CM.ClearConnections();
+                        //CM.ClearConnections();
                         foreach (GameObject clue in GM.clueCards)
                         {
                            clue.GetComponent<Clue>().SetSelected(false);
@@ -637,7 +637,7 @@ namespace Invector.CharacterController
         protected virtual void ExitGameInput()
         {
             // just a example to quit the application 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && !GM.gameEnding)
             {
                 GM.pauseScreen.SetActive(true);
                 if (!Cursor.visible)

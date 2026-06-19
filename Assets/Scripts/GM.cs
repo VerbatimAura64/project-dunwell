@@ -1,6 +1,6 @@
 //using Ink.Parsed;
 using Ink.Runtime;
-using Ink.UnityIntegration;
+//using Ink.UnityIntegration;
 using Invector.CharacterController;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,6 +37,7 @@ public class GM : MonoBehaviour
     public bool isConversation;
     public bool datapadChoice;
     public bool gameOver;
+    public bool gameEnding;
     public GameObject choiceButtonPrefab;
     public Transform choicesContainer;
     public Clue clueScript;
@@ -120,18 +121,6 @@ public class GM : MonoBehaviour
                 ContinueStory();
         IsDemoOver();
         EndGameB();
-        //if(Input.GetKeyDown(KeyCode.Return))
-        //  PlayNext();
-        //DiscoverClue();
-        //while (_inkStory.canContinue)
-        {
-            //Debug.Log
-        }
-        //_inkStory.variablesState["good_count"] = goodChoice;
-        //_inkStory.variablesState["bad_count"] = badChoice;
-        //ToBePlayed();
-
-        //toBePlayed.Enqueue(queueList.First());
     }
 
     private IEnumerator Instructions()
@@ -153,7 +142,7 @@ public class GM : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / duration;
             t = t * t * (3f - 2f * t);
-            tC.a = Mathf.Lerp(startAlpha, endAlpha, t);
+            //tC.a = Mathf.Lerp(startAlpha, endAlpha, t);
             c.a = Mathf.Lerp(startAlpha, endAlpha, t);
             instruct.GetComponent<Image>().color = c;
             yield return null;
@@ -173,12 +162,22 @@ public class GM : MonoBehaviour
 
     public void EndGameB()
     {
-        if (gameOver && ((bool)_inkStory.variablesState["managerCaught"] || !(bool)_inkStory.variablesState["bluffed"]))
-            StartCoroutine(FadeAndShowMenu());
-    }
+        if ((bool)_inkStory.variablesState["managerCaught"] || !(bool)_inkStory.variablesState["bluffed"])
+        {
+            Debug.LogWarning(_inkStory.variablesState["managerCaught"]);
+            Debug.LogWarning(_inkStory.variablesState["bluffed"]);
+            if (gameOver)
+            {
+                //objective.SetActive(false);
+                //GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonInput>().prompt.SetActive(false);
+                StartCoroutine(FadeAndShowMenu());
+            }
+        }
+    } 
 
     public void EndGame()
     {
+        if(gameOver) 
             StartCoroutine(FadeAndShowMenu());
     }
 
@@ -191,7 +190,6 @@ public class GM : MonoBehaviour
         SceneManager.LoadScene(0);
         Time.timeScale = 1.0f;
     }
-
     public void Resume()
     {
         pauseScreen.SetActive(false);
@@ -200,7 +198,6 @@ public class GM : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
     public void QuitGame()
     {
         Application.Quit();
@@ -208,14 +205,12 @@ public class GM : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
-
     private IEnumerator EndingBTransition() {
         yield return StartCoroutine(FadeScreen(0f, 1f, 2f));
         mainCam.enabled = false;
         jailCam.enabled = true;
         yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
     }
-
     public IEnumerator LoadNewScene()
     {
         fadeScreen.SetActive(true);
@@ -226,7 +221,6 @@ public class GM : MonoBehaviour
         //yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
         //fadeScreen.SetActive(false);
     }
-
     public IEnumerator RevealScene()
     {
         yield return StartCoroutine(FadeScreen(1f, 0f, 3f));
@@ -236,7 +230,6 @@ public class GM : MonoBehaviour
             StartCoroutine(Instructions());
         }
     }
-
     private IEnumerator FadeAndShowMenu()
     {
         fadeScreen.SetActive(true);
@@ -250,7 +243,7 @@ public class GM : MonoBehaviour
             fadeScreen.GetComponent<Image>().color = c;
             yield return null;
         }
-        yield return new WaitForSecondsRealtime(1.5f);
+        yield return new WaitForSecondsRealtime(3.5f);
         
         endMenu.SetActive(true);
         Cursor.lockState = CursorLockMode.Confined;
@@ -409,10 +402,12 @@ public class GM : MonoBehaviour
                     if (ending.Equals("ENDING_B"))
                     {
                         //Fade logic here
+                        gameEnding = true;
                         StartCoroutine(EndingBTransition());
-                        
+                        objective.SetActive(false);
                         GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonController>().lockMovement = true;
-                        GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonCamera>().lockCamera = true;
+                        //GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<vThirdPersonCamera>().lockCamera = true;
+                        GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonInput>().prompt.SetActive(false);
                     }
                     
                     //Fade logic here

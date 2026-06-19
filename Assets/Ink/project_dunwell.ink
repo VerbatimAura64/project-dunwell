@@ -472,8 +472,6 @@ The city keeps raining. I stop looking.
 
 === endingC ===
 # ENDING_C
-I left the datapads where I found them.
-
 My instinct is to take everything, build the case, hand it to someone with a badge and watch the machinery move. That's what I came here to do. That's what Dexter's message asked me to do, even if he didn't know he was asking.
 
 But my name is in that network. My directories. My architecture. Chief, Phelps, Morgan — running surveillance on civilians in their own homes, and it doesn't matter that I didn't know. 

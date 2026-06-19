@@ -145,6 +145,8 @@ public class ConnectionManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        activeConnections.Clear();
+        _madeConnections.Clear();
     }
 
     
