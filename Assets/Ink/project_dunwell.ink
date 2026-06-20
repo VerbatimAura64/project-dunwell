@@ -410,6 +410,7 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
 -> DONE
 
 === closingMonologue ===
+#ENDING
 Dante was here. He might've just left the building as I walked in, and he left the door wide open for me to be caught in it.
 I have his credential now. And an address to the central hub he's pinged authentications from.
 My interface saves the drive scan and I can't help but think back to the room. Seeing Dexter still sitting there. I'm sorry I couldn't have been here sooner for him.
