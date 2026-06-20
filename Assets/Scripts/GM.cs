@@ -454,6 +454,10 @@ public class GM : MonoBehaviour
     void DisplayChoices()
     {
         HideChoices();
+        if (datapadChoice)
+        {
+            gameEnding = true;
+        }
 
         for (int i = 0; i < _inkStory.currentChoices.Count; i++)
         {

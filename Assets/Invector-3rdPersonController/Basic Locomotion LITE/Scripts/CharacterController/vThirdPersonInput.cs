@@ -416,6 +416,12 @@ namespace Invector.CharacterController
                     //prompt.SetActive(false);
                     //dialogue.SetActive(false);
                 }
+            } else
+            {
+                focused = false;
+                tpCamera.inspectCam.enabled = false;
+                tpCamera._camera.enabled = true;
+                prompt.GetComponent<TMP_Text>().text = "Press F to investigate";
             }
         }
 
@@ -447,48 +453,69 @@ namespace Invector.CharacterController
 
         protected virtual void OpenCaseBoard()
         {
-            if (!GM.isConversation || !GM.gameEnding)
+            if (!GM.gameEnding)
             {
-                if (!caseFocused && !focused)
+                if (!GM.isConversation)
                 {
-                    if (Input.GetKeyDown(caseBoardInput))
+                    if (!caseFocused && !focused)
                     {
-                        if (!Cursor.visible)
-                            Cursor.lockState = CursorLockMode.Confined;
-                        Cursor.visible = true;
-                        cc.isSprinting = false;
-                        cc.input = Vector2.zero;
-                        tpCamera.enabled = false;
-                        GM.caseBoard.SetActive(true);
-                        GM.dialogue.transform.localPosition = new Vector3(0,415f,0);
-                        cc.lockMovement = true;
-                        caseFocused = true;
-                        ccm.UpdateCardPosition();
-                    }
-                }
-                else if (caseFocused && !focused)
-                {
-                    if (Input.GetKeyDown(caseBoardInput))
-                    {
-                        if (Cursor.visible)
-                            Cursor.visible = false;
-                        Cursor.lockState = CursorLockMode.Locked;
-                        //CM.ClearConnections();
-                        foreach (GameObject clue in GM.clueCards)
+                        if (Input.GetKeyDown(caseBoardInput))
                         {
-                           clue.GetComponent<Clue>().SetSelected(false);
-                           //Debug.LogError(clue.name + clue.GetComponent<Clue>().IsSelected());
+                            if (!Cursor.visible)
+                                Cursor.lockState = CursorLockMode.Confined;
+                            Cursor.visible = true;
+                            cc.isSprinting = false;
+                            cc.input = Vector2.zero;
+                            tpCamera.enabled = false;
+                            GM.caseBoard.SetActive(true);
+                            GM.dialogue.transform.localPosition = new Vector3(0, 415f, 0f);
+                            cc.lockMovement = true;
+                            caseFocused = true;
+                            ccm.UpdateCardPosition();
                         }
-                        GM.caseBoard.SetActive(false);
-                        if (GM.dialogue.activeInHierarchy) GM.dialogue.SetActive(true);
-                        else GM.dialogue.SetActive(false);
-                        GM.dialogue.transform.localPosition = new Vector3(0f, -415f, 0);
-                        cc.lockMovement = false;
-                        tpCamera.enabled = true;
-                        tpCamera.ReturnOldRotate();
-                        caseFocused = false;
+                    }
+                    else if (caseFocused && !focused)
+                    {
+                        if (Input.GetKeyDown(caseBoardInput))
+                        {
+                            if (Cursor.visible)
+                                Cursor.visible = false;
+                            Cursor.lockState = CursorLockMode.Locked;
+                            //CM.ClearConnections();
+                            foreach (GameObject clue in GM.clueCards)
+                            {
+                                clue.GetComponent<Clue>().SetSelected(false);
+                                //Debug.LogError(clue.name + clue.GetComponent<Clue>().IsSelected());
+                            }
+                            GM.caseBoard.SetActive(false);
+                            if (GM.dialogue.activeInHierarchy) GM.dialogue.SetActive(true);
+                            else GM.dialogue.SetActive(false);
+                            GM.dialogue.transform.localPosition = new Vector3(0f, -415f, 0f);
+                            cc.lockMovement = false;
+                            tpCamera.enabled = true;
+                            tpCamera.ReturnOldRotate();
+                            caseFocused = false;
+                        }
                     }
                 }
+                else
+                {
+                    GM.caseBoard.SetActive(false);
+                    GM.dialogue.transform.localPosition = new Vector3(0f, -415f, 0f);
+                    caseFocused = false;
+
+                    //Cursor.lockState = CursorLockMode.Locked;
+                    //tpCamera.enabled = true;
+                    //cc.lockMovement = false;
+                }
+            }
+            else
+            {
+                GM.caseBoard.SetActive(false);
+                GM.dialogue.transform.localPosition = new Vector3(0f, -415f, 0f);
+                cc.lockMovement = false;
+                tpCamera.enabled = true;
+                caseFocused = false;
             }
         }
 

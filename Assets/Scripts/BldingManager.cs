@@ -79,6 +79,8 @@ public class BldingManager : MonoBehaviour
             if (!playerCaught)
             {
                 BluffChance();
+                if (Cursor.visible)
+                    Cursor.visible = false;
                 Vector3 playerDirection = -(player.transform.position - m_Agent.transform.position);
                 Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
                 float angle = Quaternion.Angle(targetRotation, transform.rotation);
