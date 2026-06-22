@@ -61903,6 +61903,7 @@ MonoBehaviour:
   isConversation: 0
   datapadChoice: 0
   gameOver: 0
+  gameEnding: 0
   choiceButtonPrefab: {fileID: 5368163522434258479, guid: 3b62fe2b0e2aa5c4f8ab1f9a5dd31e72, type: 3}
   choicesContainer: {fileID: 1771345216}
   clueScript: {fileID: 0}
@@ -92901,10 +92902,10 @@ RectTransform:
   - {fileID: 731208359}
   m_Father: {fileID: 1770958194}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 347.8}
-  m_SizeDelta: {x: 486.2, y: 360.6}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -263.7, y: -254.5}
+  m_SizeDelta: {x: 486.19995, y: 360.59998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &673244130
 MonoBehaviour:
@@ -100114,7 +100115,10 @@ MonoBehaviour:
     around
 
 
-    Press Tab to advance Dialog'
+    Press Tab to advance Dialog
+
+
+    Press C to open Caseboard'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -100180,7 +100184,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -24.2229, y: -156.5476, z: -42.81897, w: -145.31824}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

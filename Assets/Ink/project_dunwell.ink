@@ -116,7 +116,7 @@ If only I had answered him sooner.
 -> clueHub
 
 ===clueHub===
-{not managerAlerted: 
+{not managerAlerted && not seenClueRoom: 
 The door swings open. It's dim in here, difficult to see — save for the blinding glow of the wall screen at the far end.
 I can make him out. Sitting in a chair, head down like he fell asleep watching something. But there's something on his head.
 A bag. And around his feet — a pool of blood.
