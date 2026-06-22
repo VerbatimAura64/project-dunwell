@@ -79,10 +79,8 @@ public class GM : MonoBehaviour
         StartCoroutine(RevealScene());
         caseBoard.SetActive(false);
         _inkStory = new Story(inkAsset.text);
-        prompt = GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonInput>().objective.GetComponent<TMP_Text>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        //InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
-        //if (window != null) { InkPlayerWindow.Attach(_inkStory); }
+  //      InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
+    //    if (window != null) { InkPlayerWindow.Attach(_inkStory); }
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -403,13 +401,13 @@ public class GM : MonoBehaviour
                 {
                     string ending = tag.Substring(0); // Extract the clue number after "ENDING_"
                     // Load the scene using SceneManager.LoadScene(sceneName);
-                    Debug.LogError("this should be "+ending);
+                    Debug.LogError(ending);
+                    gameEnding = true;
                     if (ending.Equals("ENDING_B"))
                     {
                         //Fade logic here
-                        
+                        AdvanceDialogue();
                         StartCoroutine(EndingBTransition());
-                        gameEnding = true;
                         objective.SetActive(false);
                         
                         //player.GetComponent<vThirdPersonController>().enabled = false;
@@ -538,6 +536,12 @@ public class GM : MonoBehaviour
     public void MakeChoice(int choice)
     {
         _inkStory.ChooseChoiceIndex(choice);
+        if (datapadChoice)
+        {
+            gameEnding = true;
+            GameObject.Find("Datapads").GetComponent<BoxCollider>().enabled = false;
+            GameObject.Find("Dexter's Login").GetComponent<BoxCollider>().enabled = false;
+        }
         Cursor.visible = false;
         HideChoices();
         GameObject.Find("Datapads").GetComponent<BoxCollider>().enabled = false;

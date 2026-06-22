@@ -307,8 +307,8 @@ The irony isn't lost on me — using my own work to chase down whoever stole it.
 
 === datapadsChoice ===
 # DATAPAD_CHOICE
-All this data. The invasion of privacy, it's making me realize how much of a mistake this whole system was. The money moves fast in this city, changing things from bad to worse. No one needs all this personal information on any of these people.
-I need to figure out what to do with this.
+All this data. The invasion of privacy, it's making me realize how much of a mistake this whole system was. The money moves fast in this city, changing things from bad to worse. 
+No one needs all this personal information on any of these people. I need to figure out what to do with this.
 ~ foundMorrowTrace = true
 * [Take the datapads] -> datapadsSceneTake
 * [Destroy them] -> datapadsSceneDestroy
@@ -317,13 +317,15 @@ I need to figure out what to do with this.
 
 
 === datapadsSceneTake ===
-I could use these to build a case against Dante, against this corporation. But my name is already on one of them — I might just implicate myself too. Is this going to be worth it if I get caught with them? They'll know I've been here and that'd be tampering with evidence as a possible suspect for an investigation.
+I could use these to build a case against Dante, against this corporation. But my name is already on one of them — I might just implicate myself too. 
+Is this going to be worth it if I get caught with them? They'll know I've been here and that'd be tampering with evidence as a possible suspect for an investigation.
 But it'd clear my name if I can connect the dots.
 ~ datapadsChoiceMade = 1
 -> closingMonologue
 
 === datapadsSceneDestroy ===
-There's rage sparking in my arms. I just want to smash the glass, crush the pads and erase all the data, wipe everything clean. The tablet is in my hands, arms shaking, and I can feel the relief of what it would be to see it break. To see them all break.
+There's rage sparking in my arms. I just want to smash the glass, crush the pads and erase all the data, wipe everything clean. 
+The tablet is in my hands, arms shaking, and I can feel the relief of what it would be to see it break. To see them all break.
 And it's incredibly fulfilling to do so.
 ~ datapadsChoiceMade = 2
 -> closingMonologue

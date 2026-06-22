@@ -419,20 +419,6 @@ namespace Invector.CharacterController
                         //dialogue.SetActive(false);
                     }
                 }
-                else
-                {
-                    focused = false;
-                    tpCamera.inspectCam.enabled = false;
-                    tpCamera._camera.enabled = true;
-                    prompt.GetComponent<TMP_Text>().text = "Press F to investigate";
-                }
-            }
-            else
-            {
-                focused = false;
-                tpCamera.inspectCam.enabled = false;
-                tpCamera._camera.enabled = true;
-                prompt.GetComponent<TMP_Text>().text = "Press F to investigate";
             }
         }
 
@@ -479,7 +465,7 @@ namespace Invector.CharacterController
                             cc.input = Vector2.zero;
                             tpCamera.enabled = false;
                             GM.caseBoard.SetActive(true);
-                            GM.dialogue.transform.localPosition = new Vector3(0, 415f, 0f);
+                            GM.dialogue.transform.localPosition = new Vector3(0, 415f, 0);
                             cc.lockMovement = true;
                             caseFocused = true;
                             ccm.UpdateCardPosition();
@@ -501,7 +487,7 @@ namespace Invector.CharacterController
                             GM.caseBoard.SetActive(false);
                             if (GM.dialogue.activeInHierarchy) GM.dialogue.SetActive(true);
                             else GM.dialogue.SetActive(false);
-                            GM.dialogue.transform.localPosition = new Vector3(0f, -415f, 0f);
+                            GM.dialogue.transform.localPosition = new Vector3(0f, -415f, 0);
                             cc.lockMovement = false;
                             tpCamera.enabled = true;
                             tpCamera.ReturnOldRotate();
@@ -509,24 +495,6 @@ namespace Invector.CharacterController
                         }
                     }
                 }
-                else
-                {
-                    GM.caseBoard.SetActive(false);
-                    GM.dialogue.transform.localPosition = new Vector3(0f, -415f, 0f);
-                    caseFocused = false;
-
-                    //Cursor.lockState = CursorLockMode.Locked;
-                    //tpCamera.enabled = true;
-                    //cc.lockMovement = false;
-                }
-            }
-            else
-            {
-                GM.caseBoard.SetActive(false);
-                GM.dialogue.transform.localPosition = new Vector3(0f, -415f, 0f);
-                cc.lockMovement = false;
-                tpCamera.enabled = true;
-                caseFocused = false;
             }
         }
 
