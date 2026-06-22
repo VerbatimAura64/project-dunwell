@@ -345,7 +345,7 @@ But there's no time.
 }
 
 { managerCaught:
-    I've called the droids. They'll sentence you for this murder! 
+    "I've called the droids. They'll sentence you for this murder!" 
     ->endingB
 - else:
 
@@ -399,7 +399,7 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
     ~ convManagerDone = true
     -> conveManagerDone
 - else:
-    You're trespassing. You need to leave.
+    "You're trespassing. You need to leave."
     ->endingB
     }
 }

@@ -160,7 +160,8 @@ public class GM : MonoBehaviour
     {
         gameOver = (bool)_inkStory.variablesState["gameOver"];
         if(gameOver)
-            prompt.text = "Take the elevator to leave";
+            if(prompt != null)
+                prompt.text = "Take the elevator to leave";
 
     }
 
