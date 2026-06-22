@@ -103,6 +103,18 @@ public class Clue : MonoBehaviour
             player.GetComponent<vThirdPersonInput>().tpCamera.GetComponent<vThirdPersonCamera>().inspectCam.enabled = false;
             player.GetComponent<vThirdPersonInput>().tpCamera.GetComponent<vThirdPersonCamera>()._camera.enabled = true;
         }
+        if (clueObj.name == "Dexter's Login")
+        {
+            //if ((int)gm._inkStory.variablesState["good_count"] >= 5)
+            if ((bool)gm._inkStory.variablesState["foundMorrowTrace"] == true)
+            {
+
+                GameObject.Find("Datapads").GetComponent<BoxCollider>().enabled = true;
+                //GameObject.Find("Dunwell").GetComponent<vThirdPersonInput>().clueTriggered = false;
+
+            }
+        }
+
     }
 
     void WallReveal()
@@ -128,10 +140,10 @@ public class Clue : MonoBehaviour
         if (clueObj.name == "Dexter's Login")
         {
             //if ((int)gm._inkStory.variablesState["good_count"] >= 5)
-            if ((bool)gm._inkStory.variablesState["foundMorrowTrace"] == true)
+            if ((int)gm._inkStory.variablesState["good_count"] >= 8 && !gm.gameEnding)
             {
-
-                GameObject.Find("Datapads").GetComponent<BoxCollider>().enabled = true;
+                
+                GameObject.Find("Dexter's Login").GetComponent<BoxCollider>().enabled = true;
                 //GameObject.Find("Dunwell").GetComponent<vThirdPersonInput>().clueTriggered = false;
 
             }
@@ -150,6 +162,17 @@ public class Clue : MonoBehaviour
                 gm.ContinueStory();
 
                 gm.dialogue.SetActive(true);
+            }
+        }
+        if (clueObj.name == "Dexter's Login")
+        {
+            //if ((int)gm._inkStory.variablesState["good_count"] >= 5)
+            if ((bool)gm._inkStory.variablesState["foundMorrowTrace"] == true)
+            {
+
+                GameObject.Find("Datapads").GetComponent<BoxCollider>().enabled = true;
+                //GameObject.Find("Dunwell").GetComponent<vThirdPersonInput>().clueTriggered = false;
+
             }
         }
 

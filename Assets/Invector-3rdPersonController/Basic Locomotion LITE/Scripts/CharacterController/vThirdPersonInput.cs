@@ -317,104 +317,107 @@ namespace Invector.CharacterController
 
         protected virtual void FocusInput()
         {
-            if (!GM.isConversation)
+            if (!GM.gameEnding)
             {
-                if (mapCollided || clueTriggered)
+                if (!GM.isConversation)
                 {
-                    prompt.SetActive(true);
-                    if (!focused)
+                    if (mapCollided || clueTriggered)
                     {
                         prompt.SetActive(true);
-                        if (Input.GetKeyDown(focusInput) && !caseFocused)
+                        if (!focused)
                         {
-                            focused = true;
-                            if (itemToFocus.GetComponent<Clue>() != null)
+                            prompt.SetActive(true);
+                            if (Input.GetKeyDown(focusInput) && !caseFocused)
                             {
-                                if (!itemToFocus.GetComponent<Clue>().discovered && clueTriggered)
-                                    GM.dialogue.SetActive(true);
-                                if (itemToFocus.GetComponent<Clue>().isInteractable)
+                                focused = true;
+                                if (itemToFocus.GetComponent<Clue>() != null)
                                 {
-                                    if (!Cursor.visible)
+                                    if (!itemToFocus.GetComponent<Clue>().discovered && clueTriggered)
+                                        GM.dialogue.SetActive(true);
+                                    if (itemToFocus.GetComponent<Clue>().isInteractable)
                                     {
-                                        Cursor.lockState = CursorLockMode.Confined;
-                                        Cursor.visible = true;
+                                        if (!Cursor.visible)
+                                        {
+                                            Cursor.lockState = CursorLockMode.Confined;
+                                            Cursor.visible = true;
+                                        }
+                                        itemToFocus.GetComponent<Transform>().position = tpCamera.anchor.transform.position;
                                     }
-                                    itemToFocus.GetComponent<Transform>().position = tpCamera.anchor.transform.position;
                                 }
+                                cc.isSprinting = false;
+                                cc.input = Vector2.zero;
+
+                                cc.lockMovement = true;
+                                //tpCamera.lockCamera = true;
+                                //tpCamera.enabled = false;
+                                //tpCamera.lockCamera = true;
+                                tpCamera._camera.enabled = false;
+                                tpCamera.inspectCam.enabled = true;
+
+
+                                if (mapCollided)
+                                {
+                                    tpCamera.inspectCam.fieldOfView = 60;
+                                    prompt.GetComponent<TMP_Text>().text = "Press F to back out";
+                                }
+                                else if (clueTriggered)
+                                {
+
+                                    InspectClue();
+                                    prompt.GetComponent<TMP_Text>().text = "Press F to back out";
+                                }
+                                SetFocus();
                             }
-                            cc.isSprinting = false;
-                            cc.input = Vector2.zero;
-
-                            cc.lockMovement = true;
-                            //tpCamera.lockCamera = true;
-                            //tpCamera.enabled = false;
-                            //tpCamera.lockCamera = true;
-                            tpCamera._camera.enabled = false;
-                            tpCamera.inspectCam.enabled = true;
-
-
-                            if (mapCollided)
+                        }
+                        else
+                        {
+                            if (Input.GetKeyDown(focusInput))
                             {
-                                tpCamera.inspectCam.fieldOfView = 60;
-                                prompt.GetComponent<TMP_Text>().text = "Press F to back out";
+                                focused = false;
+                                cc.lockMovement = false;
+                                tpCamera.enabled = true;
+                                tpCamera.inspectCam.enabled = false;
+                                tpCamera._camera.enabled = true;
+                                if (itemToFocus.GetComponent<Clue>() != null)
+                                {
+                                    if (itemToFocus.GetComponent<Clue>().isInteractable)
+                                    {
+                                        if (Cursor.visible)
+                                            Cursor.visible = false;
+                                        Cursor.lockState = CursorLockMode.Locked;
+                                        itemToFocus.GetComponent<Transform>().position = itemToFocus.GetComponent<Clue>().ogPos;
+                                        itemToFocus.GetComponent<Transform>().rotation = itemToFocus.GetComponent<Clue>().ogDirection;
+                                    }
+                                }
+                                //tpCamera.ReturnOldRotate();
+                                tpCamera.lockCamera = false;
+                                if (mapCollided)
+                                {
+                                    tpCamera.inspectCam.fieldOfView = 78.5f;
+                                    prompt.GetComponent<TMP_Text>().text = "Press F to focus";
+                                }
+                                else if (clueTriggered)
+                                {
+                                    prompt.GetComponent<TMP_Text>().text = "Press F to investigate";
+                                }
+                                SetFocus();
                             }
-                            else if (clueTriggered)
-                            {
-
-                                InspectClue();
-                                prompt.GetComponent<TMP_Text>().text = "Press F to back out";
-                            }
-                            SetFocus();
                         }
                     }
                     else
                     {
-                        if (Input.GetKeyDown(focusInput))
+                        /*if (Input.GetKeyDown(focusInput) && focused)
                         {
-                            focused = false;
                             cc.lockMovement = false;
-                            tpCamera.enabled = true;
-                            tpCamera.inspectCam.enabled = false;
+                            focused = false;
                             tpCamera._camera.enabled = true;
-                            if (itemToFocus.GetComponent<Clue>() != null)
-                            {
-                                if (itemToFocus.GetComponent<Clue>().isInteractable)
-                                {
-                                    if (Cursor.visible)
-                                        Cursor.visible = false;
-                                    Cursor.lockState = CursorLockMode.Locked;
-                                    itemToFocus.GetComponent<Transform>().position = itemToFocus.GetComponent<Clue>().ogPos;
-                                    itemToFocus.GetComponent<Transform>().rotation = itemToFocus.GetComponent<Clue>().ogDirection;
-                                }
-                            }
-                            //tpCamera.ReturnOldRotate();
+                            tpCamera.inspectCam.enabled = false;
                             tpCamera.lockCamera = false;
-                            if (mapCollided)
-                            {
-                                tpCamera.inspectCam.fieldOfView = 78.5f;
-                                prompt.GetComponent<TMP_Text>().text = "Press F to focus";
-                            }
-                            else if (clueTriggered)
-                            {
-                                prompt.GetComponent<TMP_Text>().text = "Press F to investigate";
-                            }
-                            SetFocus();
-                        }
+                            tpCamera.ReturnOldRotate();
+                        }*/
+                        //prompt.SetActive(false);
+                        //dialogue.SetActive(false);
                     }
-                }
-                else
-                {
-                    /*if (Input.GetKeyDown(focusInput) && focused)
-                    {
-                        cc.lockMovement = false;
-                        focused = false;
-                        tpCamera._camera.enabled = true;
-                        tpCamera.inspectCam.enabled = false;
-                        tpCamera.lockCamera = false;
-                        tpCamera.ReturnOldRotate();
-                    }*/
-                    //prompt.SetActive(false);
-                    //dialogue.SetActive(false);
                 }
             }
         }
@@ -447,46 +450,49 @@ namespace Invector.CharacterController
 
         protected virtual void OpenCaseBoard()
         {
-            if (!GM.isConversation || !GM.gameEnding)
+            if (!GM.gameEnding)
             {
-                if (!caseFocused && !focused)
+                if (!GM.isConversation)
                 {
-                    if (Input.GetKeyDown(caseBoardInput))
+                    if (!caseFocused && !focused)
                     {
-                        if (!Cursor.visible)
-                            Cursor.lockState = CursorLockMode.Confined;
-                        Cursor.visible = true;
-                        cc.isSprinting = false;
-                        cc.input = Vector2.zero;
-                        tpCamera.enabled = false;
-                        GM.caseBoard.SetActive(true);
-                        GM.dialogue.transform.localPosition = new Vector3(0,415f,0);
-                        cc.lockMovement = true;
-                        caseFocused = true;
-                        ccm.UpdateCardPosition();
-                    }
-                }
-                else if (caseFocused && !focused)
-                {
-                    if (Input.GetKeyDown(caseBoardInput))
-                    {
-                        if (Cursor.visible)
-                            Cursor.visible = false;
-                        Cursor.lockState = CursorLockMode.Locked;
-                        //CM.ClearConnections();
-                        foreach (GameObject clue in GM.clueCards)
+                        if (Input.GetKeyDown(caseBoardInput))
                         {
-                           clue.GetComponent<Clue>().SetSelected(false);
-                           //Debug.LogError(clue.name + clue.GetComponent<Clue>().IsSelected());
+                            if (!Cursor.visible)
+                                Cursor.lockState = CursorLockMode.Confined;
+                            Cursor.visible = true;
+                            cc.isSprinting = false;
+                            cc.input = Vector2.zero;
+                            tpCamera.enabled = false;
+                            GM.caseBoard.SetActive(true);
+                            GM.dialogue.transform.localPosition = new Vector3(0, 415f, 0);
+                            cc.lockMovement = true;
+                            caseFocused = true;
+                            ccm.UpdateCardPosition();
                         }
-                        GM.caseBoard.SetActive(false);
-                        if (GM.dialogue.activeInHierarchy) GM.dialogue.SetActive(true);
-                        else GM.dialogue.SetActive(false);
-                        GM.dialogue.transform.localPosition = new Vector3(0f, -415f, 0);
-                        cc.lockMovement = false;
-                        tpCamera.enabled = true;
-                        tpCamera.ReturnOldRotate();
-                        caseFocused = false;
+                    }
+                    else if (caseFocused && !focused)
+                    {
+                        if (Input.GetKeyDown(caseBoardInput))
+                        {
+                            if (Cursor.visible)
+                                Cursor.visible = false;
+                            Cursor.lockState = CursorLockMode.Locked;
+                            //CM.ClearConnections();
+                            foreach (GameObject clue in GM.clueCards)
+                            {
+                                clue.GetComponent<Clue>().SetSelected(false);
+                                //Debug.LogError(clue.name + clue.GetComponent<Clue>().IsSelected());
+                            }
+                            GM.caseBoard.SetActive(false);
+                            if (GM.dialogue.activeInHierarchy) GM.dialogue.SetActive(true);
+                            else GM.dialogue.SetActive(false);
+                            GM.dialogue.transform.localPosition = new Vector3(0f, -415f, 0);
+                            cc.lockMovement = false;
+                            tpCamera.enabled = true;
+                            tpCamera.ReturnOldRotate();
+                            caseFocused = false;
+                        }
                     }
                 }
             }

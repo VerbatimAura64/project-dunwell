@@ -1,6 +1,6 @@
 //using Ink.Parsed;
 using Ink.Runtime;
-using Ink.UnityIntegration;
+//using Ink.UnityIntegration;
 using Invector.CharacterController;
 using System.Collections;
 using System.Collections.Generic;
@@ -77,8 +77,8 @@ public class GM : MonoBehaviour
         StartCoroutine(RevealScene());
         caseBoard.SetActive(false);
         _inkStory = new Story(inkAsset.text);
-        InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
-        if (window != null) { InkPlayerWindow.Attach(_inkStory); }
+  //      InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
+    //    if (window != null) { InkPlayerWindow.Attach(_inkStory); }
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -398,10 +398,11 @@ public class GM : MonoBehaviour
                     string ending = tag.Substring(0); // Extract the clue number after "ENDING_"
                     // Load the scene using SceneManager.LoadScene(sceneName);
                     Debug.LogError(ending);
+                    gameEnding = true;
                     if (ending.Equals("ENDING_B"))
                     {
                         //Fade logic here
-                        gameEnding = true;
+                        AdvanceDialogue();
                         StartCoroutine(EndingBTransition());
                         objective.SetActive(false);
                         GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonController>().lockMovement = true;
@@ -533,6 +534,12 @@ public class GM : MonoBehaviour
     public void MakeChoice(int choice)
     {
         _inkStory.ChooseChoiceIndex(choice);
+        if (datapadChoice)
+        {
+            gameEnding = true;
+            GameObject.Find("Datapads").GetComponent<BoxCollider>().enabled = false;
+            GameObject.Find("Dexter's Login").GetComponent<BoxCollider>().enabled = false;
+        }
         Cursor.visible = false;
         HideChoices();
         AdvanceDialogue();
