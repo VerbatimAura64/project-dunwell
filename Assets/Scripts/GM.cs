@@ -1,6 +1,6 @@
 //using Ink.Parsed;
 using Ink.Runtime;
-using Ink.UnityIntegration;
+//using Ink.UnityIntegration;
 using Invector.CharacterController;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +14,8 @@ public class GM : MonoBehaviour
 {
     private static GM instance;
     private static Canvas screenInstance;
+    private GameObject player;
+    private TMP_Text prompt;
     public TextAsset inkAsset;
     public Story inkStory;
     public Canvas canvas;
@@ -77,8 +79,10 @@ public class GM : MonoBehaviour
         StartCoroutine(RevealScene());
         caseBoard.SetActive(false);
         _inkStory = new Story(inkAsset.text);
-        InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
-        if (window != null) { InkPlayerWindow.Attach(_inkStory); }
+        prompt = GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonInput>().objective.GetComponent<TMP_Text>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        //InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
+        //if (window != null) { InkPlayerWindow.Attach(_inkStory); }
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -157,6 +161,8 @@ public class GM : MonoBehaviour
     void IsDemoOver()
     {
         gameOver = (bool)_inkStory.variablesState["gameOver"];
+        if(gameOver)
+            prompt.text = "Take the elevator to leave";
 
     }
 
@@ -167,10 +173,7 @@ public class GM : MonoBehaviour
             Debug.LogWarning(_inkStory.variablesState["managerCaught"]);
             Debug.LogWarning(_inkStory.variablesState["attemptToBluff"]);
             Debug.LogWarning(_inkStory.variablesState["bluffed"]);
-            if (gameOver)
-            {
-                StartCoroutine(FadeAndShowMenu());
-            }
+            StartCoroutine(EndingBTransition());
         }
     } 
 
@@ -207,7 +210,10 @@ public class GM : MonoBehaviour
     private IEnumerator EndingBTransition() {
         yield return StartCoroutine(FadeScreen(0f, 1f, 2f));
         mainCam.enabled = false;
+        Debug.LogError("main cam "+mainCam.enabled);
         jailCam.enabled = true;
+        Debug.LogError("jail cam " + jailCam.enabled);
+
         yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
     }
     public IEnumerator LoadNewScene()
@@ -397,27 +403,22 @@ public class GM : MonoBehaviour
                 {
                     string ending = tag.Substring(0); // Extract the clue number after "ENDING_"
                     // Load the scene using SceneManager.LoadScene(sceneName);
-                    Debug.LogError(ending);
+                    Debug.LogError("this should be "+ending);
                     if (ending.Equals("ENDING_B"))
                     {
                         //Fade logic here
-                        gameEnding = true;
+                        
                         StartCoroutine(EndingBTransition());
+                        gameEnding = true;
                         objective.SetActive(false);
-                        GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonController>().lockMovement = true;
-                        //GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<vThirdPersonCamera>().lockCamera = true;
-                        GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonInput>().prompt.SetActive(false);
+                        
+                        //player.GetComponent<vThirdPersonController>().enabled = false;
+                        //Debug.LogError("controller " +player.GetComponent<vThirdPersonController>().enabled);
+                        //player.GetComponentInChildren<vThirdPersonCamera>().lockCamera = true;
+                        player.GetComponent<vThirdPersonInput>().prompt.SetActive(false);
+                        player.SetActive(false);
                     }
-                    
-                    //Fade logic here
-                    //
-                    //
-                    
-                    //disable input logic
-                    //
-                    //
-                    //Debug.Log("Clue found triggered: " + clueName);
-                    //Trigger Ending sequence
+
                     continue;
                 }
             }
@@ -539,6 +540,7 @@ public class GM : MonoBehaviour
         _inkStory.ChooseChoiceIndex(choice);
         Cursor.visible = false;
         HideChoices();
+        GameObject.Find("Datapads").GetComponent<BoxCollider>().enabled = false;
         AdvanceDialogue();
 
     }

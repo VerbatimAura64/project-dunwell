@@ -258,13 +258,11 @@ My architecture. My work. In the wild and in violation of everything I imagined 
 === morrowRevealed ===
 # CLUE_FOUND_9
 # ALARM_TRIGGERED
-~ foundMorrowTrace = true
 ~ good_count = good_count + 1
 Last authentication — 5:45 a.m. this morning.
 The name attached to it: Dante Morrow.
 I know that name. I worked alongside him on the original infrastructure contracts. He knew this architecture because he helped build it. He knew where the skeleton keys were because I showed him.
 Morgan flags the trace. The alarm is live. I need to move.
-
 -> datapadsChoice
 
  
@@ -311,6 +309,7 @@ The irony isn't lost on me — using my own work to chase down whoever stole it.
 # DATAPAD_CHOICE
 All this data. The invasion of privacy, it's making me realize how much of a mistake this whole system was. The money moves fast in this city, changing things from bad to worse. No one needs all this personal information on any of these people.
 I need to figure out what to do with this.
+~ foundMorrowTrace = true
 * [Take the datapads] -> datapadsSceneTake
 * [Destroy them] -> datapadsSceneDestroy
 * [Leave them] -> datapadsSceneLeave
