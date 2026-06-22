@@ -14,8 +14,6 @@ public class GM : MonoBehaviour
 {
     private static GM instance;
     private static Canvas screenInstance;
-    private GameObject player;
-    private TMP_Text prompt;
     public TextAsset inkAsset;
     public Story inkStory;
     public Canvas canvas;
@@ -79,8 +77,8 @@ public class GM : MonoBehaviour
         StartCoroutine(RevealScene());
         caseBoard.SetActive(false);
         _inkStory = new Story(inkAsset.text);
-  //      InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
-    //    if (window != null) { InkPlayerWindow.Attach(_inkStory); }
+        //      InkPlayerWindow window = InkPlayerWindow.GetWindow(true);
+        //    if (window != null) { InkPlayerWindow.Attach(_inkStory); }
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -159,9 +157,6 @@ public class GM : MonoBehaviour
     void IsDemoOver()
     {
         gameOver = (bool)_inkStory.variablesState["gameOver"];
-        if(gameOver)
-            if(prompt != null)
-                prompt.text = "Take the elevator to leave";
 
     }
 
@@ -172,13 +167,16 @@ public class GM : MonoBehaviour
             Debug.LogWarning(_inkStory.variablesState["managerCaught"]);
             Debug.LogWarning(_inkStory.variablesState["attemptToBluff"]);
             Debug.LogWarning(_inkStory.variablesState["bluffed"]);
-            StartCoroutine(EndingBTransition());
+            if (gameOver)
+            {
+                StartCoroutine(FadeAndShowMenu());
+            }
         }
-    } 
+    }
 
     public void EndGame()
     {
-        if(gameOver) 
+        if (gameOver)
             StartCoroutine(FadeAndShowMenu());
     }
 
@@ -186,7 +184,7 @@ public class GM : MonoBehaviour
     {
         StartCoroutine(LoadNewScene());
     }
-    public void Menu() 
+    public void Menu()
     {
         SceneManager.LoadScene(0);
         Time.timeScale = 1.0f;
@@ -195,7 +193,7 @@ public class GM : MonoBehaviour
     {
         pauseScreen.SetActive(false);
         Time.timeScale = 1.0f;
-        
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -206,13 +204,11 @@ public class GM : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
-    private IEnumerator EndingBTransition() {
+    private IEnumerator EndingBTransition()
+    {
         yield return StartCoroutine(FadeScreen(0f, 1f, 2f));
         mainCam.enabled = false;
-        Debug.LogError("main cam "+mainCam.enabled);
         jailCam.enabled = true;
-        Debug.LogError("jail cam " + jailCam.enabled);
-
         yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
     }
     public IEnumerator LoadNewScene()
@@ -220,7 +216,7 @@ public class GM : MonoBehaviour
         fadeScreen.SetActive(true);
         int sceneIndex = SceneManager.GetActiveScene().buildIndex;
         yield return StartCoroutine(FadeScreen(0f, 1f, 4f));
-        yield return SceneManager.LoadSceneAsync(sceneIndex +1);
+        yield return SceneManager.LoadSceneAsync(sceneIndex + 1);
         yield return new WaitForSecondsRealtime(5f);
         //yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
         //fadeScreen.SetActive(false);
@@ -248,7 +244,7 @@ public class GM : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSecondsRealtime(3.5f);
-        
+
         endMenu.SetActive(true);
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
@@ -270,7 +266,7 @@ public class GM : MonoBehaviour
             float t = elapsed / fadeDuration;
             t = t * t * (3f - 2f * t);
 
-            c.a = Mathf.Lerp(startAlpha, endAlpha,t);
+            c.a = Mathf.Lerp(startAlpha, endAlpha, t);
             fadeScreen.GetComponent<Image>().color = c;
             yield return null;
         }
@@ -279,7 +275,7 @@ public class GM : MonoBehaviour
     }
     public void TriggerClueKnot(string knotTitle)
     {
-        
+
         _inkStory.ChoosePathString(knotTitle);
         AdvanceDialogue();
         //ContinueStory();
@@ -410,20 +406,27 @@ public class GM : MonoBehaviour
                         AdvanceDialogue();
                         StartCoroutine(EndingBTransition());
                         objective.SetActive(false);
-                        
-                        //player.GetComponent<vThirdPersonController>().enabled = false;
-                        //Debug.LogError("controller " +player.GetComponent<vThirdPersonController>().enabled);
-                        //player.GetComponentInChildren<vThirdPersonCamera>().lockCamera = true;
-                        player.GetComponent<vThirdPersonInput>().prompt.SetActive(false);
-                        player.SetActive(false);
+                        GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonController>().lockMovement = true;
+                        //GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<vThirdPersonCamera>().lockCamera = true;
+                        GameObject.FindGameObjectWithTag("Player").GetComponent<vThirdPersonInput>().prompt.SetActive(false);
                     }
 
+                    //Fade logic here
+                    //
+                    //
+
+                    //disable input logic
+                    //
+                    //
+                    //Debug.Log("Clue found triggered: " + clueName);
+                    //Trigger Ending sequence
                     continue;
                 }
             }
 
 
-        } else if (_inkStory.currentChoices.Count > 0)
+        }
+        else if (_inkStory.currentChoices.Count > 0)
         {
 
             dialogue.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
@@ -436,7 +439,7 @@ public class GM : MonoBehaviour
             //choices = new List<bool>();
             for (int i = 0; i < _inkStory.currentChoices.Count; i++)
             {
-                if(isConversation || datapadChoice)
+                if (isConversation || datapadChoice)
                     DisplayChoices();
                 else
                     dialogue.SetActive(false);
@@ -444,8 +447,9 @@ public class GM : MonoBehaviour
                 //choices.Add(false);
                 //Debug.Log("Choice " + (i+1) + ": " + choice.text);
             }
-        
-        } else
+
+        }
+        else
         {
             dialogue.SetActive(false);
         }
@@ -454,10 +458,6 @@ public class GM : MonoBehaviour
     void DisplayChoices()
     {
         HideChoices();
-        if (datapadChoice)
-        {
-            gameEnding = true;
-        }
 
         for (int i = 0; i < _inkStory.currentChoices.Count; i++)
         {
@@ -472,7 +472,7 @@ public class GM : MonoBehaviour
 
         choicesContainer.gameObject.SetActive(true);
     }
-    
+
     void HideChoices()
     {
         foreach (GameObject choiceButton in choiceButtons)
@@ -481,7 +481,7 @@ public class GM : MonoBehaviour
         }
         choiceButtons.Clear();
         choicesContainer.gameObject.SetActive(false);
-    
+
     }
 
     void IsClipOn()
@@ -545,7 +545,6 @@ public class GM : MonoBehaviour
         }
         Cursor.visible = false;
         HideChoices();
-        GameObject.Find("Datapads").GetComponent<BoxCollider>().enabled = false;
         AdvanceDialogue();
 
     }
@@ -569,7 +568,7 @@ public class GM : MonoBehaviour
                 inkKnotTitle = clueScript.inkKnotTitle,
                 inkChoice = clueScript.inkChoice
             };
-           
+
             //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
 
             //clueList.clues[i] = clueInfo;
@@ -593,8 +592,8 @@ public class GM : MonoBehaviour
         }*/
 
         //.Last<Clue>().inkKnotTitle);
-       //if(Input.GetKeyDown(KeyCode.Return))
-            //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
+        //if(Input.GetKeyDown(KeyCode.Return))
+        //_inkStory.ChoosePathString(clueList.clues.Last<ClueInfo>().inkKnotTitle);
         // _inkStory.variablesState["clueInspected"] = clueInspected;
     }
 
