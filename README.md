@@ -5,7 +5,7 @@ A neo-noir sci-fi locked-room murder mystery. One suspect. Nine clues. Three end
 Built in Unity + Ink as the centrepiece of a junior game-dev portfolio targeting 
 gameplay programming, tools, and narrative design roles.
 
-**[Play on itch.io](https://harborviewgames.itch.io)** · 
+**[Play on itch.io](https://harborviewgames.itch.io/project-dunwell)** · 
 **[Case Study](https://verbatimaura64.github.io/project-dunwell.html)**
 
 ---
