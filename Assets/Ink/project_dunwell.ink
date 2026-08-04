@@ -55,7 +55,7 @@ The evening curfew hasn't been lifted yet, I need to get inside.
 These apartments were cheap, The Studios they called them, basically saving space in the building by building the hallways around the outside of the apartments instead of between them. Leaner buildings, smaller but equally sized apartments, and cheaper rents.
  It didn’t take too many persuasion prompts to convince the artificial reception to let me through and up to his floor. 
   ~ seenIntMonologue = true
- - else: Where should I go
+ - else: Where should I go?
  }
 +[Examine the notice on the door] ->clueFineNotice
 +[Knock on Dexter's door] -> dextersDoor
@@ -79,7 +79,7 @@ This isn't Dexter's Apartment...
  ->DONE
 
 ===dextersDoor===
-I knocked on the door. The room sounds hollow, like no one could possibly be inside. He told me to meet here. Maybe he fell asleep - I'm three hours late.
+I knocked on the door. The room sounds hollow, like no one could possibly be inside. He told me to meet him here. Maybe he fell asleep - I'm three hours late.
 The door is locked. Override lock, not a standard residential fit. I can force the lock, or maybe there's a floor terminal around here somewhere.
 
 *[Force the lock] ->bruteForce
@@ -137,19 +137,19 @@ What can I find here, I don't have a lot of time.
 
 
 ===connectionBodyGun===
-If the gun is on the table, then it couldn't have been suicide...
+If the gun is on the table, then it couldn't have been suicide.
 ->DONE
 
 ===connectionNeighborFine===
-This guy better watch his back, or he might wind up like Dexter. If only I could warn him or something.
+This guy better watch his back, or he might wind up like Dexter. There’s no way to warn him though, or I would.
 ->DONE
 
 ===connectionScreenFine===
-Maybe Dexter told his neighbor about feeling like he was watched, but something must've got Dexter to take down the tapestry. Unless someone else took it down for him.
+Maybe Dexter told his neighbor about feeling like he was being watched, but something must've got Dexter to take down the tapestry. Unless someone else took it down for him.
 ->DONE
 
 ===connectionDeskGun===
-Seems like Dexter put up a fight before he lost to the best of his oponent and ended up, well, in the chair.
+Seems like Dexter put up a fight before he lost to the best of his opponent and ended up, well, in the chair.
 ->DONE
 
 ===connectionDatapads===
@@ -165,7 +165,7 @@ It's Dexter's drive, but it has my programs on it. I think the observer was tryi
 ~ foundLockedDoor = true
 ~ good_count = good_count + 1
 ~ seenClueRoom = true
-An overrided privacy lock can only come from the inside. 
+An overridden privacy lock can only come from the inside. 
 { foundStorageTerminal: The stack trace from the terminal didn't log any entry requests or breach attempts after the lock was set.} 
 So how did our killer get in? How did they get out?
 
@@ -185,7 +185,7 @@ This place had been wrecked.
 ~ foundBody = true
 ~ good_count = good_count + 1
 ~ seenClueRoom = true
-It looks like Dexter, but I can't be sure. Not with the bag on his head and the blood splatter dripping into his shirt and onto the floor. I never met the guy, but something tells me there wouldn't be anyone else in here except him anyhow.
+It looks like Dexter, but I can't be sure. Not with the bag on his head and the blood splatter dripping into his shirt and onto the floor. I never met the guy, but something tells me there wouldn't be anyone else here except him anyhow.
 One shot, straight between the eyes.
 
 -> clueHub
@@ -210,7 +210,7 @@ But why leave it to be found? Why drop it here from where they shot Dexter?
 ~ foundMonitor = true
 ~ good_count = good_count + 1
 ~ seenClueRoom = true
-There's no windows in these apartments by design, but these wallscreens weren't any better as a source of artificial sunshine. But why is it still on, glowing with life if the rest of the room has died.
+There aren’t any windows in these apartments by design, but these wallscreens weren't any better as a source of artificial sunshine. But why is it still on, glowing with life if the rest of the room has died.
 There's something more off though, the emitted light is further behind the glass instead of on it. I'm beginning to feel more disconnected than the panel from where it ought to be emitting from.
 -> clueHub
 
@@ -248,7 +248,7 @@ The one that stuck out the most was mine.
 ~ foundFiles = true
 ~ foundSignature = true
 ~ good_count = good_count + 1
-There's a terminal drive on the center command table and my interface says it needs no authentication. Who doesn't lock their data before stepping away, unless they needed to leave in a hurry.
+There's a terminal drive on the center command table and my interface says it needs no authentication. Who doesn't lock their data before stepping away, unless they had to leave in a hurry.
 But there's something more pressing. The directory list has a set of applications only I could recognize — applications I know I personally named. Not some corpo slave making a quick buck.
 Phelps. Chief. Morgan. Names from the History Archive Museum that seemed inspiring at the time.
 My architecture. My work. In the wild and in violation of everything I imagined its use for.
@@ -268,7 +268,7 @@ Morgan flags the trace. The alarm is live. I need to move.
  
  === beatTwo ===
  { foundScreenLast:
-Something about that wallscreen isn't sitting right with me. Tracing the edge trying to bring the lights to the front glass, there's a click and a reader shows itself from out behind the wall.
+Something about that wallscreen isn't sitting right with me. Tracing the edge trying to bring the lights to the front glass, there's a click and a reader reveals itself from out behind the wall.
 The something in the walls.
 }
 { foundStorageTerminal: That ghost signal from the storage terminal. It was coming from here. }
@@ -282,7 +282,7 @@ The scanner needs a different kind of authentication, a handshake that seems too
 
 === obsRoom ===
 {not seenObsRoom:
-    One way glass. Four apartments visible from here, Dexter's included. There's an elevator too — an interior service one . This is how he got in. This is how he got out.
+    One way glass. Four apartments visible from here, Dexter's included. There's an elevator too — an interior service one. This is how he got in. This is how he got out.
 ~seenObsRoom = true
 - else: 
     What are they doing here...
@@ -307,7 +307,7 @@ The irony isn't lost on me — using my own work to chase down whoever stole it.
 
 === datapadsChoice ===
 # DATAPAD_CHOICE
-All this data. The invasion of privacy, it's making me realize how much of a mistake this whole system was. The money moves fast in this city, changing things from bad to worse. 
+All this data. The invasion of privacy makes me realize how much of a mistake this whole system was. The money moves fast in this city, changing things from bad to worse. 
 No one needs all this personal information on any of these people. I need to figure out what to do with this.
 ~ foundMorrowTrace = true
 * [Take the datapads] -> datapadsSceneTake
@@ -325,13 +325,13 @@ But it'd clear my name if I can connect the dots.
 
 === datapadsSceneDestroy ===
 There's rage sparking in my arms. I just want to smash the glass, crush the pads and erase all the data, wipe everything clean. 
-The tablet is in my hands, arms shaking, and I can feel the relief of what it would be to see it break. To see them all break.
+The tablet is in my hands, arms shaking, and I can feel the relief of what it would be like to see it break. To see them all break.
 And it's incredibly fulfilling to do so.
 ~ datapadsChoiceMade = 2
 -> closingMonologue
 
 === datapadsSceneLeave ===
-I don't have the time to think about these datapads. I have to get out of here. I'd love to smash them, but I can't leave any more fingerprints. If I could carry them or back them up, I would.
+I don't have the time to think about these datapads. I gotta get out of here. I'd love to smash them, but I can't leave any more fingerprints. If I could carry them or back them up, I would.
 But there's no time.
 ~ datapadsChoiceMade = 0
 -> closingMonologue
@@ -413,7 +413,7 @@ Not unfriendly. The tone of a man whose job is to know who belongs and who doesn
 === closingMonologue ===
 Dante was here. He might've just left the building as I walked in, and he left the door wide open for me to be caught in it.
 I have his credential now. And an address to the central hub he's pinged authentications from.
-My interface saves the drive scan and I can't help but think back to the room. Seeing Dexter still sitting there. I'm sorry I couldn't have been here sooner for him.
+My interface saves the drive scan, and I can't help but think back to the room. Seeing Dexter still sitting there. I'm sorry I couldn't have been here sooner for him.
 I never intended for my work to be used like this. Targeting innocent civilians for the wrong reasons. Nobody is safe if everyone is distrustful.
 There's a long list of things I need to do to nail Dante to this elaborate scheme. 
 
@@ -460,7 +460,7 @@ Dante Morrow is outside these walls. Dexter Clear is in the ground. The observat
 { managerCaught:
 The cell is smaller than the apartments in The Studios. Not by much.
 
-I keep doing what I always do — noticing things. The crack in the upper left corner of the ceiling that suggests the building settled unevenly. The guard who favors his right leg on the evening shift. 
+I keep doing what I always do — noticing things. The crack in the upper left corner of the ceiling suggests the building settled unevenly. The guard who favors his right leg on the evening shift. 
 
 Observation without application. The instinct running on nothing, like an engine with nowhere to go.
 I had the thread. I just ran out of room to pull it.
@@ -481,7 +481,7 @@ But my name is in that network. My directories. My architecture. Chief, Phelps, 
 
 It doesn't matter that Dante took it without asking. The code is mine. The sightlines are mine. Any case built on that drive has me in it, and a case with me in it is a case Dante Morrow can dismantle in an afternoon.
 
-So I'll leave it for someone else.
+So, I'll leave it for someone else.
 
 Dexter Clear spent the last months of his life trying to assemble something — evidence, a droid, a contingency. He didn't trust institutions. He trusted systems he built himself. 
 

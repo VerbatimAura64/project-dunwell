@@ -332,17 +332,28 @@ namespace Invector.CharacterController
                                 focused = true;
                                 if (itemToFocus.GetComponent<Clue>() != null)
                                 {
-                                    if (!itemToFocus.GetComponent<Clue>().discovered && clueTriggered)
-                                        GM.dialogue.SetActive(true);
-                                    if (itemToFocus.GetComponent<Clue>().isInteractable)
+                                    if (!itemToFocus.GetComponent<Clue>().discovered && clueTriggered && itemToFocus.GetComponent<Clue>().isInteractable)
                                     {
+                                        GM.dialogue.SetActive(true);
+                                        Debug.LogError("FocusInput: " + itemToFocus.name + " is interactable");
                                         if (!Cursor.visible)
                                         {
                                             Cursor.lockState = CursorLockMode.Confined;
                                             Cursor.visible = true;
                                         }
                                         itemToFocus.GetComponent<Transform>().position = tpCamera.anchor.transform.position;
-                                    }
+                                        
+                                    } 
+                                    //if (itemToFocus.GetComponent<Clue>().isInteractable)
+                                    //{
+                                        //Debug.LogError("FocusInput: " + itemToFocus.name + " is interactable");
+                                        /*if (!Cursor.visible)
+                                        {
+                                            Cursor.lockState = CursorLockMode.Confined;
+                                            Cursor.visible = true;
+                                        }
+                                        itemToFocus.GetComponent<Transform>().position = tpCamera.anchor.transform.position;*/
+                                    //}
                                 }
                                 cc.isSprinting = false;
                                 cc.input = Vector2.zero;
@@ -362,7 +373,6 @@ namespace Invector.CharacterController
                                 }
                                 else if (clueTriggered)
                                 {
-
                                     InspectClue();
                                     prompt.GetComponent<TMP_Text>().text = "Press F to back out";
                                 }
@@ -387,6 +397,7 @@ namespace Invector.CharacterController
                                         Cursor.lockState = CursorLockMode.Locked;
                                         itemToFocus.GetComponent<Transform>().position = itemToFocus.GetComponent<Clue>().ogPos;
                                         itemToFocus.GetComponent<Transform>().rotation = itemToFocus.GetComponent<Clue>().ogDirection;
+                                        itemToFocus.GetComponent<Clue>().isInteractable = false;
                                     }
                                 }
                                 //tpCamera.ReturnOldRotate();
@@ -426,7 +437,7 @@ namespace Invector.CharacterController
 
         void Inspecting()
         {
-            if (focused && clueTriggered)
+            if ( focused &&  clueTriggered && itemToFocus.GetComponent<Clue>().isInteractable)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -524,12 +535,12 @@ namespace Invector.CharacterController
                 }
                 else if(focused && !foundClue.relevant) 
                 {
-                if (!GM.dialogue.activeInHierarchy)
-                    GM.dialogue.SetActive(true);
-                GM.typeWriter._readyForNewText = true;
-                GM.typeWriter.PrepareForNewText(GM.dialogue);
-                GM._inkStory.ChoosePathString("notRelevant");
-                GM.AdvanceDialogue();//GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
+                    if (!GM.dialogue.activeInHierarchy)
+                        GM.dialogue.SetActive(true);
+                    GM.typeWriter._readyForNewText = true;
+                    GM.typeWriter.PrepareForNewText(GM.dialogue);
+                    GM._inkStory.ChoosePathString("notRelevant");
+                    GM.AdvanceDialogue();//GM.dialogue.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GM._inkStory.Continue();
                
 
             }

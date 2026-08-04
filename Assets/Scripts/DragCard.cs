@@ -64,7 +64,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Debug.Log("Dragging card: " + gameObject.name);
             rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;// transform.root.GetComponent<Canvas>().scaleFactor;
                                                                                    //transform.position = Input.mousePosition;
-        } else
+        } else // (include if interactable?)
         {
             Debug.Log("Rotating: " + gameObject.name);
         }
