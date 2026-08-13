@@ -135,7 +135,9 @@ public class GM : MonoBehaviour
         float elapsed = 0f;
         //Color tC = instruct.GetComponentInChildren<TextMeshProUGUI>().color;
         Color c = instruct.GetComponent<Image>().color;
+        Color c2 = instruct.GetComponentInChildren<TextMeshProUGUI>().color;
         c.a = startAlpha;
+        c2.a = startAlpha;
 
         while (elapsed < duration)
         {
@@ -144,13 +146,17 @@ public class GM : MonoBehaviour
             t = t * t * (3f - 2f * t);
             //tC.a = Mathf.Lerp(startAlpha, endAlpha, t);
             c.a = Mathf.Lerp(startAlpha, endAlpha, t);
+            c2.a = Mathf.Lerp(startAlpha, endAlpha, t);
             instruct.GetComponent<Image>().color = c;
+            instruct.GetComponentInChildren<TextMeshProUGUI>().color = c2;
             yield return null;
         }
         //tC.a = endAlpha;
         c.a = endAlpha;
+        c2.a = endAlpha;
         //instruct.GetComponentInChildren<TextMeshProUGUI>().color = tC;
         instruct.GetComponent<Image>().color = c;
+        instruct.GetComponentInChildren<TextMeshProUGUI>().color = c2;
         instruct.SetActive(false);
     }
 
@@ -218,6 +224,18 @@ public class GM : MonoBehaviour
         yield return StartCoroutine(FadeScreen(0f, 1f, 4f));
         yield return SceneManager.LoadSceneAsync(sceneIndex + 1);
         yield return new WaitForSecondsRealtime(5f);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex + 1);
+        asyncLoad.allowSceneActivation = false;
+
+        while (asyncLoad.progress < 0.9f)
+        {
+            yield return null;
+        }
+
+        // Scene is loaded but not activated — if you reach here without crashing,
+        // loading isn't the problem, activation is
+        Debug.Log("Scene loaded, activating...");
+        asyncLoad.allowSceneActivation = true;
         //yield return StartCoroutine(FadeScreen(1f, 0f, 2f));
         //fadeScreen.SetActive(false);
     }
