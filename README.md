@@ -6,7 +6,7 @@ Built in Unity + Ink as the centrepiece of a junior game-dev portfolio targeting
 gameplay programming, tools, and narrative design roles.
 
 **[Play on itch.io](https://harborviewgames.itch.io/project-dunwell)** · 
-**[Case Study](https://verbatimaura64.github.io/project-dunwell.html)**
+**[Case Study](https://verbatimaura64.github.io/case_study/project-dunwell.html)**
 
 ---
 
@@ -93,4 +93,4 @@ final fade-to-menu.
 ## Case Study
 
 Full breakdown of the architecture, challenges, and retrospective:
-[verbatimaura64.github.io/project-dunwell.html](https://verbatimaura64.github.io/project-dunwell.html)
+[verbatimaura64.github.io/project-dunwell.html](https://verbatimaura64.github.io/case_study/project-dunwell.html)
